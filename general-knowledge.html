@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f1a33"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="LSA DSCG"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" href="assets/icon-180.png"><script src="assets/app-nav.js"></script>
+<title>General Knowledge · LSA Toolbox, DSCG</title>
+<link rel="icon" type="image/png" href="assets/favicon-dscg.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+
+:root{
+  --navy:#1a2744;
+  --navy-deep:#0f1a33;
+  --navy-mid:#243260;
+  --blue:#2d5fa6;
+  --accent:#f5b60f;
+  --accent-deep:#c98f00;
+  --green:#2a7a4b;
+  --bg:#f5f3ef;
+  --surface:#ffffff;
+  --border:#ddd5c5;
+  --text:#2a2520;
+  --muted:#7a7060;
+  --shadow:0 2px 14px rgba(26,39,68,.10);
+  --shadow-lg:0 14px 40px rgba(26,39,68,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Quicksand',Georgia,serif;
+  background:var(--bg);color:var(--text);line-height:1.72;font-size:17px;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;}
+
+/* ── TOP BAR ── */
+.topbar{background:var(--navy-deep);color:rgba(255,255,255,.7);font-size:12.5px;}
+.topbar-inner{
+  max-width:1040px;margin:0 auto;padding:9px 28px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.topbar .place{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.12em;font-size:11px;}
+.topbar .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);}
+.topbar a.back{
+  display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.78);text-decoration:none;
+  border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:4px 13px;transition:all .2s;font-size:11.5px;
+}
+.topbar a.back:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(200,168,75,.6);}
+
+/* ── HEADER (sober, no photo) ── */
+.head{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,var(--blue) 135%);
+  border-bottom:3px solid var(--accent);
+}
+.head::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 88% -10%,rgba(74,123,200,.4),transparent 55%);
+}
+.head-inner{position:relative;z-index:2;max-width:1040px;margin:0 auto;padding:46px 28px 40px;}
+.breadcrumb{
+  display:flex;align-items:center;gap:9px;flex-wrap:wrap;
+  font-size:12px;letter-spacing:.04em;color:rgba(255,255,255,.85);margin-bottom:18px;
+}
+.breadcrumb a{color:rgba(255,255,255,.85);text-decoration:none;border-bottom:1px solid transparent;transition:.2s;}
+.breadcrumb a:hover{color:#fff;border-bottom-color:var(--accent);}
+.breadcrumb .sep{opacity:.5;}
+.breadcrumb .tag{
+  background:var(--green);color:#fff;border-radius:5px;padding:2px 9px;
+  font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+}
+.head h1{
+  font-family:'Quicksand',serif;color:#fff;font-weight:700;
+  font-size:clamp(2.1rem,4.6vw,3.1rem);line-height:1.05;
+}
+.head .sub{color:rgba(255,255,255,.78);font-size:clamp(15px,2vw,18px);font-style:italic;margin-top:12px;max-width:600px;}
+
+/* ── WRAP ── */
+.wrap{max-width:880px;margin:0 auto;padding:48px 28px 30px;}
+
+/* ── SECTION (each resource) ── */
+.res{margin-bottom:46px;}
+.res-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px;}
+.res-head>div{flex:1;min-width:0;}
+.res-head .idx{
+  font-family:'Quicksand',serif;font-weight:700;color:#fff;background:var(--blue);
+  width:36px;height:36px;flex-shrink:0;border-radius:9px;
+  display:inline-flex;align-items:center;justify-content:center;font-size:.95rem;
+  transform:translateY(-2px);
+}
+.res:nth-child(2) .idx{background:var(--blue);}
+.res h2{
+  font-family:'Quicksand',serif;color:var(--navy);font-weight:600;
+  font-size:1.7rem;line-height:1.12;
+}
+.res .kicker{
+  display:block;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent-deep);margin-bottom:4px;
+}
+.res-rule{height:2px;background:linear-gradient(90deg,var(--accent),transparent);margin:14px 0 22px;}
+
+.res-sub{color:var(--muted);font-size:15px;line-height:1.55;margin:-8px 0 18px;text-wrap:pretty;}
+.pod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;}.pod-link{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 16px;border:1px solid var(--border);border-radius:10px;background:var(--surface);box-shadow:var(--shadow);text-decoration:none;color:var(--navy);font-weight:600;font-size:15px;transition:all .2s;}.pod-link:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-2px);box-shadow:var(--shadow-lg);}.pod-link .pod-name{display:flex;align-items:center;gap:10px;min-width:0}.pod-link .pod-logo{width:24px;height:24px;flex-shrink:0;object-fit:contain}.pod-link .ext{font-size:11px;font-weight:700;color:var(--blue);white-space:nowrap;}
+.fmt{display:flex;align-items:center;gap:12px;margin:8px 0 26px;padding-bottom:10px;border-bottom:2px solid var(--navy);}.fmt h2.fmt-title{font-size:1.15rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);}.fmt .fmt-count{font-size:12px;font-weight:700;color:#fff;background:var(--navy);border-radius:20px;padding:2px 10px;}.fmt-group{margin-bottom:56px;}
+.fmt-group>summary{list-style:none;cursor:pointer;user-select:none;transition:color .2s;}.fmt-group>summary::-webkit-details-marker{display:none;}.fmt-group>summary:hover h2.fmt-title{color:var(--blue);}.fmt .fmt-chev{margin-left:auto;color:var(--navy);transition:transform .25s;flex-shrink:0;}.fmt-group[open] .fmt-chev{transform:rotate(180deg);}.fmt-group{margin-bottom:22px;}.fmt-group[open]{margin-bottom:48px;}.fmt-group:not([open])>summary{margin-bottom:0;}.fmt-body{padding-top:4px;}@media print{.fmt-chev{display:none;}}
+/* ── VIDEO EMBEDS ── */
+.video{
+  border-radius:12px;overflow:hidden;background:var(--navy-deep);
+  border:1px solid var(--border);box-shadow:var(--shadow-lg);
+}
+.video.wide{position:relative;width:100%;aspect-ratio:16/9;}
+.video.short{position:relative;width:100%;max-width:360px;aspect-ratio:9/16;margin:0 auto;}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+
+/* ── ARTICLE LINK CARD ── */
+.card-link{
+  display:flex;align-items:stretch;gap:0;text-decoration:none;
+  border-radius:12px;overflow:hidden;border:1px solid var(--border);
+  background:var(--surface);box-shadow:var(--shadow);transition:all .25s;
+}
+.card-link:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px);border-color:var(--accent);}
+.card-thumb{position:relative;width:240px;flex-shrink:0;overflow:hidden;background:var(--navy);}
+.card-thumb img{width:100%;height:100%;object-fit:cover;object-position:50% 60%;display:block;transition:transform .4s;}
+.card-link:hover .card-thumb img{transform:scale(1.05);}
+.card-thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 60%,rgba(26,39,68,.25));}
+.card-body{padding:22px 26px;display:flex;flex-direction:column;justify-content:center;gap:7px;flex:1;}
+.card-body .kicker{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);}
+.card-body h3{font-family:'Quicksand',serif;color:var(--navy);font-weight:600;font-size:1.5rem;line-height:1.1;}
+.card-body p{color:var(--muted);font-size:15px;line-height:1.5;margin:0;}
+.card-body .go{
+  display:inline-flex;align-items:center;gap:8px;margin-top:6px;
+  color:var(--blue);font-weight:600;font-size:14px;
+}
+.card-link:hover .go{color:var(--accent-deep);}
+.card-link:hover .go svg{transform:translateX(4px);}
+.card-body .go svg{transition:transform .2s;}
+
+/* ── BACK LINK ── */
+.tofoot{text-align:center;margin:40px 0 10px;}
+.tofoot a{
+  display:inline-flex;align-items:center;gap:9px;text-decoration:none;
+  color:var(--navy);font-weight:600;font-size:15px;
+  border:1px solid var(--border);background:var(--surface);border-radius:30px;padding:11px 24px;
+  transition:all .2s;box-shadow:var(--shadow);
+}
+.tofoot a:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+
+/* ── FOOTER ── */
+footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;border-top:3px solid var(--accent);}
+.foot-inner{
+  max-width:1040px;margin:0 auto;padding:30px 28px;
+  display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:13px;
+}
+.foot-brand{display:flex;align-items:center;gap:13px;}
+.foot-brand img{width:38px;height:38px;border-radius:9px;}
+.foot-brand strong{color:#fff;font-family:'Quicksand',serif;font-weight:600;font-size:15px;display:block;}
+.foot-brand span{font-size:12px;}
+
+@media(max-width:640px){
+  body{font-size:16px;}
+  .wrap{padding:36px 22px 24px;}
+  .res h2{font-size:1.45rem;}
+  .card-link{flex-direction:column;}
+  .card-thumb{width:100%;height:180px;}
+  .card-thumb::after{background:linear-gradient(0deg,rgba(26,39,68,.25),transparent 60%);}
+}
+</style>
+<style>.visit-count{margin-top:8px}.visit-count img{height:16px;vertical-align:middle}</style><style id="lsa-h1-or">h1,h1 em,h1 span{color:#f5b60f!important}</style></head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="place"><span class="dot"></span>Lycée Sidoine Apollinaire · Clermont-Ferrand</span>
+    <a class="back" href="index.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Retour à l'accueil
+    </a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="head" data-screen-label="General Knowledge · header">
+  <div class="head-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Accueil</a>
+      <span class="sep">›</span>
+      <span>DSCG</span>
+      <span class="tag">DSCG</span>
+    </div>
+    <h1><span style="color:#f5b60f">General Knowledge</span></h1>
+    <p class="sub">Ressources et points de culture générale pour le DSCG.</p>
+  </div>
+</header>
+
+<!-- RESOURCES -->
+<main class="wrap">
+
+  <details class="fmt-group"><summary class="fmt"><h2 class="fmt-title">Vidéos</h2><span class="fmt-count">4</span><svg class="fmt-chev" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="fmt-body"><section class="res">
+    <div class="res-head">
+      <span class="idx">1</span>
+      <div>
+        <span class="kicker">Vidéo · Short</span>
+        <h2>GB vs UK</h2>
+      </div>
+    </div>
+    <div class="res-rule"></div>
+    <div class="video short">
+      <iframe src="https://www.youtube.com/embed/xoP0HYz5oUE" title="GB vs UK" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+  </section>
+<section class="res">
+    <div class="res-head">
+      <span class="idx">2</span>
+      <div>
+        <span class="kicker">Vidéo · Enquête</span>
+        <h2>Enquête sur l'inventeur du bitcoin</h2>
+      </div>
+    </div>
+    <div class="res-rule"></div>
+    <div class="video wide">
+      <iframe src="https://www.youtube.com/embed/uY5FTf7CsPw" title="Enquête sur l'inventeur du bitcoin" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+  </section>
+<section class="res">
+    <div class="res-head">
+      <span class="idx">3</span>
+      <div>
+        <span class="kicker">Vidéo · Affaire</span>
+        <h2>The Enron Scandal</h2>
+      </div>
+    </div>
+    <div class="res-rule"></div>
+    <p class="res-sub">Le scandale fondateur de la régulation comptable moderne. Il a révélé les failles de l'audit et de la gouvernance, et conduit à la loi Sarbanes-Oxley. Affaire régulièrement citée dans de nombreux sujets.</p>
+    <div class="video wide">
+      <iframe src="https://www.youtube.com/embed/vMj0t2Vsyvs" title="The Enron Scandal" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+  </section><section class="res">
+    <div class="res-head">
+      <span class="idx">4</span>
+      <div>
+        <span class="kicker">Vidéo · Reportage</span>
+        <h2>Reportage sur la NHS</h2>
+      </div>
+    </div>
+    <div class="res-rule"></div>
+    <p class="res-sub">Ces Britanniques qui se font opérer à l'étranger</p>
+    <div class="video wide">
+      <iframe src="https://tube-langues-vivantes.apps.education.fr/videos/embed/tJZKvP6pydMvdihnuxuoty" title="NHS JT France 2" loading="lazy" allow="fullscreen" allowfullscreen sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+    </div>
+  </section></div></details>
+<details class="fmt-group"><summary class="fmt"><h2 class="fmt-title">Podcasts</h2><span class="fmt-count">1</span><svg class="fmt-chev" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="fmt-body"><section class="res">
+    <div class="res-head">
+      <span class="idx">5</span>
+      <div>
+        <span class="kicker">Podcast</span>
+        <h2>Fifty States</h2>
+      </div>
+    </div>
+    <div class="res-rule"></div>
+    <p class="res-sub">Produit par Quotidien, ce podcast hebdomadaire en français raconte chacun des 50 États américains (histoire, politique, cinéma, musique, gastronomie, anecdotes), une façon vivante de découvrir la culture et la diversité des États-Unis.</p>
+    <div class="pod-grid"><a class="pod-link" href="https://podcasts.apple.com/fr/podcast/fifty-states-un-podcast-quotidien/id1733461735" target="_blank" rel="noopener"><span class="pod-name"><img class="pod-logo" src="assets/pod-applepodcasts.svg" alt="Logo Apple Podcasts">Apple Podcasts</span><span class="ext">Externe ↗</span></a><a class="pod-link" href="https://open.spotify.com/show/2ZQ7aoNwthPykcLaDNH1Q9" target="_blank" rel="noopener"><span class="pod-name"><img class="pod-logo" src="assets/pod-spotify.svg" alt="Logo Spotify">Spotify</span><span class="ext">Externe ↗</span></a><a class="pod-link" href="https://www.deezer.com/fr/show/1000715622" target="_blank" rel="noopener"><span class="pod-name"><img class="pod-logo" src="assets/pod-deezer.svg" alt="Logo Deezer">Deezer</span><span class="ext">Externe ↗</span></a><a class="pod-link" href="https://podcastaddict.com/podcast/fifty-states-un-podcast-quotidien/4983786" target="_blank" rel="noopener"><span class="pod-name"><img class="pod-logo" src="assets/pod-podcastaddict.svg" alt="Logo Podcast Addict">Podcast Addict</span><span class="ext">Externe ↗</span></a><a class="pod-link" href="https://pca.st/itunes/1733461735" target="_blank" rel="noopener"><span class="pod-name"><img class="pod-logo" src="assets/pod-pocketcasts.svg" alt="Logo Pocket Casts">Pocket Casts</span><span class="ext">Externe ↗</span></a><a class="pod-link" href="https://castbox.fm/vic/1733461735" target="_blank" rel="noopener"><span class="pod-name"><img class="pod-logo" src="assets/pod-castbox.svg" alt="Logo Castbox">Castbox</span><span class="ext">Externe ↗</span></a><a class="pod-link" href="https://overcast.fm/itunes1733461735" target="_blank" rel="noopener"><span class="pod-name"><img class="pod-logo" src="assets/pod-overcast.svg" alt="Logo Overcast">Overcast</span><span class="ext">Externe ↗</span></a><a class="pod-link" href="https://feeds.audiomeans.fr/feed/fa79dc24-5b09-4f81-ba14-2b8229bcb817.xml" target="_blank" rel="noopener"><span class="pod-name"><img class="pod-logo" src="assets/pod-rss.svg" alt="Logo Flux RSS">Flux RSS</span><span class="ext">Externe ↗</span></a></div>
+  </section></div></details>
+<details class="fmt-group"><summary class="fmt"><h2 class="fmt-title">Articles</h2><span class="fmt-count">2</span><svg class="fmt-chev" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="fmt-body"><section class="res">
+    <div class="res-head">
+      <span class="idx">6</span>
+      <div>
+        <span class="kicker">Article</span>
+        <h2>Brexit in a few words</h2>
+      </div>
+    </div>
+    <div class="res-rule"></div>
+    <a class="card-link" href="brexit.html">
+      <div class="card-thumb">
+        <img src="assets/brexit-bus.png" alt="Le bus de campagne « Vote Leave »">
+      </div>
+      <div class="card-body">
+        <span class="kicker">Lire l'article</span>
+        <h3>Brexit in a few words</h3>
+        <p>Le retrait du Royaume-Uni de l'Union européenne : causes profondes et conséquences durables.</p>
+        <span class="go">
+          Ouvrir l'article
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </div>
+    </a>
+  </section><section class="res">
+    <div class="res-head">
+      <span class="idx">7</span>
+      <div>
+        <span class="kicker">Article</span>
+        <h2>Crashes, Collapses and Scandals</h2>
+      </div>
+    </div>
+    <div class="res-rule"></div>
+    <a class="card-link" href="financial-crises.html">
+      <div class="card-thumb">
+        <img src="assets/crisis-1929.jpg" alt="Une du Brooklyn Daily Eagle, octobre 1929" style="object-position:50% 20%">
+      </div>
+      <div class="card-body">
+        <span class="kicker">Lire l'article</span>
+        <h3>Crashes, Collapses and Scandals</h3>
+        <p>A century of financial crises in the English-speaking world, from the 1929 crash to Silicon Valley Bank.</p>
+        <span class="go">
+          Ouvrir l'article
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </div>
+    </a>
+  </section></div></details>
+  <div class="tofoot">
+    <a href="index.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Retour à l'accueil
+    </a>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <img src="assets/lsa-logo.png" alt="Logo LSA">
+      <div>
+        <strong>LSA Toolbox</strong>
+        <span>DSCG · General Knowledge · M. Blanchet</span>
+      </div>
+    </div>
+    <div>Lycée Sidoine Apollinaire, Clermont-Ferrand</div>
+  </div>
+<div class="visit-count" id="visitCount"></div></footer>
+
+<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-dscg-'+encodeURIComponent(k)+'&label=Visites&countColor=%23c8a84b&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script></body>
+</html>

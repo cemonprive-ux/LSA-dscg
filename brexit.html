@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f1a33"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="LSA DSCG"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" href="assets/icon-180.png"><script src="assets/app-nav.js"></script>
+<title>Brexit in a few words · LSA Toolbox, General Knowledge</title>
+<link rel="icon" type="image/png" href="assets/favicon-dscg.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+:root{--navy:#1a2744;--navy-deep:#0f1a33;--blue:#2d5fa6;--accent:#f5b60f;--accent-deep:#c98f00;--green:#2a7a4b;--red:#b5302b;--bg:#f5f3ef;--surface:#ffffff;--border:#ddd5c5;--text:#2a2520;--muted:#6e6556;--shadow:0 2px 14px rgba(26,39,68,.10);--shadow-lg:0 14px 40px rgba(26,39,68,.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Quicksand',sans-serif;background:var(--bg);color:var(--text);line-height:1.75;font-size:17px;-webkit-font-smoothing:antialiased}
+a{color:var(--blue)}a:hover{color:var(--accent-deep)}
+.topbar{background:var(--navy-deep);color:rgba(255,255,255,.7);font-size:12.5px}
+.topbar-inner{max-width:1140px;margin:0 auto;padding:9px 28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.topbar .place{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.12em;font-size:11px}
+.topbar .dot{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.topbar .links{display:flex;gap:8px;flex-wrap:wrap}
+.topbar a.back{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.82);text-decoration:none;border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:4px 13px;transition:all .2s;font-size:11.5px}
+.topbar a.back:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(245,182,15,.6)}
+.hero{position:relative;overflow:hidden;background:var(--navy);border-bottom:3px solid var(--accent)}
+.hero-img{position:relative;height:clamp(340px,52vh,560px)}
+.hero-img img{width:100%;height:100%;object-fit:cover;object-position:50% 58%;display:block}
+.hero-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,26,51,.25) 0%,rgba(15,26,51,.15) 30%,rgba(15,26,51,.7) 66%,rgba(15,26,51,.95) 100%)}
+.hero-cap{position:absolute;left:0;right:0;bottom:0;z-index:2;max-width:1040px;margin:0 auto;padding:0 28px 34px;width:100%}
+.breadcrumb{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:12px;letter-spacing:.04em;color:rgba(255,255,255,.92);margin-bottom:16px;text-shadow:0 1px 6px rgba(15,26,51,.7)}
+.breadcrumb a{color:rgba(255,255,255,.82);text-decoration:none;border-bottom:1px solid transparent}
+.breadcrumb a:hover{color:#fff;border-bottom-color:var(--accent)}
+.breadcrumb .sep{opacity:.5}
+.breadcrumb .tag{background:var(--green);color:#fff;border-radius:5px;padding:2px 9px;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.hero h1{color:#fff;font-weight:700;font-size:clamp(2rem,5vw,3.3rem);line-height:1.06;text-wrap:balance;text-shadow:0 2px 24px rgba(0,0,0,.45);max-width:860px}
+.hero .sub{color:rgba(255,255,255,.88);font-size:clamp(15px,2vw,19px);margin-top:12px;max-width:680px;font-weight:500}
+.credit{position:absolute;right:14px;top:12px;z-index:3;font-size:10px;color:rgba(255,255,255,.8);background:rgba(15,26,51,.55);padding:3px 9px;border-radius:5px}
+.wrap{max-width:780px;margin:0 auto;padding:54px 28px 30px}
+.lead{font-size:20px;line-height:1.7;color:var(--navy);border-left:3px solid var(--accent);padding-left:22px;margin-bottom:34px;text-wrap:pretty}
+.lead::first-letter{font-weight:700;color:var(--accent-deep);font-size:3.2em;line-height:.8;float:left;margin:6px 10px 0 0}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 30px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 14px;text-align:center;box-shadow:var(--shadow);border-top:4px solid var(--accent)}
+.stat:nth-child(2){border-top-color:var(--blue)}.stat:nth-child(3){border-top-color:var(--red)}.stat:nth-child(4){border-top-color:var(--green)}
+.stat .n{font-weight:700;color:var(--navy);font-size:1.75rem;line-height:1}
+.stat .n small{font-size:.6em;color:var(--accent-deep)}
+.stat .l{font-size:12.5px;color:var(--muted);margin-top:7px;line-height:1.35}
+.chrono{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.chrono a{text-decoration:none;font-size:13px;font-weight:700;color:var(--navy);background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 13px;transition:all .2s}
+.chrono a:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-2px)}
+.part{margin-top:64px;scroll-margin-top:20px}
+.part-head{display:flex;align-items:baseline;gap:14px}
+.part-head .num{flex-shrink:0;width:40px;height:40px;border-radius:9px;background:var(--blue);color:#fff;font-weight:700;font-size:1rem;display:inline-flex;align-items:center;justify-content:center;transform:translateY(-3px)}
+h2{color:var(--navy);font-weight:700;font-size:1.75rem;line-height:1.15;text-wrap:balance}
+.h2-rule{height:2px;background:linear-gradient(90deg,var(--accent),transparent);margin:12px 0 18px}
+.era{position:relative;padding-left:34px;margin-top:40px;scroll-margin-top:20px}
+.era::before{content:"";position:absolute;left:8px;top:14px;bottom:-40px;width:2px;background:var(--border)}
+.era:last-child::before{bottom:0}
+.era::after{content:"";position:absolute;left:1px;top:8px;width:16px;height:16px;border-radius:50%;background:var(--surface);border:3px solid var(--accent)}
+.year{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--navy);border-radius:6px;padding:3px 11px;margin-bottom:8px}
+h3{color:var(--navy);font-weight:700;font-size:1.35rem;line-height:1.2;text-wrap:balance}
+p{margin:14px 0;text-wrap:pretty}
+.em{font-style:italic}
+strong{color:var(--navy);font-weight:700}
+.reform{display:flex;gap:14px;align-items:flex-start;margin:20px 0;padding:16px 20px;border-radius:10px;background:#f3f8f4;border:1px solid #cfe3d6}
+.reform .ttl{flex-shrink:0;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green);padding-top:3px}
+.reform p{margin:0}
+.side{margin:20px 0;padding:16px 20px;border-radius:10px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow)}
+.side .ttl{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:2px}
+.side p{margin:0}
+.bignum{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:20px 0;padding:18px 22px;border-radius:10px;background:var(--navy);color:#fff;box-shadow:var(--shadow-lg)}
+.bignum .n{font-size:2rem;font-weight:700;color:var(--accent);line-height:1.1;flex-shrink:0}
+.bignum .l{font-size:15px;line-height:1.45}
+.figure{margin:26px 0 8px;border-radius:12px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow-lg);background:var(--surface)}
+.figure img{display:block;width:100%;height:auto}
+.figure figcaption{padding:12px 20px;font-size:13.5px;color:var(--muted);background:#fcfbf8;border-top:1px solid var(--border);line-height:1.5}
+.conclusion{margin:64px 0 10px;scroll-margin-top:20px}
+.conclusion .box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 24px;box-shadow:var(--shadow);border-top:4px solid var(--accent)}
+.conclusion .box p:first-child{margin-top:0}.conclusion .box p:last-child{margin-bottom:0}
+.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:50px 0 10px}
+.actions a{display:inline-flex;align-items:center;gap:9px;text-decoration:none;color:var(--navy);font-weight:600;font-size:15px;border:1px solid var(--border);background:var(--surface);border-radius:30px;padding:11px 24px;transition:all .2s;box-shadow:var(--shadow)}
+.actions a:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;border-top:3px solid var(--accent)}
+.foot-inner{max-width:1040px;margin:0 auto;padding:30px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:13px}
+.foot-brand{display:flex;align-items:center;gap:13px}
+.foot-brand img{width:38px;height:38px;border-radius:9px}
+.foot-brand strong{color:#fff;font-weight:600;font-size:15px;display:block}
+.foot-brand span{font-size:12px}
+.visit-count{margin-top:8px}.visit-count img{height:16px;vertical-align:middle}
+@media(max-width:640px){body{font-size:16px}.wrap{padding:38px 20px 24px}h2{font-size:1.45rem}h3{font-size:1.2rem}.lead{font-size:18px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.era{padding-left:28px}.reform{flex-direction:column;gap:4px}.bignum .n{font-size:1.6rem}.topbar-inner{padding:9px 18px}}
+@media print{.topbar,.actions,.chrono,footer{display:none}.hero-img{height:300px}.figure,.stat,.side,.reform,.bignum,.conclusion .box{break-inside:avoid}}
+</style>
+<style id="lsa-h1-or">h1,h1 em,h1 span{color:#f5b60f!important}</style></head>
+<body>
+<div class="topbar"><div class="topbar-inner"><span class="place"><span class="dot"></span>Lycée Sidoine Apollinaire · Clermont-Ferrand</span><div class="links"><a class="back" href="general-knowledge.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>Retour à General Knowledge</a><a class="back" href="index.html">Accueil</a></div></div></div>
+<header class="hero" data-screen-label="Brexit · hero">
+<div class="hero-img"><img src="assets/brexit-bus.png" alt="Le bus de campagne « Vote Leave » : « We send the EU £350 million a week, let's fund our NHS instead »"><span class="credit">Vote Leave campaign bus, 2016</span></div>
+<div class="hero-cap">
+<div class="breadcrumb"><a href="index.html">Accueil</a><span class="sep">›</span><span class="lvl">DSCG</span><span class="sep">›</span><a href="general-knowledge.html">General Knowledge</a><span class="tag lvl">DSCG</span></div>
+<h1>Brexit in a few words</h1>
+<p class="sub">Le retrait du Royaume-Uni de l'Union européenne : causes profondes et conséquences durables.</p>
+</div>
+</header>
+<article class="wrap">
+<p class="lead">Le <strong>Brexit</strong> désigne le retrait du Royaume-Uni de l'Union européenne, officiellement effectif le <strong>31 janvier 2020</strong>, après le référendum du 23 juin 2016 qui avait vu 51,9 % des Britanniques voter en faveur de la sortie. Ce référendum avait été convoqué par le Premier ministre conservateur <strong>David Cameron</strong>, qui espérait apaiser les divisions de son parti sur l'Europe : favorable au maintien, il démissionnera dès l'annonce de la victoire du « Leave ». Il est important de garder à l'esprit qu'avec un taux de participation de 72,2 %, ce n'est que 37,4 % de l'électorat a voté pour quitter l'UE et 34,5 % pour rester. Cet événement constitue une rupture historique majeure dans la construction européenne, mais il s'inscrit en réalité dans une ambivalence britannique vis-à-vis de l'Europe qui remonte aux origines mêmes de la construction communautaire.</p>
+<div class="stats">
+<div class="stat"><div class="n">51,9<small>%</small></div><div class="l">en faveur du « Leave »</div></div>
+<div class="stat"><div class="n">72,2<small>%</small></div><div class="l">de participation</div></div>
+<div class="stat"><div class="n">2020</div><div class="l">retrait effectif (31 janv.)</div></div>
+<div class="stat"><div class="n">1973</div><div class="l">année de l'adhésion</div></div>
+</div>
+<nav class="chrono" aria-label="Sommaire"><a href="#causes">I · Les causes</a><a href="#c-histoire">Héritage historique</a><a href="#c-politique">Politique</a><a href="#c-eco">Économie</a><a href="#consequences">II · Les conséquences</a><a href="#q-politique">Politique</a><a href="#q-eco">Économie</a><a href="#conclusion">Conclusion</a></nav>
+
+<section class="part" id="causes">
+<div class="part-head"><span class="num">I</span><h2>Les causes du Brexit</h2></div><div class="h2-rule"></div>
+<div class="era" id="c-histoire">
+<span class="year">1 · Un héritage historique</span><h3>Une adhésion toujours contrariée</h3>
+<p>Le Royaume-Uni n'a pas participé à la fondation de la Communauté économique européenne en 1957. Puissance atlantiste, tournée vers le Commonwealth et l'alliance privilégiée avec les États-Unis, la Grande-Bretagne se percevait davantage comme une puissance mondiale que comme une nation européenne parmi d'autres. Sa première demande d'adhésion, en 1961, fut bloquée à deux reprises par le général de Gaulle, qui jugeait le Royaume-Uni trop lié à Washington pour s'intégrer sincèrement au projet continental. Le général de Gaulle considérait le Royaume-Uni comme un possible <span class="em">cheval de Troie</span> américain au sein de l'Union européenne. L'adhésion ne fut effective qu'en 1973, et immédiatement contestée : dès 1975, un premier référendum fut organisé sur le maintien dans la CEE.</p>
+<p>Ce rapport ambigu s'explique aussi par la psychologie collective d'un ancien empire en déclin. Après avoir dominé une grande partie du monde, le Royaume-Uni a vécu la décolonisation et l'effacement progressif de sa puissance comme un traumatisme national. L'appartenance à une Europe fédérale perçue comme contraignante heurtait une identité nationale fondée sur la singularité, la <strong>souveraineté parlementaire</strong>, principe cardinal du droit britannique, et la nostalgie d'une grandeur révolue. L'euroscepticisme britannique n'est donc pas une réaction conjoncturelle : il est <strong>structurel</strong>, nourri par des siècles d'histoire insulaire et impériale.</p>
+<div class="side"><div class="ttl">Fun fact</div><p>La série la plus populaire au Royaume-Uni est <span class="em">Downton Abbey</span>, ce qui révèle l'attachement des Britanniques à la grandeur passée du royaume.</p></div>
+</div>
+<div class="era" id="c-politique">
+<span class="year">2 · Sur le plan politique</span><h3>« Take back control »</h3>
+<p>La montée d'un euroscepticisme profond au sein de la société britannique constitue la toile de fond du vote. Le Royaume-Uni n'a jamais pleinement adhéré au projet d'intégration européenne : il n'a pas adopté l'euro, ni l'espace Schengen. Le sentiment de perte de souveraineté face aux institutions de Bruxelles, perçues comme lointaines et non élues, a alimenté un discours souverainiste puissant, porté notamment par le parti UKIP et une frange du Parti conservateur. La figure de proue de cette mouvance fut <strong>Nigel Farage</strong>, leader de l'UKIP : militant eurosceptique de longue date, c'est lui qui, par sa pression politique constante, a largement contribué à imposer l'idée même d'un référendum.</p>
+<div class="bignum"><span class="n">« Take back control »</span><span class="l">Slogan de la campagne « Leave », lois, frontières, argent</span></div>
+</div>
+<div class="era" id="c-eco">
+<span class="year">3 · Sur le plan économique</span><h3>Immigration, budget et défiance</h3>
+<p>La question de l'<strong>immigration économique intra-européenne</strong> a joué un rôle déterminant : une partie de l'électorat populaire percevait la libre circulation des travailleurs comme une pression sur les salaires et les services publics. Par ailleurs, la contribution nette du Royaume-Uni au budget de l'UE était régulièrement présentée comme un coût injustifié, le célèbre chiffre de <strong>350 millions de livres par semaine</strong> mis en avant par les partisans du Leave, bien que contesté, a fortement marqué les esprits. La crise financière de 2008 et ses effets durables sur les classes moyennes ont également nourri un rejet des élites et des institutions internationales.</p>
+<figure class="figure"><img src="assets/brexit-bus.png" alt="Le bus de campagne « Vote Leave » : « We send the EU £350 million a week, let's fund our NHS instead »"><figcaption>Le bus de la campagne « Vote Leave » (2016) : « We send the EU £350 million a week, let's fund our NHS instead ».</figcaption></figure>
+</div>
+</section>
+
+<section class="part" id="consequences">
+<div class="part-head"><span class="num">II</span><h2>Les conséquences du Brexit</h2></div><div class="h2-rule"></div>
+<div class="era" id="q-politique">
+<span class="year">1 · Sur le plan politique</span><h3>Une cohésion intérieure fragilisée</h3>
+<p>Le Brexit a profondément fragilisé la cohésion interne du Royaume-Uni : l'Écosse, majoritairement pro-européenne (<strong>62 % de Remain</strong>), a relancé le débat sur l'indépendance. En Irlande du Nord, la question de la frontière avec la République d'Irlande (membre de l'UE) a ravivé des tensions historiques et conduit au <strong>protocole nord-irlandais</strong>, source de friction persistante. Sur la scène européenne, le Brexit a paradoxalement renforcé la cohésion des 27 États membres face aux négociations, tout en servant d'avertissement contre les tendances centrifuges dans d'autres pays.</p>
+</div>
+<div class="era" id="q-eco">
+<span class="year">2 · Sur le plan économique</span><h3>Un bilan négatif à court et moyen terme</h3>
+<p>L'accord de commerce et de coopération signé le <strong>24 décembre 2020</strong> a évité un « no deal » mais n'a pas préservé l'accès au marché unique. Cet accord fut négocié et signé par <strong>Boris Johnson</strong>, figure de la campagne « Vote Leave » en 2016 devenu Premier ministre en 2019 : porté au pouvoir sur la promesse de « livrer le Brexit » (<span class="em">get Brexit done</span>), c'est lui qui en a assuré la mise en œuvre concrète. Les échanges commerciaux avec l'UE se sont complexifiés : nouvelles formalités douanières, contrôles phytosanitaires, augmentation des coûts logistiques. Le secteur financier a particulièrement souffert : Londres a perdu une partie de son rôle de hub financier européen au profit d'Amsterdam, Paris et Dublin.</p>
+<div class="reform"><span class="ttl">L'impact chiffré</span><p>Le PIB britannique aurait été amputé de <strong>4 à 5 %</strong> à long terme selon les estimations du gouvernement lui-même. L'inflation et les difficultés de recrutement dans certains secteurs (santé, agriculture, hôtellerie) ont également été imputées en partie au Brexit.</p></div>
+</div>
+</section>
+
+<section class="conclusion" id="conclusion">
+<h2>Conclusion</h2><div class="h2-rule"></div>
+<div class="box">
+<p>Le Brexit illustre la tension croissante entre intégration supranationale et revendications souverainistes qui traverse les démocraties occidentales. Produit d'une ambivalence historique profonde autant que de griefs contemporains, il s'inscrit dans le long récit d'un pays qui n'a jamais totalement renoncé à l'idée de sa propre exceptionnalité.</p>
+<p>S'il a permis au Royaume-Uni de regagner une autonomie législative formelle, son bilan économique reste négatif à court et moyen terme. Il constitue, pour les étudiants en gestion, un <strong>cas d'école</strong> sur les interactions entre décisions politiques, dynamiques commerciales et stratégies d'entreprise dans un contexte de reconfiguration des blocs économiques.</p>
+</div>
+</section>
+
+<div class="actions"><a href="general-knowledge.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>Retour à General Knowledge</a><a href="index.html">Retour à l'accueil</a></div>
+</article>
+<footer><div class="foot-inner"><div class="foot-brand"><img src="assets/lsa-logo.png" alt="Logo LSA"><div><strong>LSA Toolbox</strong><span>General Knowledge · M. Blanchet</span></div></div><div>Lycée Sidoine Apollinaire, Clermont-Ferrand</div></div><div class="visit-count" id="visitCount"></div></footer>
+<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-dscg-'+encodeURIComponent(k)+'&label=Visites&countColor=%23f5b60f&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script>
+<script id="gk-from">(function(){if(!/[?&]from=dcg/.test(location.search))return;document.querySelectorAll('a[href="general-knowledge.html"]').forEach(function(a){a.href="general-knowledge.html"});document.querySelectorAll(".lvl").forEach(function(s){s.textContent="DCG"})})();</script>
+</body>
+</html>

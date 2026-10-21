@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f1a33"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="LSA DSCG"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" href="assets/icon-180.png"><script src="assets/app-nav.js"></script>
+<title>Cryptocurrencies in a few words · LSA Toolbox, DSCG 1-Finance</title>
+<link rel="icon" type="image/png" href="assets/favicon-dscg.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+
+:root{
+  --navy:#1a2744;
+  --navy-deep:#0f1a33;
+  --navy-mid:#243260;
+  --blue:#2d5fa6;
+  --accent:#f5b60f;
+  --accent-deep:#c98f00;
+  --green:#2a7a4b;
+  --red:#b5302b;
+  --bg:#f5f3ef;
+  --surface:#ffffff;
+  --border:#ddd5c5;
+  --text:#2a2520;
+  --muted:#7a7060;
+  --shadow:0 2px 14px rgba(26,39,68,.10);
+  --shadow-lg:0 14px 40px rgba(26,39,68,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Quicksand',Georgia,serif;
+  background:var(--bg);color:var(--text);line-height:1.72;font-size:17px;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;}
+
+/* ── TOP BAR ── */
+.topbar{background:var(--navy-deep);color:rgba(255,255,255,.7);font-size:12.5px;}
+.topbar-inner{
+  max-width:1140px;margin:0 auto;padding:9px 28px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.topbar .place{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.12em;font-size:11px;}
+.topbar .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);}
+.topbar a.back{
+  display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.78);text-decoration:none;
+  border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:4px 13px;transition:all .2s;font-size:11.5px;
+}
+.topbar a.back:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(200,168,75,.6);}
+
+/* ── HERO ── */
+.hero{position:relative;overflow:hidden;background:var(--navy);border-bottom:3px solid var(--accent);}
+.hero-img{position:relative;height:clamp(320px,46vh,520px);}
+.hero-img img{width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block;}
+.hero-img::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(15,26,51,.30) 0%,rgba(15,26,51,.10) 30%,rgba(15,26,51,.55) 66%,rgba(15,26,51,.93) 100%);
+}
+.hero-cap{
+  position:absolute;left:0;right:0;bottom:0;z-index:2;
+  max-width:1040px;margin:0 auto;padding:0 28px 34px;
+  width:100%;
+}
+.breadcrumb{
+  display:flex;align-items:center;gap:9px;flex-wrap:wrap;
+  font-size:12px;letter-spacing:.04em;color:rgba(255,255,255,.92);margin-bottom:16px;
+  text-shadow:0 1px 6px rgba(15,26,51,.7);
+}
+.breadcrumb a{color:rgba(255,255,255,.78);text-decoration:none;border-bottom:1px solid transparent;transition:.2s;}
+.breadcrumb a:hover{color:#fff;border-bottom-color:var(--accent);}
+.breadcrumb .sep{opacity:.5;}
+.breadcrumb .tag{
+  background:var(--green);color:#fff;border-radius:5px;padding:2px 9px;
+  font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+}
+.hero h1{
+  font-family:'Quicksand',serif;color:#fff;font-weight:700;
+  font-size:clamp(2.1rem,5vw,3.4rem);line-height:1.04;text-wrap:balance;
+  text-shadow:0 2px 24px rgba(0,0,0,.4);
+}
+.hero .sub{color:rgba(255,255,255,.82);font-size:clamp(15px,2vw,18px);font-style:italic;margin-top:12px;max-width:640px;}
+.credit{
+  position:absolute;right:14px;bottom:10px;z-index:3;
+  font-size:10px;color:rgba(255,255,255,.55);letter-spacing:.03em;
+  background:rgba(15,26,51,.4);padding:3px 9px;border-radius:5px;
+}
+
+/* ── ARTICLE ── */
+.wrap{max-width:760px;margin:0 auto;padding:54px 28px 30px;}
+
+.lead{
+  font-size:20px;line-height:1.7;color:var(--navy);
+  border-left:3px solid var(--accent);padding-left:22px;margin-bottom:40px;
+}
+.lead strong{font-weight:600;}
+
+h2{
+  font-family:'Quicksand',serif;color:var(--navy);font-weight:600;
+  font-size:1.9rem;line-height:1.12;margin:52px 0 6px;
+  display:flex;align-items:baseline;gap:14px;
+}
+h2 .num{
+  font-size:1rem;font-weight:700;color:#fff;background:var(--blue);
+  width:38px;height:38px;flex-shrink:0;border-radius:9px;
+  display:inline-flex;align-items:center;justify-content:center;
+  transform:translateY(-3px);font-family:'Quicksand',serif;
+}
+.h2-rule{height:2px;background:linear-gradient(90deg,var(--accent),transparent);margin:14px 0 26px;}
+
+h3{
+  font-family:'Quicksand',serif;color:var(--navy);font-weight:600;font-style:italic;
+  font-size:1.32rem;margin:36px 0 4px;
+}
+h3 .kicker{
+  display:block;font-style:normal;font-family:'Quicksand',serif;
+  font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent-deep);margin-bottom:5px;
+}
+p{margin:16px 0;text-wrap:pretty;}
+p .em{font-style:italic;}
+strong{color:var(--navy);font-weight:600;}
+
+/* drop cap on first intro paragraph */
+.lead::first-letter{
+  font-family:'Quicksand',serif;font-weight:700;color:var(--accent-deep);
+  font-size:3.2em;line-height:.8;float:left;margin:6px 10px 0 0;
+}
+
+/* ── STAT STRIP ── */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;
+  margin:34px 0 6px;box-shadow:var(--shadow);
+}
+.stat{background:var(--surface);padding:20px 16px;text-align:center;}
+.stat .n{font-family:'Quicksand',serif;font-weight:700;color:var(--navy);font-size:1.85rem;line-height:1;}
+.stat .n small{font-size:.6em;color:var(--accent-deep);}
+.stat .l{font-size:11.5px;color:var(--muted);margin-top:7px;line-height:1.35;letter-spacing:.02em;}
+
+/* ── PULL QUOTE / SLOGAN ── */
+.slogan{
+  margin:34px 0;padding:26px 30px;border-radius:10px;
+  background:var(--navy);color:#fff;position:relative;overflow:hidden;
+  box-shadow:var(--shadow-lg);
+}
+.slogan::before{
+  content:"\201C";position:absolute;top:-18px;left:14px;
+  font-family:'Quicksand',serif;font-size:7rem;color:rgba(200,168,75,.32);line-height:1;
+}
+.slogan q{font-family:'Quicksand',serif;font-style:italic;font-size:1.7rem;line-height:1.2;display:block;quotes:none;position:relative;}
+.slogan q::before,.slogan q::after{content:none;}
+.slogan .by{display:block;margin-top:12px;font-size:13px;color:var(--accent);letter-spacing:.04em;text-transform:uppercase;font-weight:700;}
+
+/* ── CALLOUTS ── */
+.callout{
+  margin:28px 0;padding:18px 22px;border-radius:10px;
+  background:#fcfbf8;border:1px solid var(--border);border-left:4px solid var(--blue);
+  font-size:16px;
+}
+.callout .ttl{
+  display:flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:6px;
+}
+.callout.fun{border-left-color:var(--accent-deep);background:#faf6ec;}
+.callout.fun .ttl{color:var(--accent-deep);}
+.callout.eco{border-left-color:var(--green);background:#f3f8f4;}
+.callout.eco .ttl{color:var(--green);}
+.callout.warn{border-left-color:var(--red);background:#faf1f0;}
+.callout.warn .ttl{color:var(--red);}
+.callout p{margin:0;}
+
+/* ── INLINE PHOTO ── */
+.inline-photo{
+  margin:48px 0 8px;border-radius:12px;overflow:hidden;
+  border:1px solid var(--border);box-shadow:var(--shadow-lg);background:var(--surface);
+}
+.inline-photo img{display:block;width:100%;height:auto;}
+.inline-photo figcaption{
+  padding:13px 20px;font-size:13px;font-style:italic;color:var(--muted);
+  background:#fcfbf8;border-top:1px solid var(--border);line-height:1.5;
+}
+
+/* ── CONCLUSION ── */
+.conclusion{
+  margin:48px 0 10px;padding:30px 32px;border-radius:12px;
+  background:linear-gradient(135deg,#fcfbf8,#f6f2e8);
+  border:1px solid var(--border);box-shadow:var(--shadow);
+}
+.conclusion .ttl{
+  font-family:'Quicksand',serif;color:var(--navy);font-weight:600;font-size:1.5rem;
+  display:flex;align-items:center;gap:12px;margin-bottom:6px;
+}
+.conclusion .ttl::before{content:"";width:26px;height:3px;background:var(--accent);border-radius:2px;}
+.conclusion p:last-child{margin-bottom:0;}
+
+/* ── BACK LINK ── */
+.tofoot{text-align:center;margin:46px 0 10px;}
+.tofoot a{
+  display:inline-flex;align-items:center;gap:9px;text-decoration:none;
+  color:var(--navy);font-weight:600;font-size:15px;
+  border:1px solid var(--border);background:var(--surface);border-radius:30px;padding:11px 24px;
+  transition:all .2s;box-shadow:var(--shadow);
+}
+.tofoot a:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+
+/* ── FOOTER ── */
+footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;border-top:3px solid var(--accent);}
+.foot-inner{
+  max-width:1040px;margin:0 auto;padding:30px 28px;
+  display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:13px;
+}
+.foot-brand{display:flex;align-items:center;gap:13px;}
+.foot-brand img{width:38px;height:38px;border-radius:9px;}
+.foot-brand strong{color:#fff;font-family:'Quicksand',serif;font-weight:600;font-size:15px;display:block;}
+.foot-brand span{font-size:12px;}
+
+@media(max-width:640px){
+  body{font-size:16px;}
+  .stats{grid-template-columns:repeat(2,1fr);}
+  .wrap{padding:38px 22px 24px;}
+  h2{font-size:1.6rem;}
+  .slogan q{font-size:1.35rem;}
+  .lead{font-size:18px;}
+}
+</style>
+<style>.visit-count{margin-top:8px}.visit-count img{height:16px;vertical-align:middle}</style><style id="lsa-h1-or">h1,h1 em,h1 span{color:#f5b60f!important}</style></head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="place"><span class="dot"></span>Lycée Sidoine Apollinaire · Clermont-Ferrand</span>
+    <a class="back" href="digital-currency.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Retour à 1-Finance
+    </a>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero" data-screen-label="Cryptocurrencies · hero">
+  <div class="hero-img">
+    <img src="assets/crypto-coins-3d.jpg" alt="3D render of the most popular cryptocurrencies: Bitcoin, Ethereum, BNB, XRP, Cardano, Solana, Dogecoin and more">
+    <span class="credit">3D render, major cryptocurrencies</span>
+  </div>
+  <div class="hero-cap">
+    <div class="breadcrumb">
+      <a href="index.html">Accueil</a>
+      <span class="sep">›</span>
+      <span>DSCG</span>
+      <span class="sep">›</span>
+      <a href="digital-currency.html">1-Finance</a>
+      <span class="tag">DSCG</span>
+    </div>
+    <h1>Cryptocurrencies in a few words</h1>
+    <p class="sub">A financial revolution under scrutiny: opportunities, risks, and the question of who we trust with money.</p>
+  </div>
+</header>
+
+<!-- ARTICLE -->
+<article class="wrap">
+
+  <p class="lead">Over the past decade, <strong>cryptocurrencies</strong> have moved from the fringes of the internet to the centre of global financial debate. Bitcoin, Ethereum, and thousands of other digital assets now represent a <strong>multi-trillion-dollar market</strong>, attracting both enthusiastic investors and deep institutional concern. Understanding what is at stake, economically, socially, and politically, is essential for any observer of contemporary finance.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="n">$3<small>T+</small></div><div class="l">market value at its peak</div></div>
+    <div class="stat"><div class="n">−70<small>%</small></div><div class="l">Bitcoin's fall in 2022</div></div>
+    <div class="stat"><div class="n">2023</div><div class="l">EU MiCA regulation adopted</div></div>
+    <div class="stat"><div class="n">2</div><div class="l">flagship CBDCs in development</div></div>
+  </div>
+
+  <!-- PART I -->
+  <h2><span class="num">I</span>A new monetary paradigm</h2>
+  <div class="h2-rule"></div>
+
+  <h3><span class="kicker">1 · The foundations of money</span>A challenge to central banks</h3>
+  <p>At their core, cryptocurrencies challenge the very foundations of traditional money. Unlike conventional currencies issued by central banks, they rely on <strong>blockchain technology</strong>: a decentralised, tamper-proof ledger that records transactions without any intermediary. This design was originally driven by a desire to bypass banks and governments, giving individuals direct control over their assets.</p>
+
+  <h3><span class="kicker">2 · For their supporters</span>A genuine breakthrough</h3>
+  <p>For their supporters, this represents a genuine breakthrough. In countries where banking systems are unreliable or where inflation erodes savings rapidly, as seen in <strong>Argentina</strong> or <strong>Venezuela</strong>, cryptocurrencies offer an alternative store of value. They also facilitate cross-border transfers at lower costs and greater speed than conventional wire transfers, which could benefit migrant workers sending <span class="em">remittances</span> to their families.</p>
+
+  <!-- PART II -->
+  <figure class="inline-photo">
+    <img src="assets/crypto-coins-metal.jpg" alt="A pile of physical commemorative crypto coins: Bitcoin, Ethereum, Litecoin, Ripple, Zcash and others">
+    <figcaption>Physical representations of crypto-assets, Bitcoin, Ethereum, Litecoin, Ripple, Zcash and others. In reality, cryptocurrencies exist only as entries on a digital ledger.</figcaption>
+  </figure>
+
+  <h2><span class="num">II</span>Economic opportunities and risks</h2>
+  <div class="h2-rule"></div>
+
+  <h3><span class="kicker">1 · The promise</span>Returns and decentralised finance</h3>
+  <p>From an investment perspective, cryptocurrencies have generated extraordinary returns for early adopters, fuelling widespread interest. <strong>Decentralised Finance (DeFi)</strong> platforms now allow users to lend, borrow, and earn interest without involving any bank, representing a significant shift in how financial services might be structured in the future.</p>
+
+  <h3><span class="kicker">2 · The other side</span>Volatility and collapse</h3>
+  <p>However, these opportunities come with serious risks. Price volatility remains extreme: Bitcoin lost over <strong>70% of its value in 2022</strong> alone, wiping out savings for millions of retail investors. Unlike bank deposits, crypto holdings are not covered by any deposit guarantee scheme. When platforms collapse, as <strong>FTX</strong> dramatically did in 2022, investors have little legal recourse.</p>
+
+  <div class="callout eco">
+    <div class="ttl">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Z"/><path d="M12 6v6l3 2"/></svg>
+      An energy concern
+    </div>
+    <p>The energy consumption of proof-of-work cryptocurrencies like Bitcoin is staggering. According to various estimates, <strong>Bitcoin mining consumes more electricity annually than several medium-sized countries</strong>, raising pressing environmental concerns at a time when carbon emissions must be reduced urgently.</p>
+  </div>
+
+  <!-- PART III -->
+  <h2><span class="num">III</span>Regulatory and political stakes</h2>
+  <div class="h2-rule"></div>
+
+  <h3><span class="kicker">1 · A difficult position</span>Outside the rules</h3>
+  <p>Governments and central banks find themselves in a difficult position. Cryptocurrencies operate largely outside existing regulatory frameworks, making them attractive tools for <strong>money laundering, tax evasion, and sanctions circumvention</strong>. The anonymity they provide, though often overstated, complicates law enforcement efforts worldwide.</p>
+
+  <h3><span class="kicker">2 · The response</span>Regulators push back</h3>
+  <p>Regulators are now pushing back. The European Union's <strong>MiCA regulation</strong> (Markets in Crypto-Assets), adopted in 2023, represents the most comprehensive attempt so far to bring crypto markets under a coherent legal framework. In the United States, a fierce debate continues over whether crypto assets should be classified as <span class="em">securities</span> or <span class="em">commodities</span>, with significant consequences for oversight.</p>
+
+  <h3><span class="kicker">3 · The state's answer</span>The rise of CBDCs</h3>
+  <p>In response to the rise of private cryptocurrencies, many central banks are exploring their own digital currencies, known as <strong>CBDCs</strong> (Central Bank Digital Currencies). The <strong>digital euro</strong> and the <strong>digital yuan</strong> are both in advanced stages of development. These state-backed alternatives would preserve monetary sovereignty while offering some of the efficiency gains associated with digital payments.</p>
+
+  <div class="slogan">
+    <q>The cryptocurrency debate is, ultimately, a question of trust.</q>
+    <span class="by">Who controls money, who guarantees its value, who bears the risk</span>
+  </div>
+
+  <!-- CONCLUSION -->
+  <div class="conclusion">
+    <div class="ttl">A question of trust</div>
+    <p>Ultimately, the cryptocurrency debate is about trust, who controls money, who guarantees its value, and who bears the risks when things go wrong. Advocates argue that decentralisation empowers individuals and reduces the power of institutions that have repeatedly failed ordinary citizens. Critics point out that in the absence of regulation, ordinary investors and vulnerable populations often suffer the most.</p>
+    <p>The future of cryptocurrencies will likely be shaped by how effectively regulators manage to balance <strong>innovation with protection</strong>, and by whether digital assets can eventually deliver on their most ambitious promises: greater financial inclusion, reduced transaction costs, and a more resilient global financial system.</p>
+  </div>
+
+  <div class="tofoot">
+    <a href="digital-currency.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Retour à 1-Finance
+    </a>
+  </div>
+
+</article>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <img src="assets/lsa-logo.png" alt="Logo LSA">
+      <div>
+        <strong>LSA Toolbox</strong>
+        <span>DSCG · 1-Finance · M. Blanchet</span>
+      </div>
+    </div>
+    <div>Lycée Sidoine Apollinaire, Clermont-Ferrand</div>
+  </div>
+<div class="visit-count" id="visitCount"></div></footer>
+
+<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-dscg-'+encodeURIComponent(k)+'&label=Visites&countColor=%23c8a84b&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script></body>
+</html>

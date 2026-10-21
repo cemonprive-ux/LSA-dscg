@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f1a33"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="LSA DSCG"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" href="assets/icon-180.png"><script src="assets/app-nav.js"></script>
+<title>DSCG UE6, Structured Oral Response Trainer · Green Revolution</title>
+<link rel="icon" type="image/png" href="assets/favicon-dscg.png">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #1a2744; --navy-mid: #243260; --navy-light: #2d5fa6;
+  --gold: #f5b60f; --gold-light: #f7cd4a; --gold-pale: rgba(245,182,15,.1);
+  --ice: #e8f0f5; --white: #f9f7f4; --paper: #fdfcfa; --text: #1c2b3a; --muted: #6b7f90; --border: #d4dde5;
+  --correct: #2a7a4b; --correct-bg: #e7f3ec; --wrong: #b5302b; --wrong-bg: #fbe9e8; --warn: #c98f00; --warn-bg: #fdf3d6;
+  --part1: #2a7a4b; --part1-bg: #e7f3ec; --part2: #b5302b; --part2-bg: #fbe9e8; --part3: #2d5fa6; --part3-bg: #e8eef8;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--text); font-family: 'Quicksand', sans-serif; font-weight: 400; line-height: 1.65; min-height: 100vh; }
+a { color: inherit; }
+.topbar { background: var(--navy); color: rgba(255,255,255,.75); font-size: 12.5px; }
+.topbar-inner { max-width: 900px; margin: 0 auto; padding: 9px 2rem; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.topbar .place { display: inline-flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: .1em; font-size: 11px; }
+.topbar .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+.topbar .links { display: flex; gap: .5rem; }
+.topbar a.back { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,.78); text-decoration: none; border: 1px solid rgba(255,255,255,.18); border-radius: 20px; padding: 4px 13px; transition: all .2s; font-size: 11.5px; }
+.topbar a.back:hover { background: rgba(255,255,255,.1); color: #fff; border-color: rgba(201,163,85,.6); }
+.site-header { background: var(--navy); color: white; padding: 2.4rem 2rem 2rem; position: relative; overflow: hidden; }
+.site-header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.site-header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(201,163,85,.12) 0%, transparent 65%); pointer-events: none; }
+.header-inner { max-width: 900px; margin: 0 auto; position: relative; }
+.badge { display: inline-block; font-family: 'Quicksand', sans-serif; font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(201,163,85,.35); padding: .2rem .75rem; border-radius: 2px; margin-bottom: 1rem; }
+.site-header h1 { font-family: 'Quicksand', sans-serif; font-size: clamp(1.7rem, 4.5vw, 2.7rem); font-weight: 700; line-height: 1.15; margin-bottom: .6rem; }
+.site-header h1 em { color: var(--gold-light); font-style: italic; }
+.site-header .lede { font-size: .92rem; color: rgba(255,255,255,.72); max-width: 640px; }
+.question-box { background: rgba(255,255,255,.06); border-left: 3px solid var(--gold); padding: .9rem 1.2rem; border-radius: 0 6px 6px 0; margin-top: 1.2rem; }
+.question-box .q-label { font-family: 'Quicksand', sans-serif; font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin-bottom: .3rem; }
+.question-box .q-text { font-family: 'Quicksand', sans-serif; font-size: 1.35rem; font-style: italic; color: #fff; }
+.source-toggle { display: inline-flex; align-items: center; gap: .45rem; background: rgba(255,255,255,.08); color: #fff; border: 1px solid rgba(255,255,255,.25); border-radius: 20px; padding: .45rem 1rem; font-family: 'Quicksand', sans-serif; font-size: .72rem; letter-spacing: .04em; cursor: pointer; margin-top: 1.1rem; transition: all .18s; }
+.source-toggle:hover { border-color: var(--gold); background: rgba(255,255,255,.14); }
+.source-backdrop { position: fixed; inset: 0; background: rgba(13,27,42,.45); z-index: 190; opacity: 0; pointer-events: none; transition: opacity .2s; }
+.source-backdrop.open { opacity: 1; pointer-events: auto; }
+.source-panel { position: fixed; top: 0; left: 0; height: 100vh; width: 380px; max-width: 90vw; background: var(--paper); z-index: 200; box-shadow: 8px 0 30px rgba(13,27,42,.25); transform: translateX(-100%); transition: transform .25s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; }
+.source-panel.open { transform: translateX(0); }
+.source-head { background: var(--navy); color: #fff; padding: .9rem 1.1rem; display: flex; align-items: center; gap: .6rem; font-family: 'Quicksand', sans-serif; font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; flex-shrink: 0; }
+.source-head .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+.source-head .sp-title { flex: 1; }
+.source-head button { background: none; border: 1px solid rgba(255,255,255,.3); color: #fff; border-radius: 6px; padding: .3rem .6rem; font-family: inherit; font-size: .68rem; cursor: pointer; }
+.source-head button:hover { border-color: var(--gold); }
+.source-body { padding: 1.2rem 1.3rem; overflow-y: auto; font-size: .87rem; line-height: 1.65; flex: 1; }
+.source-body p { margin-bottom: .85rem; }
+.source-body p.lede { font-weight: 600; color: var(--navy); font-size: .95rem; font-family: 'Quicksand', sans-serif; }
+.source-body .hl { background: var(--gold-pale); padding: 0 .15rem; }
+.source-body .src { font-size: .74rem; color: var(--muted); font-style: italic; border-top: 1px solid var(--border); padding-top: .7rem; margin-top: .3rem; word-break: break-all; }
+@media (max-width: 600px) { .source-panel { width: 100vw; max-width: 100vw; } }
+.step-nav-wrap { background: var(--navy-mid); position: sticky; top: 0; z-index: 60; box-shadow: 0 2px 10px rgba(0,0,0,.08); }
+.step-nav { max-width: 900px; margin: 0 auto; display: flex; overflow-x: auto; scrollbar-width: none; }
+.step-nav::-webkit-scrollbar { display: none; }
+.step-pill { flex: 1; min-width: 84px; display: flex; flex-direction: column; align-items: center; gap: .25rem; padding: .6rem .4rem; background: none; border: none; color: rgba(255,255,255,.55); cursor: pointer; font-family: 'Quicksand', sans-serif; font-size: .62rem; letter-spacing: .03em; text-transform: uppercase; border-bottom: 3px solid transparent; transition: all .15s; }
+.step-pill .num { width: 1.5rem; height: 1.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .72rem; border: 1.5px solid rgba(255,255,255,.35); }
+.step-pill.active { color: #fff; border-bottom-color: var(--gold); }
+.step-pill.active .num { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+.step-pill.done .num { background: rgba(46,125,94,.85); border-color: transparent; color: #fff; }
+.step-pill.done .num::before { content: '✓'; }
+.step-pill.done .num span { display: none; }
+.main { max-width: 900px; margin: 0 auto; padding: 2.2rem 2rem 4rem; }
+.section-title { display: flex; align-items: center; gap: .9rem; font-family: 'Quicksand', sans-serif; font-size: 1.75rem; font-weight: 700; color: var(--navy); margin: 2.8rem 0 .4rem; }
+.section-num { font-family: 'Quicksand', sans-serif; font-size: .85rem; color: var(--gold); background: var(--navy); width: 2.2rem; height: 2.2rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; flex-shrink: 0; }
+.section-sub { color: var(--muted); font-size: .9rem; margin-bottom: 1.4rem; max-width: 680px; }
+.part-tag { display:inline-block; font-family:'Quicksand',sans-serif; font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; padding:.2rem .6rem; border-radius:3px; margin-left:.6rem; vertical-align:middle; }
+.tag-1 { background: var(--part1-bg); color: var(--part1); }
+.tag-2 { background: var(--part2-bg); color: var(--part2); }
+.tag-3 { background: var(--part3-bg); color: var(--part3); }
+.ex-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 1.4rem 1.5rem; margin-bottom: 1.1rem; box-shadow: 0 2px 12px rgba(13,27,42,.04); }
+.ex-q { font-weight: 600; color: var(--navy); margin-bottom: 1rem; font-size: 1rem; }
+.ex-q em { font-style: italic; color: var(--gold); }
+.ex-q .sub { display: block; font-weight: 400; color: var(--muted); font-size: .84rem; margin-top: .25rem; }
+.strategy-box { background: var(--gold-pale); border: 1px dashed var(--gold); border-radius: 8px; padding: .85rem 1.1rem; margin-bottom: 1.1rem; font-size: .88rem; color: var(--navy-mid); }
+.strategy-box .lbl { font-family: 'Quicksand', sans-serif; font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: .3rem; }
+.mcq-options { display: flex; flex-direction: column; gap: .55rem; }
+.mcq-btn { text-align: left; background: var(--white); border: 1.5px solid var(--border); border-radius: 7px; padding: .75rem .9rem; font-family: inherit; font-size: .9rem; color: var(--text); cursor: pointer; transition: all .18s; display: flex; gap: .65rem; align-items: flex-start; line-height: 1.45; }
+.mcq-btn:hover:not(:disabled) { border-color: var(--gold); }
+.mcq-btn .letter { font-family: 'Quicksand', sans-serif; font-weight: 500; color: var(--gold); flex-shrink: 0; }
+.mcq-btn:disabled { cursor: default; }
+.mcq-btn.correct { border-color: var(--correct); background: var(--correct-bg); } .mcq-btn.correct .letter { color: var(--correct); }
+.mcq-btn.wrong { border-color: var(--wrong); background: var(--wrong-bg); } .mcq-btn.wrong .letter { color: var(--wrong); }
+.feedback { margin-top: .9rem; padding: .85rem 1rem; border-radius: 7px; font-size: .86rem; line-height: 1.55; display: none; }
+.feedback.show { display: block; }
+.feedback.ok { background: var(--correct-bg); border-left: 3px solid var(--correct); color: #1d5340; }
+.feedback.no { background: var(--wrong-bg); border-left: 3px solid var(--wrong); color: #6e1826; }
+.feedback strong { font-weight: 700; }
+.idea-card { background: white; border: 1.5px solid var(--border); border-radius: 8px; padding: .8rem 1rem; margin-bottom: .7rem; }
+.idea-text { font-size: .9rem; margin-bottom: .45rem; }
+.src-tag { font-family: 'Quicksand', sans-serif; font-size: .6rem; letter-spacing: .06em; text-transform: uppercase; padding: .15rem .5rem; border-radius: 3px; display: inline-block; margin-bottom: .5rem; }
+.src-doc { background: var(--ice); color: var(--navy-light); }
+.src-ext { background: var(--warn-bg); color: var(--warn); }
+.idea-btns { display: flex; gap: .5rem; flex-wrap: wrap; }
+.sort-btn { font-family: 'Quicksand', sans-serif; font-size: .78rem; border: 1.5px solid var(--border); background: var(--white); color: var(--navy); border-radius: 5px; padding: .35rem .8rem; cursor: pointer; transition: all .15s; }
+.sort-btn:hover:not(:disabled) { border-color: var(--gold); }
+.sort-btn:disabled { cursor: default; opacity: .55; }
+.sort-btn.chosen-correct { background: var(--correct); color: white; border-color: var(--correct); opacity: 1; }
+.sort-btn.chosen-wrong { background: var(--wrong); color: white; border-color: var(--wrong); opacity: 1; }
+.idea-fb { font-size: .8rem; margin-top: .5rem; display: none; }
+.idea-fb.show { display: block; }
+.idea-fb.ok { color: var(--correct); } .idea-fb.no { color: var(--wrong); }
+.field-label { font-size: .84rem; color: var(--muted); margin-bottom: .4rem; }
+textarea, input[type=text] { width: 100%; font-family: inherit; font-size: .92rem; border: 1.5px solid var(--border); border-radius: 7px; padding: .75rem .9rem; color: var(--text); background: #fff; resize: vertical; min-height: 100px; line-height: 1.6; }
+textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold); }
+.btn { font-family: 'Quicksand', sans-serif; font-size: .8rem; letter-spacing: .03em; background: var(--navy); color: white; border: none; border-radius: 7px; padding: .68rem 1.3rem; cursor: pointer; transition: all .18s; margin-top: .9rem; }
+.btn:hover { background: var(--navy-mid); }
+.btn.gold { background: var(--gold); color: var(--navy); font-weight: 600; }
+.btn.gold:hover { background: var(--gold-light); }
+.btn.ghost { background: transparent; color: var(--navy); border: 1.5px solid var(--border); }
+.btn.ghost:hover { border-color: var(--gold); }
+.toolbar { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: 1rem; }
+.fb-grid { display: grid; gap: .9rem; margin-top: 1.2rem; }
+.fb-panel { border: 1px solid var(--border); border-radius: 9px; background: white; overflow: hidden; }
+.fb-panel-head { padding: .7rem 1rem; font-family: 'Quicksand', sans-serif; font-size: .76rem; letter-spacing: .04em; text-transform: uppercase; display: flex; align-items: center; gap: .55rem; border-bottom: 1px solid var(--border); }
+.fb-panel-head .ic { width: 1.4rem; height: 1.4rem; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: .85rem; flex-shrink: 0; font-weight: 700; }
+.fb-panel-body { padding: .85rem 1rem; font-size: .86rem; line-height: 1.6; }
+.fb-panel-body ul { list-style: none; }
+.fb-panel-body li { padding-left: 1.25rem; position: relative; margin-bottom: .35rem; }
+.fb-panel-body li::before { position: absolute; left: 0; top: -.05rem; }
+.fb-panel-body li.good::before { content: '✓'; color: var(--correct); }
+.fb-panel-body li.bad::before { content: '!'; color: var(--wrong); font-weight: 700; }
+.fb-panel-body li.tip::before { content: '→'; color: var(--gold); }
+.lvl-ok .fb-panel-head { background: var(--correct-bg); color: #1d5340; } .lvl-ok .ic { background: var(--correct); color: white; }
+.lvl-warn .fb-panel-head { background: var(--warn-bg); color: var(--warn); } .lvl-warn .ic { background: var(--warn); color: white; }
+.lvl-bad .fb-panel-head { background: var(--wrong-bg); color: #6e1826; } .lvl-bad .ic { background: var(--wrong); color: white; }
+.reveal { display: none; margin-top: 1rem; }
+.reveal.show { display: block; }
+.model-box { background: var(--navy); color: #eef3f7; border-radius: 10px; padding: 1.4rem 1.6rem; margin-top: 1rem; }
+.model-box.t1 { border-top: 4px solid var(--part1); }
+.model-box.t2 { border-top: 4px solid var(--part2); }
+.model-box.t3 { border-top: 4px solid var(--part3); }
+.model-box h4 { font-family: 'Quicksand', sans-serif; color: var(--gold-light); font-size: 1.2rem; margin-bottom: .7rem; }
+.model-box p { font-size: .9rem; line-height: 1.7; color: rgba(255,255,255,.88); margin-bottom: .6rem; }
+.model-box em { color: var(--gold-light); font-style: italic; }
+.qtype-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; font-size: .82rem; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.qtype-grid .h { background: var(--navy); color: var(--gold-light); font-family: 'Quicksand', sans-serif; font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; padding: .6rem .8rem; }
+.qtype-grid .c { padding: .6rem .8rem; border-top: 1px solid var(--border); background: white; }
+.qtype-grid .c.active { background: var(--gold-pale); font-weight: 600; color: var(--navy); border-left: 3px solid var(--gold); }
+@media (max-width: 600px) { .qtype-grid { grid-template-columns: 1fr; } .qtype-grid .h:nth-child(2) { display: none; } }
+.scaffold { display: grid; gap: .8rem; margin-top: .6rem; }
+.scaffold-row label { font-family: 'Quicksand', sans-serif; font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: .3rem; }
+.scaffold-row textarea { min-height: 52px; }
+.weak-better { display: grid; gap: .6rem; margin-bottom: 1rem; }
+.wb-line { border-radius: 7px; padding: .7rem .9rem; font-size: .87rem; }
+.wb-line.weak { background: var(--wrong-bg); color: #6e1826; }
+.wb-line.better { background: var(--warn-bg); color: var(--warn); }
+.wb-line.stronger { background: var(--correct-bg); color: #1d5340; }
+.wb-line .lvl-lbl { font-family: 'Quicksand', sans-serif; font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; display: block; margin-bottom: .25rem; opacity: .8; }
+.roadmap-part { border: 1px solid var(--border); border-radius: 9px; padding: 1rem 1.1rem; margin-bottom: .9rem; background: white; }
+.roadmap-part h5 { font-family: 'Quicksand', sans-serif; font-size: .74rem; letter-spacing: .06em; text-transform: uppercase; color: var(--navy); margin-bottom: .6rem; }
+.roadmap-fields { display: grid; gap: .6rem; }
+.roadmap-fields textarea { min-height: 44px; font-size: .86rem; }
+.note-tip { font-size: .74rem; color: var(--warn); margin-top: .25rem; display: none; }
+.note-tip.show { display: block; }
+.toolkit-cat { background: white; border: 1px solid var(--border); border-radius: 8px; margin-bottom: .6rem; overflow: hidden; }
+.toolkit-cat summary { padding: .7rem 1rem; cursor: pointer; font-family: 'Quicksand', sans-serif; font-size: .76rem; text-transform: uppercase; letter-spacing: .05em; color: var(--navy); background: var(--white); list-style: none; }
+.toolkit-cat summary::-webkit-details-marker { display: none; }
+.toolkit-cat summary::before { content: '+ '; color: var(--gold); font-weight: 700; }
+.toolkit-cat[open] summary::before { content: '– '; }
+.toolkit-cat ul { list-style: none; padding: .3rem 1rem 1rem; }
+.toolkit-cat li { font-size: .87rem; padding: .3rem 0; font-style: italic; color: var(--text); }
+.timer-box { display: flex; align-items: center; gap: 1.2rem; margin-top: 1rem; flex-wrap: wrap; }
+.timer-display { font-family: 'Quicksand', sans-serif; font-size: 2.1rem; color: var(--navy); min-width: 4.5rem; }
+.checklist { display: flex; flex-direction: column; gap: .6rem; }
+.checklist label { display: flex; gap: .65rem; align-items: flex-start; font-size: .9rem; cursor: pointer; }
+.checklist input[type=checkbox] { width: 18px; height: 18px; margin-top: .15rem; accent-color: var(--gold); flex-shrink: 0; }
+.correction-block { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
+.cb-head { padding: .8rem 1.1rem; font-family: 'Quicksand', sans-serif; font-size: 1.25rem; font-weight: 600; color: white; }
+.cb-head.h1 { background: var(--part1); } .cb-head.h2 { background: var(--part2); } .cb-head.h3 { background: var(--part3); } .cb-head.hn { background: var(--navy); }
+.cb-body { padding: 1rem 1.2rem; background: white; }
+.cb-body p { font-size: .9rem; margin-bottom: .7rem; }
+.cb-body ul { list-style: none; }
+.cb-body li { padding: .45rem 0 .45rem 1.3rem; position: relative; border-bottom: 1px solid var(--ice); font-size: .9rem; }
+.cb-body li:last-child { border-bottom: none; }
+.cb-body li::before { content: '◆'; position: absolute; left: 0; color: var(--gold); font-size: .7rem; top: .55rem; }
+.cb-body li .src { font-family: 'Quicksand', sans-serif; font-size: .68rem; color: var(--muted); }
+.print-only { display: none; }
+.visit-count { text-align: center; padding: .8rem 0 1.4rem; }
+.visit-count img { height: 16px; vertical-align: middle; }
+@media (max-width: 600px) {
+  .main { padding: 1.4rem 1.1rem 3rem; }
+  .ex-card { padding: 1.1rem; }
+  .question-box .q-text { font-size: 1.15rem; }
+}
+@media print {
+  .topbar, .site-header, .step-nav-wrap, .section-title, .section-sub, .ex-card, .btn, .toolbar, .no-print, .source-toggle, .source-backdrop { display: none !important; }
+  .print-only { display: block !important; }
+  body { background: white; }
+  .main { padding: 0; max-width: 100%; }
+  .source-panel { display: none; }
+  body.printing-source .print-only { display: none !important; }
+  body.printing-source .source-panel { display: block !important; position: static; transform: none; width: 100%; max-width: 100%; height: auto; box-shadow: none; }
+  body.printing-source .source-head button { display: none; }
+}
+</style>
+<style id="lsa-h1-or">h1,h1 em,h1 span{color:#f5b60f!important}</style></head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="place"><span class="dot"></span>Lycée Sidoine Apollinaire · Clermont-Ferrand</span>
+    <div class="links">
+      <a class="back" href="green-revolution.html">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        Green Revolution
+      </a>
+      <a class="back" href="governance-csr.html">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        Chapitre 3 · Governance
+      </a>
+      <a class="back" href="index.html">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        Accueil
+      </a>
+    </div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="badge">DSCG, UE6 Business English · Épreuve orale, partie 2</div>
+    <h1>Structured Oral Response Trainer<br><em>Green Revolution</em></h1>
+    <p class="lede">Cette page prépare une réponse ORALE structurée à la question posée sur le texte, pas une dissertation écrite. Vous apprenez une méthode transférable : analyser la question, construire des arguments avec le texte ET vos connaissances, préparer des notes courtes, puis parler à partir de ces notes.</p>
+    <div class="question-box">
+      <div class="q-label">Discussion question</div>
+      <div class="q-text">How can businesses drive sustainable change?</div>
+    </div>
+    <button class="source-toggle" onclick="toggleSource(true)">📄 Show source text</button>
+  </div>
+</header>
+
+<aside class="source-panel" id="sourcePanel">
+  <div class="source-head"><div class="dot"></div><span class="sp-title">Source Document</span><button onclick="printSource()">🖶 Imprimer</button><button onclick="toggleSource(false)">✕</button></div>
+  <div class="source-body">
+    <p class="lede">Green Revolution: 'Nudge Brands &amp; Consumers With Smart Tech To Incite Behavioural Change', Says New Report</p>
+    <p>A new consumer research report has highlighted <span class="hl">"brand peer pressure"</span> and <span class="hl">technological innovation</span> as critical to push forward sustainable behaviour among both shoppers and businesses. The new report, conducted by a team of behavioural change and sustainability experts, also puts forward a range of recommendations, among them reminding consumers that "they are not alone when it comes to making sustainable choices".</p>
+    <p>Released by the British tech-for-good app developer 3 Sided Cube on Monday (March 8), the <em>Igniting A Green Revolution</em> report provides insights into what could help drive and accelerate sustainable brand and consumer behaviour, as well as the role of technology as a tool to promote climate-friendly habits.</p>
+    <p>One of the key findings from the report highlights the effectiveness of <span class="hl">brand peer pressure</span> on businesses to green their operations, suggesting that in addition to financial incentives, companies can be pushed to make more sustainable changes due to moral reasons and pressure from their industry rivals and competitors. According to the analysts, if more waste reduction, reuse and emission reduction initiatives and campaigns are celebrated by governments, other businesses and wider society, it is more likely that companies will "wake up to their responsibilities to become more sustainable".</p>
+    <p>Another "igniting" factor to push forward sustainable change is <span class="hl">technology</span>, which the report describes as a "crucial tool" when it comes to consumers. Based on 3 Sided Cube's previous survey data indicating that the majority of shoppers are motivated to live more sustainable lives and are demanding digital tools to help them make such changes, the research believes that tech innovation will enable "smarter, greener decisions" and "help consumers see how they are part of a growing community focused on green issues".</p>
+    <p>Commenting on the findings, managing director of 3 Sided Cube, Richard Strachan, said: "Reprimanding people doesn't work if we want to reach a mass audience. We have to 'nudge' consumer and brand behaviour towards greener choices. Technology is one of the best tools we have to make this happen."</p>
+    <p>Among some of the key issues that consumers are concerned about includes <span class="hl">non-recyclable packaging</span> and complex recycling rules. From the businesses' perspective, the report finds that while they recognise their responsibility to take climate action, the <span class="hl">"lack of government financial support"</span> and guidance remain key barriers to making sustainable changes.</p>
+    <p>Recommendations include showing consumers that sustainable lifestyles are "increasing in popularity every day", because shoppers have indicated a greater likelihood to follow through with actions if they believe they are part of a broad trend made up of many individuals.</p>
+    <p class="src">Source: 3 Sided Cube, "Igniting A Green Revolution" report, cited 8 March.</p>
+  </div>
+</aside>
+<div class="source-backdrop" id="sourceBackdrop" onclick="toggleSource(false)"></div>
+
+<div class="step-nav-wrap"><nav class="step-nav" id="stepNav"></nav></div>
+
+<main class="main">
+
+  <div class="section-title"><span class="section-num">01</span> Analyse the Question</div>
+  <p class="section-sub">Ne répondez pas trop vite. Identifiez d'abord ce que la question demande exactement avant de chercher des arguments.</p>
+  <div class="strategy-box"><span class="lbl">Exam strategy</span>Before looking for arguments, make sure you know exactly what the question asks.</div>
+
+  <div class="ex-card" id="exInstr">
+    <div class="ex-q">What is the <em>instruction phrase</em> in this question, the part that tells you what kind of answer is expected?</div>
+    <div class="mcq-options">
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'exInstr','C\'est le sujet (topic), pas l\'instruction : il vous dit DE QUOI on parle, pas COMMENT r\u00e9pondre.')"><span class="letter">A</span> sustainable change</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,true,'exInstr','Exact. \u00ab How can \u00bb demande des moyens concrets \u2014 pas un simple jugement pour/contre.')"><span class="letter">B</span> how can</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'exInstr','C\'est un mot-cl\u00e9 du sujet, pas l\'instruction elle-m\u00eame.')"><span class="letter">C</span> businesses</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'exInstr','\u00ab Drive \u00bb pr\u00e9cise l\'action attendue, mais l\'instruction principale reste \u00ab how can \u00bb.')"><span class="letter">D</span> drive</button>
+    </div>
+    <div class="feedback" id="exInstr-fb"></div>
+  </div>
+
+  <div class="ex-card" id="exReform">
+    <div class="ex-q">In simple words, what do you have to discuss?<span class="sub">Reformulez la question avec vos propres mots, sans recopier son vocabulaire. ≈ 15–30 mots.</span></div>
+    <textarea id="reformText" data-persist placeholder="I have to explain what methods…"></textarea>
+    <div class="toolbar">
+      <button class="btn gold" onclick="analyzeReform()">Analyser ma reformulation</button>
+      <button class="btn ghost" onclick="reveal('exReform-model')">Voir un modèle</button>
+    </div>
+    <div class="fb-grid" id="exReform-fb"></div>
+    <div class="reveal" id="exReform-model">
+      <div class="model-box"><h4>Modèle, reformulation</h4>
+      <p>I have to explain which concrete methods can push companies towards more sustainable practices, and how effective these methods really are.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="section-num">02</span> Identify the Type of Question</div>
+  <p class="section-sub">Le plan dépend de la question posée, il n'existe pas un plan unique pour toutes les questions du DSCG. Voici quelques types courants :</p>
+
+  <div class="ex-card">
+    <div class="qtype-grid">
+      <div class="h">Question type</div><div class="h">Possible structure</div>
+      <div class="c">To what extent…?</div><div class="c">advantages / limits / overall assessment</div>
+      <div class="c">Should companies…?</div><div class="c">arguments in favour / arguments against / position</div>
+      <div class="c">Is X a threat or an opportunity?</div><div class="c">opportunities / threats / conditions</div>
+      <div class="c">How can…?</div><div class="c active">problem / possible solutions / limitations</div>
+      <div class="c">Why…?</div><div class="c">causes / consequences</div>
+      <div class="c">What impact…?</div><div class="c">effects on stakeholders / positive / negative</div>
+    </div>
+  </div>
+
+  <div class="ex-card" id="exQtype">
+    <div class="ex-q">Given the phrase <em>« how can »</em>, which structure fits this question best?</div>
+    <div class="mcq-options">
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'exQtype','Ce sch\u00e9ma convient \u00e0 une question \u00ab to what extent \u00bb ou \u00ab should \u00bb, pas \u00e0 une question de moyens.')"><span class="letter">A</span> advantages / limits / overall assessment</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,true,'exQtype','Exact. \u00ab How can \u00bb demande d\u2019identifier un probl\u00e8me, puis des solutions concr\u00e8tes, puis d\u2019en discuter les limites.')"><span class="letter">B</span> problem / possible solutions / limitations</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'exQtype','Ce sch\u00e9ma convient \u00e0 une question \u00ab why \u00bb, pas ici.')"><span class="letter">C</span> causes / consequences</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'exQtype','Ce sch\u00e9ma convient \u00e0 une question \u00ab is X a threat or opportunity \u00bb, pas ici.')"><span class="letter">D</span> opportunities / threats / conditions</button>
+    </div>
+    <div class="feedback" id="exQtype-fb"></div>
+  </div>
+
+  <div class="strategy-box"><span class="lbl">For this question</span>Part 1, Problem · Part 2, Possible solutions · Part 3, Limitations. Une autre question du DSCG demanderait une autre structure : ne mémorisez jamais un plan unique.</div>
+
+  <div class="section-title"><span class="section-num">03</span> Brainstorm &amp; Sort</div>
+  <p class="section-sub">Classez chaque idée dans la bonne partie : <strong>Problem</strong>, <strong>Possible solutions</strong>, ou <strong>Limitations</strong>. Certaines viennent du texte, d'autres de vos connaissances, les deux sont nécessaires.</p>
+  <div class="strategy-box"><span class="lbl">Rule</span>Do not rely only on the document. Use it as a starting point, then add relevant knowledge and examples.</div>
+
+  <div id="ideaList"></div>
+  <div class="feedback" id="sortSummary"></div>
+
+  <div class="section-title"><span class="section-num">04</span> Connect Document and Knowledge</div>
+  <p class="section-sub">Un bon argument enrichit le document avec vos connaissances, il ne se contente pas de le paraphraser.</p>
+
+  <div class="ex-card">
+    <div class="ex-q">Worked example</div>
+    <div class="weak-better">
+      <div class="wb-line"><span class="lvl-lbl">From the document</span>Technology is described as a "crucial tool" that helps consumers make "smarter, greener decisions". <span class="src-tag src-doc">texte, §4</span></div>
+      <div class="wb-line"><span class="lvl-lbl">From your knowledge</span>Apps such as Too Good To Go already connect consumers with unsold food to reduce waste. <span class="src-tag src-ext">connaissances</span></div>
+      <div class="wb-line better"><span class="lvl-lbl">Argument you can build</span>Technology can operationalise the "nudge" the report describes, turning a general intention to act sustainably into a concrete, everyday habit.</div>
+    </div>
+  </div>
+
+  <div class="ex-card" id="exConnect">
+    <div class="ex-q">Your turn.<span class="sub">From the document: brand peer pressure pushes companies to green their operations when rivals' initiatives are publicly celebrated (doc, §3). From your knowledge: think of a reporting rule, ranking or public campaign that puts similar pressure on businesses. Build one argument connecting the two.</span></div>
+    <textarea id="connectText" data-persist placeholder="From the document… From my knowledge… Therefore…"></textarea>
+    <div class="toolbar">
+      <button class="btn gold" onclick="analyzeConnect()">Analyser mon argument</button>
+      <button class="btn ghost" onclick="reveal('exConnect-model')">Voir un exemple</button>
+    </div>
+    <div class="fb-grid" id="exConnect-fb"></div>
+    <div class="ia-box" data-ia="argument" data-ia-texte="#connectText" data-ia-ctx="Question=.q-text|Document source=#sourcePanel .source-body|Exercice=#exConnect .ex-q" data-ia-min="15"></div>
+    <div class="reveal" id="exConnect-model">
+      <div class="model-box"><h4>Exemple possible</h4>
+      <p>Brand peer pressure works because reputation matters, and this is reinforced by rules such as the EU's CSRD, which force companies to disclose their environmental impact publicly, making it harder to lag behind competitors without consequences.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="section-num">05</span> Build a Strong Argument</div>
+  <p class="section-sub">Un argument oral efficace suit quatre temps : <strong>IDEA → EXPLAIN → EXAMPLE → LINK</strong>.</p>
+
+  <div class="ex-card">
+    <div class="ex-q">Why this matters</div>
+    <div class="weak-better">
+      <div class="wb-line weak"><span class="lvl-lbl">Idea only, too weak</span>Businesses find it hard to change.</div>
+      <div class="wb-line better"><span class="lvl-lbl">+ Explain, better</span>Businesses find it hard to change because sustainable initiatives often raise costs without a clear or immediate financial return.</div>
+      <div class="wb-line stronger"><span class="lvl-lbl">+ Example, stronger</span>…For example, the report notes that a lack of government financial support and guidance remains a key barrier for many companies.</div>
+    </div>
+  </div>
+
+  <div class="ex-card" id="exBuild1">
+    <div class="ex-q">Part 1, Problem <span class="part-tag tag-1">Build one argument</span></div>
+    <div class="scaffold">
+      <div class="scaffold-row"><label>Idea</label><textarea id="b1-idea" data-persist placeholder="Businesses struggle to…"></textarea></div>
+      <div class="scaffold-row"><label>Explain</label><textarea id="b1-explain" data-persist placeholder="This happens because…"></textarea></div>
+      <div class="scaffold-row"><label>Example</label><textarea id="b1-example" data-persist placeholder="For example…"></textarea></div>
+      <div class="scaffold-row"><label>Link to the question</label><textarea id="b1-link" data-persist placeholder="This shows that driving change requires…"></textarea></div>
+    </div>
+    <div class="toolbar">
+      <button class="btn gold" onclick="analyzeScaffold('b1',THEMES1,'Part 1')">Analyser mon argument</button>
+      <button class="btn ghost" onclick="reveal('exBuild1-model')">Voir un modèle</button>
+    </div>
+    <div class="fb-grid" id="exBuild1-fb"></div>
+    <div class="ia-box" data-ia="argument" data-ia-texte="Idea=#b1-idea|Explain=#b1-explain|Example=#b1-example|Link to the question=#b1-link" data-ia-ctx="Question=.q-text|Document source=#sourcePanel .source-body|Partie=#exBuild1 .ex-q" data-ia-min="15"></div>
+    <div class="reveal" id="exBuild1-model">
+      <div class="model-box t1"><h4>Modèle, Part 1</h4>
+      <p><em>Idea ,</em> Telling businesses to behave responsibly is not enough to change their behaviour.</p>
+      <p><em>Explain ,</em> Because moral appeals alone rarely outweigh the cost concerns companies face when investing in sustainability.</p>
+      <p><em>Example ,</em> For example, the report's managing director states that "reprimanding people doesn't work if we want to reach a mass audience", and that the lack of government financial support remains a key barrier.</p>
+      <p><em>Link ,</em> This shows that driving sustainable change requires more than good intentions, it needs real incentives.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ex-card" id="exBuild2">
+    <div class="ex-q">Part 2, Possible solutions <span class="part-tag tag-2">Build one argument</span></div>
+    <div class="scaffold">
+      <div class="scaffold-row"><label>Idea</label><textarea id="b2-idea" data-persist placeholder="One effective lever is…"></textarea></div>
+      <div class="scaffold-row"><label>Explain</label><textarea id="b2-explain" data-persist placeholder="This works because…"></textarea></div>
+      <div class="scaffold-row"><label>Example</label><textarea id="b2-example" data-persist placeholder="For example…"></textarea></div>
+      <div class="scaffold-row"><label>Link to the question</label><textarea id="b2-link" data-persist placeholder="This shows that…"></textarea></div>
+    </div>
+    <div class="toolbar">
+      <button class="btn gold" onclick="analyzeScaffold('b2',THEMES2,'Part 2')">Analyser mon argument</button>
+      <button class="btn ghost" onclick="reveal('exBuild2-model')">Voir un modèle</button>
+    </div>
+    <div class="fb-grid" id="exBuild2-fb"></div>
+    <div class="ia-box" data-ia="argument" data-ia-texte="Idea=#b2-idea|Explain=#b2-explain|Example=#b2-example|Link to the question=#b2-link" data-ia-ctx="Question=.q-text|Document source=#sourcePanel .source-body|Partie=#exBuild2 .ex-q" data-ia-min="15"></div>
+    <div class="reveal" id="exBuild2-model">
+      <div class="model-box t2"><h4>Modèle, Part 2</h4>
+      <p><em>Idea ,</em> Brand peer pressure can push companies to green their operations faster than regulation alone.</p>
+      <p><em>Explain ,</em> Because reputation and rivalry matter to businesses, no company wants to be seen lagging behind its competitors on climate action.</p>
+      <p><em>Example ,</em> For example, the report explains that when waste-reduction and emission campaigns are publicly celebrated, companies are more likely to "wake up to their responsibilities".</p>
+      <p><em>Link ,</em> This shows that social and reputational pressure can be as powerful as financial incentives in driving change.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="section-num">06</span> Organise the Response</div>
+  <p class="section-sub">Le plan doit répondre à la question, pas simplement suivre l'ordre du texte.</p>
+
+  <div class="ex-card" id="exPlan">
+    <div class="ex-q">Which plan is the most logical for this question?</div>
+    <p class="section-sub" style="margin:-0.4rem 0 1rem">Les quatre options utilisent les mêmes idées du plan retenu. Une seule les organise dans un ordre qui construit un raisonnement.</p>
+    <div class="mcq-options">
+      <button class="mcq-btn" onclick="checkMCQ(this,true,'exPlan','Exact. On part de ce qui bloque le changement, on propose ensuite des leviers concrets, puis on évalue jusqu’où ces leviers peuvent vraiment fonctionner, chaque partie s’appuie sur la précédente.')"><span class="letter">A</span> Problem → possible solutions → limitations</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'exPlan','Séduisant mais prématuré : proposer des solutions avant d’avoir identifié le problème qu’elles sont censées résoudre ne permet pas de juger si elles sont pertinentes.')"><span class="letter">B</span> Possible solutions → problem → limitations</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'exPlan','Cela évoque les limites d’un levier avant même de l’avoir présenté, le lecteur ne sait pas encore de quoi il est question.')"><span class="letter">C</span> Problem → limitations → possible solutions</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'exPlan','Cela place les limites en ouverture, avant même d’avoir défini le problème ou les solutions envisagées, l’ordre logique est inversé de bout en bout.')"><span class="letter">D</span> Limitations → problem → possible solutions</button>
+    </div>
+    <div class="feedback" id="exPlan-fb"></div>
+  </div>
+
+  <div class="section-title"><span class="section-num">07</span> Prepare Your Introduction</div>
+  <p class="section-sub">À l'oral, l'introduction reste courte : position → problème principal → annonce du plan, en 3 phrases directes.</p>
+
+  <div class="ex-card" id="exIntroMcq">
+    <div class="ex-q">Which sentence is the best <em>opening line</em>?</div>
+    <div class="mcq-options">
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'exIntroMcq','Trop pr\u00e9cis : on entre directement dans le document. Une amorce part d\'une id\u00e9e plus g\u00e9n\u00e9rale.')"><span class="letter">A</span> In March, a report by 3 Sided Cube revealed that consumers want digital tools to reduce their environmental footprint.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,true,'exIntroMcq','Exact : une bonne amorce part d\'une id\u00e9e g\u00e9n\u00e9rale avant d\'amener le sujet.')"><span class="letter">B</span> Consumers and businesses face growing pressure to act more sustainably, and new tools and social dynamics are reshaping how that change can happen.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'exIntroMcq','Une amorce reste neutre : pas de jugement tranch\u00e9 d\u00e8s la premi\u00e8re phrase.')"><span class="letter">C</span> Businesses will never truly become sustainable unless governments force them to change.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'exIntroMcq','C\'est l\'annonce du plan : elle vient \u00e0 la fin de l\'introduction, pas en ouverture.')"><span class="letter">D</span> I will first look at the difficulties businesses face, then examine possible solutions, before considering their limits.</button>
+    </div>
+    <div class="feedback" id="exIntroMcq-fb"></div>
+  </div>
+
+  <div class="ex-card" id="exIntroBuild">
+    <div class="ex-q">Build your 3-line oral introduction<span class="sub">Une phrase par ligne. Restez court, c'est ce que vous direz, pas ce que vous lirez.</span></div>
+    <div class="scaffold">
+      <div class="scaffold-row"><label>1, Position</label><textarea id="int-position" data-persist placeholder="Businesses can drive sustainable change through…, but…"></textarea></div>
+      <div class="scaffold-row"><label>2, Main issue</label><textarea id="int-issue" data-persist placeholder="These tools are promising, but they also face…"></textarea></div>
+      <div class="scaffold-row"><label>3, Announce structure</label><textarea id="int-plan" data-persist placeholder="I will first consider… before examining…"></textarea></div>
+    </div>
+    <div class="toolbar">
+      <button class="btn gold" onclick="analyzeIntroBuild()">Analyser mon introduction</button>
+      <button class="btn ghost" onclick="reveal('exIntroBuild-model')">Voir un modèle</button>
+    </div>
+    <div class="fb-grid" id="exIntroBuild-fb"></div>
+    <div class="reveal" id="exIntroBuild-model">
+      <div class="model-box"><h4>Modèle, introduction orale</h4>
+      <p>Businesses can drive sustainable change through peer pressure and technology, but neither works on its own.</p>
+      <p>These levers are promising, but they also face real barriers such as cost and a lack of government support.</p>
+      <p>I will first consider why change is difficult before examining possible solutions and their limits.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="section-num">08</span> Nuance Your Answer</div>
+  <p class="section-sub">« How can » n'accepte jamais une réponse tout-ou-rien. Utilisez may, can, could, to some extent, depending on, unless…</p>
+
+  <div class="ex-card">
+    <div class="weak-better">
+      <div class="wb-line weak"><span class="lvl-lbl">Too binary</span>New technology will make businesses sustainable.</div>
+      <div class="wb-line stronger"><span class="lvl-lbl">Nuanced</span>New technology may help businesses become more sustainable, but its impact largely depends on whether it is combined with genuine incentives and consumer trust.</div>
+    </div>
+  </div>
+
+  <div class="ex-card" id="exNuance">
+    <div class="ex-q">Rewrite this claim with more nuance:<span class="sub">« Brand peer pressure is enough to make companies sustainable. » Utilisez au moins un mot de nuance.</span></div>
+    <textarea id="nuanceText" data-persist placeholder="Brand peer pressure can…"></textarea>
+    <div class="toolbar">
+      <button class="btn gold" onclick="analyzeNuance()">Analyser ma nuance</button>
+      <button class="btn ghost" onclick="reveal('exNuance-model')">Voir un modèle</button>
+    </div>
+    <div class="fb-grid" id="exNuance-fb"></div>
+    <div class="reveal" id="exNuance-model">
+      <div class="model-box"><h4>Modèle, nuance</h4>
+      <p>Brand peer pressure can encourage companies to act, but it is unlikely to be enough on its own unless it is backed by financial incentives and clearer government guidance.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="section-num">09</span> Build Your Oral Roadmap</div>
+  <p class="section-sub">Do not write your full answer. Use keywords and short notes, you should speak from your notes, not read them.</p>
+
+  <div class="roadmap-part">
+    <h5>My position</h5>
+    <div class="roadmap-fields"><textarea id="rm-position" data-persist oninput="checkNoteLength(this)" placeholder="keywords only"></textarea><div class="note-tip" id="tip-rm-position">Keep your notes short. You should speak from your notes, not read them.</div></div>
+    <div class="toolbar"><button class="btn ghost" onclick="reveal('rm-position-model')">Possible answer</button></div>
+    <div class="reveal" id="rm-position-model"><div class="model-box"><p>combine pressure + tech, but limits remain</p></div></div>
+  </div>
+  <div class="roadmap-part">
+    <h5>Introduction</h5>
+    <div class="roadmap-fields"><textarea id="rm-intro" data-persist oninput="checkNoteLength(this)" placeholder="keywords only"></textarea><div class="note-tip" id="tip-rm-intro">Keep your notes short. You should speak from your notes, not read them.</div></div>
+    <div class="toolbar"><button class="btn ghost" onclick="reveal('rm-intro-model')">Possible answer</button></div>
+    <div class="reveal" id="rm-intro-model"><div class="model-box"><p>growing pressure to act, plan: problem / solutions / limits</p></div></div>
+  </div>
+  <div class="roadmap-part">
+    <h5>Part 1, Problem <span class="part-tag tag-1">argument · example</span></h5>
+    <div class="roadmap-fields"><textarea id="rm-p1" data-persist oninput="checkNoteLength(this)" placeholder="argument, example"></textarea><div class="note-tip" id="tip-rm-p1">Keep your notes short. You should speak from your notes, not read them.</div></div>
+    <div class="toolbar"><button class="btn ghost" onclick="reveal('rm-p1-model')">Possible answer</button></div>
+    <div class="reveal" id="rm-p1-model"><div class="model-box t1"><p>reprimanding doesn't work, cost fears, no gov support, e.g. §5 &amp; §6</p></div></div>
+  </div>
+  <div class="roadmap-part">
+    <h5>Part 2, Possible solutions <span class="part-tag tag-2">argument · example</span></h5>
+    <div class="roadmap-fields"><textarea id="rm-p2" data-persist oninput="checkNoteLength(this)" placeholder="argument, example"></textarea><div class="note-tip" id="tip-rm-p2">Keep your notes short. You should speak from your notes, not read them.</div></div>
+    <div class="toolbar"><button class="btn ghost" onclick="reveal('rm-p2-model')">Possible answer</button></div>
+    <div class="reveal" id="rm-p2-model"><div class="model-box t2"><p>peer pressure, tech/apps, nudging, e.g. Too Good To Go, IKEA take-back</p></div></div>
+  </div>
+  <div class="roadmap-part">
+    <h5>Part 3, Limitations <span class="part-tag tag-3">optional</span></h5>
+    <div class="roadmap-fields"><textarea id="rm-p3" data-persist oninput="checkNoteLength(this)" placeholder="argument, example"></textarea><div class="note-tip" id="tip-rm-p3">Keep your notes short. You should speak from your notes, not read them.</div></div>
+    <div class="toolbar"><button class="btn ghost" onclick="reveal('rm-p3-model')">Possible answer</button></div>
+    <div class="reveal" id="rm-p3-model"><div class="model-box t3"><p>greenwashing risk, packaging still complex, needs gov support too</p></div></div>
+  </div>
+  <div class="roadmap-part">
+    <h5>Conclusion</h5>
+    <div class="roadmap-fields"><textarea id="rm-concl" data-persist oninput="checkNoteLength(this)" placeholder="final answer / nuance / condition"></textarea><div class="note-tip" id="tip-rm-concl">Keep your notes short. You should speak from your notes, not read them.</div></div>
+    <div class="toolbar"><button class="btn ghost" onclick="reveal('rm-concl-model')">Possible answer</button></div>
+    <div class="reveal" id="rm-concl-model"><div class="model-box"><p>combination of levers needed, not one tool alone, depends on support &amp; trust</p></div></div>
+  </div>
+  <div class="toolbar"><button class="btn gold" onclick="checkRoadmap()">Vérifier mes notes</button></div>
+  <div class="feedback" id="roadmap-fb"></div>
+  <div class="ia-box" data-ia="plan-oral" data-ia-titre="Retour de l'IA sur mes notes" data-ia-texte="Position=#rm-position|Introduction=#rm-intro|Partie 1=#rm-p1|Partie 2=#rm-p2|Partie 3=#rm-p3|Conclusion=#rm-concl" data-ia-ctx="Question=.q-text|Document source=#sourcePanel .source-body" data-ia-min="10"></div>
+
+  <div class="section-title"><span class="section-num">10</span> Oral Language Toolkit</div>
+  <p class="section-sub">Des formulations classées par fonction pour construire votre discours à l'oral.</p>
+
+  <details class="toolkit-cat"><summary>Giving an opinion</summary><ul>
+    <li>I would argue that…</li><li>In my view…</li><li>I believe the main issue is…</li><li>It seems to me that…</li>
+  </ul></details>
+  <details class="toolkit-cat"><summary>Introducing an argument</summary><ul>
+    <li>One major advantage is…</li><li>One important concern is…</li><li>Another point to consider is…</li>
+  </ul></details>
+  <details class="toolkit-cat"><summary>Explaining</summary><ul>
+    <li>This is mainly because…</li><li>This can be explained by…</li><li>The main reason is that…</li>
+  </ul></details>
+  <details class="toolkit-cat"><summary>Giving an example</summary><ul>
+    <li>For example…</li><li>A good example would be…</li><li>This can be seen in…</li>
+  </ul></details>
+  <details class="toolkit-cat"><summary>Referring to the document</summary><ul>
+    <li>The article points out that…</li><li>According to the document…</li><li>The author highlights…</li><li>The text suggests that…</li>
+  </ul></details>
+  <details class="toolkit-cat"><summary>Adding personal knowledge</summary><ul>
+    <li>More broadly…</li><li>Beyond the article…</li><li>Another relevant example is…</li><li>This issue can also be seen in…</li>
+  </ul></details>
+  <details class="toolkit-cat"><summary>Contrasting</summary><ul>
+    <li>However…</li><li>On the other hand…</li><li>Nevertheless…</li><li>By contrast…</li>
+  </ul></details>
+  <details class="toolkit-cat"><summary>Nuancing</summary><ul>
+    <li>This is true to some extent, but…</li><li>This largely depends on…</li><li>We should also bear in mind that…</li><li>The situation is more complex because…</li>
+  </ul></details>
+  <details class="toolkit-cat"><summary>Concluding</summary><ul>
+    <li>Overall…</li><li>On balance…</li><li>I would therefore argue that…</li><li>To conclude…</li>
+  </ul></details>
+
+  <div class="section-title"><span class="section-num">11</span> Final Checklist</div>
+  <p class="section-sub">Cochez chaque point avant de considérer votre préparation terminée.</p>
+
+  <div class="ex-card">
+    <div class="checklist" id="checklist">
+      <label><input type="checkbox" id="ck1" data-persist onchange="onCheck()"> I answered the exact question.</label>
+      <label><input type="checkbox" id="ck2" data-persist onchange="onCheck()"> My position is clear.</label>
+      <label><input type="checkbox" id="ck3" data-persist onchange="onCheck()"> My response is logically organised.</label>
+      <label><input type="checkbox" id="ck4" data-persist onchange="onCheck()"> I used relevant ideas from the document.</label>
+      <label><input type="checkbox" id="ck5" data-persist onchange="onCheck()"> I added personal knowledge.</label>
+      <label><input type="checkbox" id="ck6" data-persist onchange="onCheck()"> I developed my arguments (idea → explain → example).</label>
+      <label><input type="checkbox" id="ck7" data-persist onchange="onCheck()"> I used relevant examples.</label>
+      <label><input type="checkbox" id="ck8" data-persist onchange="onCheck()"> I linked my arguments to the question.</label>
+      <label><input type="checkbox" id="ck9" data-persist onchange="onCheck()"> I used appropriate linking words.</label>
+      <label><input type="checkbox" id="ck10" data-persist onchange="onCheck()"> I nuanced my answer.</label>
+      <label><input type="checkbox" id="ck11" data-persist onchange="onCheck()"> My conclusion clearly answers the question.</label>
+      <label><input type="checkbox" id="ck12" data-persist onchange="onCheck()"> I used notes rather than reading a written text.</label>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="section-num">12</span> Oral Challenge</div>
+  <p class="section-sub">Answer the discussion question orally using your notes only. Do not read a fully written answer. Use arguments from the document and your own knowledge.</p>
+
+  <div class="ex-card">
+    <div class="ex-q">Speak now, from your roadmap above.</div>
+    <div class="timer-box">
+      <div class="timer-display" id="timerDisplay">0:00</div>
+      <button class="btn gold" id="timerStart" onclick="toggleTimer()">Démarrer</button>
+      <button class="btn ghost" onclick="resetTimer()">Réinitialiser</button>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="section-num">★</span> Possible Oral Version</div>
+  <p class="section-sub">Un exemple de contenu possible, présenté en notes courtes, pas un texte à lire, mais une base à reformuler à voix haute.</p>
+
+  <div class="toolbar" style="margin-bottom:1rem">
+    <button class="btn gold" onclick="reveal('fullCorrection')">Show a possible oral version</button>
+  </div>
+
+  <div class="reveal" id="fullCorrection">
+    <div class="correction-block">
+      <div class="cb-head hn">Introduction</div>
+      <div class="cb-body"><p>Businesses can drive sustainable change through peer pressure and technology, but neither works on its own. These levers are promising, but they also face real barriers such as cost and a lack of government support. I will first consider why change is difficult before examining possible solutions and their limits.</p></div>
+    </div>
+
+    <div class="correction-block">
+      <div class="cb-head h1">Part 1. Problem</div>
+      <div class="cb-body"><ul>
+        <li>"Reprimanding people doesn't work if we want to reach a mass audience," according to 3 Sided Cube's managing director.<span class="src">Source : texte, §5</span></li>
+        <li>A lack of government financial support and guidance remains a key barrier for businesses.<span class="src">Source : texte, §6</span></li>
+        <li>Non-recyclable packaging and complex recycling rules also frustrate consumer efforts.<span class="src">Source : texte, §6</span></li>
+        <li>Many companies fear that sustainable initiatives raise costs without a clear return on investment.<span class="src">Source : connaissances</span></li>
+      </ul></div>
+    </div>
+
+    <div class="correction-block">
+      <div class="cb-head h2">Part 2. Possible solutions</div>
+      <div class="cb-body"><ul>
+        <li>Brand peer pressure pushes companies to act, especially when rivals' climate initiatives are publicly celebrated.<span class="src">Source : texte, §3</span></li>
+        <li>Technology is a "crucial tool" that helps consumers make "smarter, greener decisions".<span class="src">Source : texte, §4</span></li>
+        <li>Companies such as IKEA and Patagonia use circular-economy schemes, repair, resale, take-back, to embed sustainability in their model.<span class="src">Source : connaissances</span></li>
+        <li>Reporting frameworks such as the EU's CSRD force disclosure of environmental impact, adding external pressure.<span class="src">Source : connaissances</span></li>
+      </ul></div>
+    </div>
+
+    <div class="correction-block">
+      <div class="cb-head h3">Part 3. Limitations</div>
+      <div class="cb-body"><ul>
+        <li>Nudges and technology cannot fix packaging and recycling systems that remain genuinely complex.<span class="src">Source : texte, §6</span></li>
+        <li>Disclosure rules create pressure, but do not guarantee real change, there is a risk of greenwashing.<span class="src">Source : connaissances</span></li>
+        <li>Showing that sustainable lifestyles are "increasing in popularity every day" only works if consumers trust the claim.<span class="src">Source : texte, §7</span></li>
+        <li>Without financial support from governments, even willing businesses may lack the means to act.<span class="src">Source : texte, §6</span></li>
+      </ul></div>
+    </div>
+
+    <div class="correction-block">
+      <div class="cb-head hn">Conclusion</div>
+      <div class="cb-body"><p>Overall, businesses can drive sustainable change by combining reputational pressure, technology and genuine financial incentives, no single lever is sufficient on its own. Peer pressure and digital tools can nudge behaviour, but they need to be backed by government support and honest communication to avoid becoming a superficial gesture. The extent of the change will depend on how far these levers are combined and sustained over time.</p></div>
+    </div>
+  </div>
+
+</main>
+
+<div class="print-only">
+  <h2 style="font-family:'Quicksand',sans-serif;color:#1a2744;font-size:1.6rem">DSCG UE6, Oral outline : Green Revolution</h2>
+  <p style="font-style:italic;color:#555">Lycée Sidoine Apollinaire, support de révision, pas un texte à lire</p>
+</div>
+
+<div class="visit-count" id="visitCount"></div>
+
+<script>
+const STORE_KEY = 'lsa-oral-str-greenrevolution-v1';
+
+const IDEAS = [
+  {t:"Reprimanding people doesn't work if businesses want to reach a mass audience.", a:'1', src:'doc'},
+  {t:"The lack of government financial support and guidance remains a key barrier for businesses.", a:'1', src:'doc'},
+  {t:"Many companies fear that sustainable initiatives increase costs without a clear return on investment.", a:'1', src:'ext'},
+  {t:"Brand peer pressure pushes companies to green their operations, especially when rivals' climate action is publicly celebrated.", a:'2', src:'doc'},
+  {t:"Technology is described as a 'crucial tool', helping consumers make 'smarter, greener decisions'.", a:'2', src:'doc'},
+  {t:"Companies such as Patagonia and IKEA use circular-economy schemes, repair, resale, take-back, to build sustainability into their business model.", a:'2', src:'ext'},
+  {t:"Even nudges and technology cannot fix packaging and recycling systems that remain complex for consumers.", a:'3', src:'doc'},
+  {t:"Reporting frameworks such as the EU's CSRD create pressure to disclose impact, but disclosure alone does not guarantee real change.", a:'3', src:'ext'},
+  {t:"Showing that sustainable lifestyles are 'increasing in popularity every day' only works if consumers trust that claim.", a:'3', src:'doc'}
+];
+const LABELS = {'1':'Problem','2':'Possible solutions','3':'Limitations'};
+const SRC_LABEL = {doc:'Source : texte', ext:'Source : connaissances'};
+
+function toggleSource(open){ document.getElementById('sourcePanel').classList.toggle('open',open); document.getElementById('sourceBackdrop').classList.toggle('open',open); }
+function printSource(){ document.body.classList.add('printing-source'); window.print(); }
+window.addEventListener('afterprint', ()=>document.body.classList.remove('printing-source'));
+const NAV_STEPS = [
+  ['analyse','ANALYSE','#exInstr'],
+  ['qtype','TYPE','#exQtype'],
+  ['sort','BRAINSTORM','#ideaList'],
+  ['connect','CONNECT','#exConnect'],
+  ['build1','BUILD 1','#exBuild1'],
+  ['build2','BUILD 2','#exBuild2'],
+  ['organise','ORGANISE','#exPlan'],
+  ['intro','INTRO','#exIntroMcq'],
+  ['nuance','NUANCE','#exNuance'],
+  ['roadmap','PREPARE','#rm-position'],
+  ['checklist','CHECK','#checklist'],
+  ['challenge','SPEAK','#timerDisplay']
+];
+const done = new Set();
+function mark(id){ done.add(id); updateProgress(); }
+function renderNav(){
+  const nav=document.getElementById('stepNav');
+  nav.innerHTML = NAV_STEPS.map((s,i)=>'<button class="step-pill'+(done.has(s[0])?' done':'')+'" onclick="goStep(\''+s[2]+'\')"><span class="num"><span>'+(i+1)+'</span></span>'+s[1]+'</button>').join('');
+}
+function goStep(sel){ const el=document.querySelector(sel); if(!el) return; const target = el.closest('.ex-card,.roadmap-part') || el; target.scrollIntoView({behavior:'smooth',block:'start'}); }
+function updateProgress(){ renderNav(); }
+
+function loadStore(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY)||'{}'); }catch(e){ return {}; } }
+function saveField(el){
+  const data = loadStore();
+  data[el.id] = (el.type==='checkbox') ? el.checked : el.value;
+  localStorage.setItem(STORE_KEY, JSON.stringify(data));
+}
+function restoreFields(){
+  const data = loadStore();
+  document.querySelectorAll('[data-persist]').forEach(el=>{
+    if(el.id in data){ if(el.type==='checkbox') el.checked = data[el.id]; else el.value = data[el.id]; }
+  });
+}
+document.addEventListener('input', e=>{ if(e.target.matches('[data-persist]')) saveField(e.target); });
+document.addEventListener('change', e=>{ if(e.target.matches('[data-persist]')) saveField(e.target); });
+
+const ideaState = {};
+function shuffleInPlace(arr){ for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } }
+function buildIdeas(){
+  shuffleInPlace(IDEAS);
+  const list = document.getElementById('ideaList');
+  IDEAS.forEach((idea,i)=>{
+    const div=document.createElement('div');
+    div.className='idea-card';
+    div.innerHTML =
+      '<span class="src-tag src-'+idea.src+'">'+SRC_LABEL[idea.src]+'</span>'+
+      '<div class="idea-text">'+idea.t+'</div>'+
+      '<div class="idea-btns">'+
+        ['1','2','3'].map(p=>'<button class="sort-btn" data-p="'+p+'" onclick="sortIdea('+i+',\''+p+'\',this)">'+LABELS[p]+'</button>').join('')+
+      '</div><div class="idea-fb" id="idea-fb-'+i+'"></div>';
+    list.appendChild(div);
+  });
+}
+function sortIdea(i,choice,btn){
+  if(ideaState[i]) return;
+  ideaState[i]=choice;
+  const ok = choice===IDEAS[i].a;
+  const fb=document.getElementById('idea-fb-'+i);
+  btn.parentElement.querySelectorAll('.sort-btn').forEach(b=>b.disabled=true);
+  if(ok){ btn.classList.add('chosen-correct'); fb.className='idea-fb show ok'; fb.textContent='✓ Bien classé dans '+LABELS[choice]+'.'; }
+  else {
+    btn.classList.add('chosen-wrong');
+    btn.parentElement.querySelector('[data-p="'+IDEAS[i].a+'"]').classList.add('chosen-correct');
+    fb.className='idea-fb show no'; fb.textContent='Cette idée relève plutôt de '+LABELS[IDEAS[i].a]+'.';
+  }
+  if(Object.keys(ideaState).length===IDEAS.length){
+    const right=IDEAS.filter((id,k)=>ideaState[k]===id.a).length;
+    const s=document.getElementById('sortSummary');
+    s.className='feedback show '+(right===IDEAS.length?'ok':'no');
+    s.innerHTML='<strong>'+right+' / '+IDEAS.length+' idées bien classées.</strong> Vous avez votre matière première pour les trois parties.';
+    mark('sort');
+  }
+}
+
+function checkMCQ(btn, ok, exId, explain){
+  const card=document.getElementById(exId);
+  card.querySelectorAll('.mcq-btn').forEach(b=>b.disabled=true);
+  const fb=document.getElementById(exId+'-fb');
+  if(ok){ btn.classList.add('correct'); fb.className='feedback show ok'; fb.innerHTML='<strong>Correct.</strong> '+(explain||''); }
+  else {
+    btn.classList.add('wrong');
+    card.querySelectorAll('.mcq-btn').forEach(b=>{ if(b.getAttribute('onclick').includes(',true,')) b.classList.add('correct'); });
+    fb.className='feedback show no'; fb.innerHTML='<strong>Pas tout à fait.</strong> '+(explain||'')+' La bonne réponse est en vert.';
+  }
+  const stepMap = {exInstr:'analyse', exQtype:'qtype', exPlan:'organise', exIntroMcq:'intro'};
+  if(stepMap[exId]) mark(stepMap[exId]);
+}
+
+function reveal(id){ const e=document.getElementById(id); e.classList.add('show'); e.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+
+function iconFor(l){ return l==='ok'?'✓':l==='warn'?'~':'!'; }
+function panel(lvl,title,bodyHtml){ return '<div class="fb-panel lvl-'+lvl+'"><div class="fb-panel-head"><span class="ic">'+iconFor(lvl)+'</span>'+title+'</div><div class="fb-panel-body">'+bodyHtml+'</div></div>'; }
+function liList(arr){ return '<ul>'+arr.map(([c,t])=>'<li class="'+c+'">'+t+'</li>').join('')+'</ul>'; }
+function wordCount(s){ return s.trim().split(/\s+/).filter(Boolean).length; }
+
+function analyzeReform(){
+  const raw=document.getElementById('reformText').value.trim();
+  const low=raw.toLowerCase();
+  const wc=wordCount(raw);
+  const grid=document.getElementById('exReform-fb');
+  if(wc<8){ grid.innerHTML=panel('bad','Trop court','Reformulez la question en une phrase complète (≈ 15–30 mots).'); return; }
+  const items=[];
+  let lvl='ok';
+  const oneWord = /^(yes|no|oui|non)\b/i.test(raw);
+  if(oneWord){ lvl='bad'; items.push(['bad','Une question « how can » n\'accepte jamais un simple oui/non.']); }
+  else items.push(['good','Vous ne répondez pas par un simple oui/non, bien.']);
+  const meansWords=['method','tool','lever','way','how','solution','mean','strateg'];
+  const hasMeans = meansWords.some(k=>low.includes(k));
+  if(hasMeans) items.push(['good','La notion de moyen concret est présente dans votre reformulation.']);
+  else { if(lvl==='ok') lvl='warn'; items.push(['tip','Ajoutez une notion de moyen concret (« method », « tool », « how »).']); }
+  grid.innerHTML = panel(lvl,'Reformulation', liList(items));
+  mark('analyse');
+}
+
+function analyzeConnect(){
+  const raw=document.getElementById('connectText').value.trim();
+  const low=raw.toLowerCase();
+  const wc=wordCount(raw);
+  const grid=document.getElementById('exConnect-fb');
+  if(wc<12){ grid.innerHTML=panel('bad','Trop court','Reliez un élément du document à une connaissance personnelle en une ou deux phrases (≈ 20–40 mots).'); return; }
+  const items=[];
+  let lvl='ok';
+  const docRef=['peer pressure','rival','competitor','celebrated','document','text','article','brand'].some(k=>low.includes(k));
+  const knowRef=['example','such as','company','regulation','law','framework','ranking','campaign'].some(k=>low.includes(k));
+  items.push([docRef?'good':'bad', docRef?'Le document est mobilisé.':'Reliez explicitement au fait du document (brand peer pressure, rivalité…).']);
+  items.push([knowRef?'good':'bad', knowRef?'Une connaissance personnelle est mobilisée.':'Ajoutez un exemple, une règle, un classement ou une campagne connue.']);
+  if(!docRef || !knowRef) lvl = docRef||knowRef ? 'warn' : 'bad';
+  grid.innerHTML = panel(lvl,'Document + connaissances', liList(items));
+  mark('connect');
+}
+
+const THEMES1 = ['reprimand','cost','financial','barrier','government','support','guidance','recycling','packaging','complex','fear','return on investment','expensive'];
+const THEMES2 = ['peer pressure','rival','competitor','brand','technology','digital','app','nudge','circular','patagonia','ikea','repair','resale','take-back','csrd','disclosure','reporting','incentive'];
+function analyzeScaffold(prefix, themes, label){
+  const fields=['idea','explain','example','link'];
+  const vals=fields.map(f=>document.getElementById(prefix+'-'+f).value.trim());
+  const grid=document.getElementById('ex'+ (prefix==='b1'?'Build1':'Build2') +'-fb');
+  const empty=fields.filter((f,i)=>vals[i].length<3);
+  if(empty.length){ grid.innerHTML=panel('bad','Champs manquants','Remplissez les quatre champs : Idea, Explain, Example, Link ('+label+').'); return; }
+  const all=vals.join(' ').toLowerCase();
+  const items=[];
+  const idea=vals[0], explain=vals[1], example=vals[2], link=vals[3];
+  items.push([wordCount(idea)<=15?'good':'tip', wordCount(idea)<=15?'Idea énoncée clairement et brièvement.':'Idea un peu longue : gardez-la courte, une affirmation.']);
+  items.push([wordCount(explain)>=5?'good':'bad', wordCount(explain)>=5?'Explication développée.':'Développez pourquoi / comment (Explain).']);
+  items.push([/for example|such as|e\.g\.|like/.test(example.toLowerCase()) || wordCount(example)>=4?'good':'tip', 'Un exemple concret est attendu (entreprise, chiffre, situation).']);
+  items.push([/this shows|this suggests|therefore|this means|link/.test(link.toLowerCase()) || wordCount(link)>=4?'good':'tip', 'Le lien avec la question doit être explicite (« this shows that… »).']);
+  const kwHit = themes.some(k=>all.includes(k));
+  items.push([kwHit?'good':'tip', kwHit?'Votre argument mobilise le vocabulaire attendu pour cette partie.':'Vérifiez que votre argument correspond bien au thème de '+label+'.']);
+  const bad = items.filter(([c])=>c==='bad').length;
+  const lvl = bad>0 ? 'bad' : (items.some(([c])=>c==='tip') ? 'warn' : 'ok');
+  grid.innerHTML = panel(lvl,'Structure de l\'argument · '+label, liList(items));
+  mark(prefix==='b1'?'build1':'build2');
+}
+
+function analyzeIntroBuild(){
+  const p=document.getElementById('int-position').value.trim();
+  const i=document.getElementById('int-issue').value.trim();
+  const s=document.getElementById('int-plan').value.trim();
+  const grid=document.getElementById('exIntroBuild-fb');
+  const items=[];
+  let lvl='ok';
+  if(p.length<5){ items.push(['bad','Ligne 1 (position) manquante.']); lvl='bad'; } else items.push(['good','Position énoncée.']);
+  if(i.length<5){ items.push(['bad','Ligne 2 (main issue) manquante.']); lvl='bad'; } else items.push(['good','Enjeu principal énoncé.']);
+  if(s.length<5){ items.push(['bad','Ligne 3 (structure) manquante.']); lvl='bad'; } else items.push(['good','Annonce du plan présente.']);
+  const nuanceWords=['may','can','could','to some extent','depend','likely'];
+  const hasNuance = nuanceWords.some(k=>p.toLowerCase().includes(k));
+  if(hasNuance) items.push(['good','La position est nuancée.']);
+  else { if(lvl==='ok') lvl='warn'; items.push(['tip','Nuancez votre position (may, could, likely, to some extent…).']); }
+  [p,i,s].forEach((t,idx)=>{ if(wordCount(t)>25){ if(lvl==='ok')lvl='warn'; items.push(['tip','Ligne '+(idx+1)+' un peu longue pour l\'oral : restez sous 25 mots.']); } });
+  grid.innerHTML = panel(lvl,'Introduction orale', liList(items));
+  mark('intro');
+}
+
+function analyzeNuance(){
+  const raw=document.getElementById('nuanceText').value.trim();
+  const low=raw.toLowerCase();
+  const grid=document.getElementById('exNuance-fb');
+  if(wordCount(raw)<6){ grid.innerHTML=panel('bad','Trop court','Reformulez la phrase avec une nuance (≈ 15–30 mots).'); return; }
+  const nuanceWords=['may','can','could','to some extent','largely','partly','depending on','unless','provided that','if'];
+  const hits=nuanceWords.filter(k=>low.includes(k));
+  const lvl = hits.length>=2?'ok':hits.length===1?'warn':'bad';
+  const items=[hits.length? ['good','Mots de nuance détectés : '+hits.join(', ')+'.'] : ['bad','Aucun mot de nuance repéré. Utilisez may, can, could, to some extent, depending on, unless…']];
+  grid.innerHTML = panel(lvl,'Nuance', liList(items));
+  mark('nuance');
+}
+
+function checkNoteLength(el){
+  const tip=document.getElementById('tip-'+el.id);
+  if(!tip) return;
+  tip.classList.toggle('show', wordCount(el.value) > 15);
+}
+function checkRoadmap(){
+  const ids=['rm-position','rm-intro','rm-p1','rm-p2','rm-p3','rm-concl'];
+  const filled=ids.filter(id=>document.getElementById(id).value.trim().length>2);
+  const tooLong=ids.filter(id=>wordCount(document.getElementById(id).value)>15);
+  const fb=document.getElementById('roadmap-fb');
+  if(filled.length<5){ fb.className='feedback show no'; fb.innerHTML='<strong>Roadmap incomplète.</strong> Remplissez au moins Position, Introduction, Part 1, Part 2 et Conclusion.'; return; }
+  if(tooLong.length){ fb.className='feedback show no'; fb.innerHTML='<strong>Certaines notes sont trop longues.</strong> Keep your notes short, you should speak from your notes, not read them.'; return; }
+  fb.className='feedback show ok'; fb.innerHTML='<strong>Roadmap prête.</strong> Passez à l\'Oral Challenge : parlez à partir de ces notes, sans les lire.';
+  mark('roadmap');
+}
+
+let timerSeconds = 0, timerInterval = null, timerRunning = false;
+function renderTimer(){
+  const m=Math.floor(timerSeconds/60), s=timerSeconds%60;
+  const d=document.getElementById('timerDisplay');
+  d.textContent = m+':'+(s<10?'0':'')+s;
+}
+function toggleTimer(){
+  const btn=document.getElementById('timerStart');
+  if(timerRunning){ clearInterval(timerInterval); timerRunning=false; btn.textContent='Reprendre'; return; }
+  timerRunning=true; btn.textContent='Pause';
+  mark('challenge');
+  timerInterval=setInterval(()=>{
+    timerSeconds++; renderTimer();
+  },1000);
+}
+function resetTimer(){ clearInterval(timerInterval); timerRunning=false; timerSeconds=0; renderTimer(); document.getElementById('timerStart').textContent='Démarrer'; }
+
+function onCheck(){
+  const boxes=document.querySelectorAll('#checklist input[type=checkbox]');
+  const all=[...boxes].every(b=>b.checked);
+  if(all) mark('checklist');
+}
+
+buildIdeas();
+restoreFields();
+renderTimer();
+renderNav();
+onCheck();
+</script>
+<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-dscg-'+encodeURIComponent(k)+'&label=Visites&countColor=%23c8a84b&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script>
+<script src="assets/ia.js"></script>
+</body>
+</html>

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f1a33"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="LSA DSCG"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" href="assets/icon-180.png"><script src="assets/app-nav.js"></script>
+<title>DSCG UE6, Summary Writing Trainer · Green Revolution</title>
+<link rel="icon" type="image/png" href="assets/favicon-dscg.png">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1a2744;--navy-mid:#0f1a33;--gold:#f5b60f;--gold-light:#ddb96a;--ice:#f1eee7;--paper:#f5f3ef;--white:#ffffff;--text:#1c2b3a;--muted:#6b7f90;--correct:#2a7a4b;--correct-bg:#eaf4ed;--wrong:#b5302b;--wrong-bg:#fbeeec;--warn:#8a6d1f;--warn-bg:#faf2dc;--border:#ddd5c5}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--text);font-family:'Quicksand',Georgia,serif;line-height:1.6}
+h1,h2,h3,h4{font-family:'Quicksand',serif}
+.mono{font-family:'Quicksand',Georgia,serif}
+.topbar{background:var(--navy);color:#fff;padding:1.1rem 1.4rem}
+.topbar-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.brand .badge{font-family:'Quicksand',Georgia,serif;font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:.2rem}
+.brand h1{font-size:1.15rem;font-weight:700;color:#fff}
+.brand h1 em{color:var(--gold-light);font-style:italic}
+.method-btn{font-family:'Quicksand',Georgia,serif;font-size:.72rem;letter-spacing:.04em;background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;padding:.5rem .9rem;border-radius:6px;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.method-btn:hover{border-color:var(--gold);color:var(--gold-light)}
+.nav-links{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.nav-link{font-family:'Quicksand',Georgia,serif;font-size:.72rem;letter-spacing:.04em;background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;padding:.5rem .9rem;border-radius:6px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block}
+.nav-link:hover{border-color:var(--gold);color:var(--gold-light)}
+.step-nav-wrap{background:var(--navy-mid);position:sticky;top:0;z-index:60;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.step-nav{max-width:1400px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none}
+.step-nav::-webkit-scrollbar{display:none}
+.step-pill{flex:1;min-width:108px;display:flex;flex-direction:column;align-items:center;gap:.25rem;padding:.6rem .5rem;background:none;border:none;color:rgba(255,255,255,.55);cursor:pointer;font-family:'Quicksand',Georgia,serif;font-size:.68rem;letter-spacing:.03em;text-transform:uppercase;border-bottom:3px solid transparent;transition:all .15s}
+.step-pill .num{width:1.5rem;height:1.5rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;border:1.5px solid rgba(255,255,255,.35)}
+.step-pill.active{color:#fff;border-bottom-color:var(--gold)}
+.step-pill.active .num{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.step-pill.done .num{background:rgba(46,125,94,.85);border-color:transparent;color:#fff}
+.step-pill.done .num::before{content:'✓'}
+.step-pill.done .num span{display:none}
+.workspace{max-width:1400px;margin:0 auto;padding:1.4rem;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:1.4rem;align-items:start}
+.source-pane{position:sticky;top:52px;background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(13,27,42,.05);max-height:calc(100vh - 72px);display:flex;flex-direction:column}
+.source-head{background:var(--navy);color:#fff;padding:.8rem 1.1rem;display:flex;align-items:center;gap:.5rem;font-family:'Quicksand',Georgia,serif;font-size:.72rem;letter-spacing:.05em;flex-shrink:0}
+.source-head .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.source-body{padding:1.2rem 1.3rem;overflow-y:auto;font-size:.87rem}
+.source-body p{margin-bottom:.8rem}
+.source-body p.lede{font-weight:600;color:var(--navy);font-size:.94rem}
+.source-body .src{font-size:.74rem;color:var(--muted);font-style:italic;border-top:1px solid var(--border);padding-top:.7rem;margin-top:.3rem}
+.hl{background:linear-gradient(transparent 55%,rgba(201,163,85,.35) 55%);padding:0 .1rem;font-weight:500}
+.close-drawer{display:none}
+.work-pane{min-width:0}
+.step-panel{display:none}
+.step-panel.active{display:block}
+.step-head{margin-bottom:1.3rem}
+.step-kicker{font-family:'Quicksand',Georgia,serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem}
+.step-head h2{font-size:1.5rem;color:var(--navy);font-weight:700}
+.step-intro{color:var(--muted);font-size:.9rem;max-width:680px;margin-top:.5rem}
+.card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1.3rem 1.4rem;margin-bottom:1.1rem;box-shadow:0 2px 12px rgba(13,27,42,.04)}
+.card h3{font-size:1rem;color:var(--navy);margin-bottom:.7rem}
+.card .q{font-weight:600;color:var(--navy);margin-bottom:.9rem;font-size:.95rem}
+.card .sub{display:block;font-weight:400;color:var(--muted);font-size:.8rem;margin-top:.25rem}
+.callout{background:var(--ice);border-left:3px solid var(--navy-mid);border-radius:0 8px 8px 0;padding:.8rem 1rem;font-size:.85rem;color:var(--navy);margin-bottom:1rem}
+.callout.gold{background:var(--warn-bg);border-left-color:var(--gold)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.def-card{background:var(--ice);border-radius:8px;padding:.9rem 1rem}
+.def-card .lbl{font-family:'Quicksand',Georgia,serif;font-size:.68rem;letter-spacing:.08em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:.3rem}
+.def-card p{font-size:.85rem;color:var(--navy)}
+.opts{display:flex;flex-direction:column;gap:.5rem}
+.opt-btn{text-align:left;background:var(--paper);border:1.5px solid var(--border);border-radius:7px;padding:.7rem .85rem;font-family:inherit;font-size:.87rem;color:var(--text);cursor:pointer;transition:all .15s;display:flex;gap:.6rem;align-items:flex-start;line-height:1.45}
+.opt-btn:hover:not(:disabled){border-color:var(--gold);background:#fff}
+.opt-btn .ltr{font-family:'Quicksand',Georgia,serif;font-weight:500;color:var(--gold);flex-shrink:0}
+.opt-btn:disabled{cursor:default}
+.opt-btn.correct{border-color:var(--correct);background:var(--correct-bg)}
+.opt-btn.correct .ltr{color:var(--correct)}
+.opt-btn.wrong{border-color:var(--wrong);background:var(--wrong-bg)}
+.opt-btn.wrong .ltr{color:var(--wrong)}
+.fb{margin-top:.8rem;padding:.75rem .9rem;border-radius:7px;font-size:.83rem;line-height:1.55;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--correct-bg);border-left:3px solid var(--correct);color:#1d5340}
+.fb.no{background:var(--wrong-bg);border-left:3px solid var(--wrong);color:#6e1826}
+.btn{font-family:'Quicksand',Georgia,serif;font-size:.78rem;letter-spacing:.02em;background:var(--navy);color:#fff;border:none;border-radius:7px;padding:.6rem 1.2rem;cursor:pointer;transition:all .15s;margin-top:.8rem;margin-right:.5rem}
+.btn:hover{background:var(--navy-mid)}
+.btn.gold{background:var(--gold);color:var(--navy);font-weight:500}
+.btn.gold:hover{background:var(--gold-light)}
+.btn.ghost{background:transparent;color:var(--navy);border:1.5px solid var(--border)}
+.btn.ghost:hover{border-color:var(--gold)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.small{padding:.4rem .8rem;font-size:.7rem}
+textarea,input.txt{width:100%;font-family:inherit;font-size:.88rem;border:1.5px solid var(--border);border-radius:7px;padding:.65rem .8rem;color:var(--text);background:#fff;resize:vertical}
+textarea:focus,input.txt:focus{outline:none;border-color:var(--gold)}
+textarea{min-height:80px}
+.field-lbl{font-size:.78rem;color:var(--muted);margin-bottom:.35rem}
+.quote{background:var(--ice);border-left:3px solid var(--navy-mid);padding:.65rem .85rem;border-radius:0 6px 6px 0;font-style:italic;font-size:.87rem;margin-bottom:.8rem;color:var(--navy)}
+.kolo-item{background:var(--white);border:1.5px solid var(--border);border-radius:8px;padding:.75rem .9rem;margin-bottom:.6rem}
+.kolo-item .txt{font-size:.87rem;margin-bottom:.6rem}
+.kolo-item.kept{border-color:var(--correct);background:var(--correct-bg)}
+.kolo-item.dropped{border-color:var(--border);background:var(--paper);opacity:.7}
+.kolo-item.dropped .txt{text-decoration:line-through}
+.kolo-item.wrongpick{border-color:var(--wrong);background:var(--wrong-bg)}
+.kolo-actions{display:flex;gap:.5rem}
+.kolo-actions button{font-family:'Quicksand',Georgia,serif;font-size:.72rem;padding:.35rem .8rem;border-radius:6px;border:1.5px solid var(--border);background:#fff;cursor:pointer}
+.kolo-actions button:disabled{opacity:.35;cursor:default}
+.kolo-actions button.keep-b:hover:not(:disabled){border-color:var(--correct);color:var(--correct)}
+.kolo-actions button.drop-b:hover:not(:disabled){border-color:var(--wrong);color:var(--wrong)}
+.kolo-fb{font-size:.78rem;margin-top:.5rem;color:var(--muted)}
+.flow{display:flex;flex-direction:column;gap:.15rem;margin:.9rem 0}
+.flow-step{font-family:'Quicksand',Georgia,serif;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);text-align:center}
+.flow-arrow{text-align:center;color:var(--border);font-size:1rem}
+.chk-row{display:flex;align-items:flex-start;gap:.6rem;padding:.4rem 0;font-size:.86rem}
+.chk-row input{margin-top:.25rem;flex-shrink:0}
+.condensed-box{background:var(--navy);color:#eef3f7;border-radius:9px;padding:1rem 1.2rem;margin-top:.4rem;font-size:.9rem;display:none}
+.condensed-box.show{display:block}
+.condensed-box strong{color:var(--gold-light)}
+.match-row{display:grid;grid-template-columns:1fr 140px;gap:.7rem;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.85rem}
+.match-row select{font-family:inherit;font-size:.82rem;border:1.5px solid var(--border);border-radius:6px;padding:.35rem .4rem}
+.plan-field{margin-bottom:1rem}
+.plan-field .lbl{font-family:'Quicksand',Georgia,serif;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem;display:flex;justify-content:space-between;align-items:center}
+.idea-row{display:flex;gap:.5rem;align-items:flex-start;margin-bottom:.6rem}
+.idea-row textarea{min-height:52px}
+.reorder-btns{display:flex;flex-direction:column;gap:.2rem;flex-shrink:0;padding-top:.1rem}
+.reorder-btns button{width:1.7rem;height:1.5rem;border:1px solid var(--border);background:#fff;border-radius:4px;cursor:pointer;font-size:.7rem}
+.reorder-btns button:disabled{opacity:.25;cursor:default}
+.write-tools{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:.8rem}
+.plan-recap{background:var(--ice);border-radius:8px;padding:.9rem 1rem;font-size:.83rem;margin-bottom:.9rem}
+.plan-recap div{margin-bottom:.35rem}
+.plan-recap .k{font-family:'Quicksand',Georgia,serif;font-size:.66rem;color:var(--gold);text-transform:uppercase;letter-spacing:.05em}
+.wc-row{display:flex;align-items:center;gap:.8rem;margin-top:.6rem;flex-wrap:wrap}
+.wc-badge{font-family:'Quicksand',Georgia,serif;font-size:.78rem;padding:.35rem .8rem;border-radius:6px;font-weight:500}
+.wc-badge.low{background:var(--warn-bg);color:var(--warn)}
+.wc-badge.ok{background:var(--correct-bg);color:var(--correct)}
+.wc-badge.high{background:var(--warn-bg);color:var(--warn)}
+.help-panel{display:none;background:var(--ice);border-radius:8px;padding:.9rem 1rem;margin-top:.8rem;font-size:.84rem}
+.help-panel.show{display:block}
+.help-panel ul{list-style:none}
+.help-sub{font-family:'DM Mono',monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:.7rem 0 .2rem}
+.help-sub:first-child{margin-top:0}
+.help-panel li{padding:.25rem 0;font-family:'Quicksand',Georgia,serif;font-size:.8rem;color:var(--navy)}
+.fb-grid{display:grid;gap:.8rem}
+.fb-panel{border:1px solid var(--border);border-radius:9px;background:#fff;overflow:hidden}
+.fb-panel-head{padding:.65rem .95rem;font-size:.85rem;font-weight:600;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.fb-panel-body{padding:.75rem .95rem;font-size:.84rem;color:var(--muted)}
+.tag{font-family:'Quicksand',Georgia,serif;font-size:.7rem;padding:.2rem .55rem;border-radius:5px}
+.lvl-ok .fb-panel-head{background:var(--correct-bg)} .lvl-ok .tag{background:var(--correct);color:#fff}
+.lvl-bad .fb-panel-head{background:var(--wrong-bg)} .lvl-bad .tag{background:var(--wrong);color:#fff}
+.summary-preview{background:var(--ice);border-radius:8px;padding:.9rem 1rem;font-size:.85rem;margin-bottom:1rem;max-height:180px;overflow-y:auto}
+.model-box{background:var(--navy);color:#eef3f7;border-radius:10px;padding:1.4rem 1.5rem;margin-top:1rem}
+.model-box h4{color:var(--gold-light);font-size:1rem;margin-bottom:.7rem}
+.model-box p{font-size:.88rem;line-height:1.75;color:rgba(255,255,255,.9)}
+.model-legend{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.9rem;font-size:.75rem}
+.model-legend span{display:inline-flex;align-items:center;gap:.35rem}
+.swatch{width:.7rem;height:.7rem;border-radius:2px;display:inline-block}
+.m-main{background:rgba(201,163,85,.35);padding:0 .15rem;border-radius:2px}
+.m-reform{text-decoration:underline;text-decoration-color:#8fc7e8;text-decoration-thickness:2px}
+.m-conn{font-weight:700;color:var(--gold-light)}
+.model-note{font-size:.78rem;color:rgba(255,255,255,.55);margin-top:.9rem;font-style:italic}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(13,27,42,.6);z-index:200;align-items:center;justify-content:center;padding:1.5rem}
+.modal-overlay.show{display:flex}
+.modal-box{background:#fff;border-radius:12px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto;padding:1.8rem 2rem}
+.modal-box h3{color:var(--navy);font-size:1.3rem;margin-bottom:1rem}
+.modal-box ol{list-style:none;counter-reset:m}
+.modal-box ol li{counter-increment:m;margin-bottom:.9rem;padding-left:2.1rem;position:relative}
+.modal-box ol li::before{content:counter(m);position:absolute;left:0;top:0;width:1.5rem;height:1.5rem;background:var(--navy);color:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Quicksand',Georgia,serif;font-size:.75rem}
+.modal-box ol li strong{color:var(--navy)}
+.modal-box ol li p{font-size:.85rem;color:var(--muted);margin-top:.15rem}
+.modal-close{position:sticky;top:0;float:right;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--muted)}
+.footer-nav{display:flex;justify-content:space-between;margin-top:1.6rem;padding-top:1.2rem;border-top:1px solid var(--border)}
+.drawer-toggle{display:none}
+@media print{.topbar,.step-nav-wrap,.drawer-toggle,.footer-nav,.visit-count,.modal-overlay,.source-pane{display:none!important}.workspace{grid-template-columns:1fr}.step-panel{display:block!important}}
+@media (max-width:960px){
+  .workspace{grid-template-columns:1fr;padding:1rem}
+  .drawer-toggle{display:inline-flex;align-items:center;gap:.4rem;background:var(--navy);color:#fff;border:none;border-radius:7px;padding:.6rem 1rem;font-family:'Quicksand',Georgia,serif;font-size:.78rem;cursor:pointer;margin-bottom:1rem}
+  .source-pane{position:fixed;inset:0;z-index:150;max-height:100vh;border-radius:0;transform:translateY(100%);transition:transform .25s;display:flex}
+  .source-pane.open{transform:translateY(0)}
+  .close-drawer{display:block;background:var(--navy);border:none;color:#fff;font-size:1.2rem;padding:.2rem .6rem;cursor:pointer;margin-left:auto}
+  .two-col{grid-template-columns:1fr}
+  .step-pill{min-width:88px;font-size:.62rem}
+}
+@media (max-width:600px){
+  .topbar-inner{flex-wrap:wrap}
+  .card{padding:1rem}
+  .idea-row{flex-direction:row}
+}
+</style>
+<style>.visit-count{margin-top:8px}.visit-count img{height:16px;vertical-align:middle}</style>
+<style id="lsa-h1-or">h1,h1 em,h1 span{color:#f5b60f!important}</style></head>
+<body>
+
+<header class="topbar"><div class="topbar-inner">
+  <div class="brand"><span class="badge">DSCG, UE6 Business English</span><h1>Summary Writing Trainer <em>· Green Revolution</em></h1></div>
+  <div class="nav-links"><a class="nav-link" href="green-revolution.html">← Green Revolution</a><a class="nav-link" href="governance-csr.html">3-Governance &amp; CSR</a><a class="nav-link" href="index.html">🏠 Accueil</a><button class="method-btn" onclick="openMethod()">✎ Summary Method</button></div>
+</div></header>
+
+<div class="step-nav-wrap"><nav class="step-nav" id="stepNav"></nav></div>
+
+<button class="drawer-toggle" onclick="toggleDrawer(true)">📄 Show source text</button>
+
+<div class="workspace">
+
+  <aside class="source-pane" id="sourcePane">
+    <div class="source-head"><div class="dot"></div><span>Source Document</span><button class="close-drawer" onclick="toggleDrawer(false)">✕</button></div>
+    <div class="source-body">
+      <p class="lede">Green Revolution: 'Nudge Brands &amp; Consumers With Smart Tech To Incite Behavioural Change', Says New Report</p>
+      <p>A new consumer research report has highlighted <span class="hl">"brand peer pressure"</span> and <span class="hl">technological innovation</span> as critical to push forward sustainable behaviour among both shoppers and businesses. The new report, conducted by a team of behavioural change and sustainability experts, also puts forward a range of recommendations, among them reminding consumers that "they are not alone when it comes to making sustainable choices".</p>
+      <p>Released by the British tech-for-good app developer 3 Sided Cube on Monday (March 8), the <em>Igniting A Green Revolution</em> report provides insights into what could help drive and accelerate sustainable brand and consumer behaviour, as well as the role of technology as a tool to promote climate-friendly habits.</p>
+      <p>One of the key findings from the report highlights the effectiveness of <span class="hl">brand peer pressure</span> on businesses to green their operations, suggesting that in addition to financial incentives, companies can be pushed to make more sustainable changes due to moral reasons and pressure from their industry rivals and competitors. According to the analysts, if more waste reduction, reuse and emission reduction initiatives and campaigns are celebrated by governments, other businesses and wider society, it is more likely that companies will "wake up to their responsibilities to become more sustainable".</p>
+      <p>Another "igniting" factor to push forward sustainable change is <span class="hl">technology</span>, which the report describes as a "crucial tool" when it comes to consumers. Based on 3 Sided Cube's previous survey data indicating that the majority of shoppers are motivated to live more sustainable lives and are demanding digital tools to help them make such changes, the research believes that tech innovation will enable "smarter, greener decisions" and "help consumers see how they are part of a growing community focused on green issues".</p>
+      <p>Commenting on the findings, managing director of 3 Sided Cube, Richard Strachan, said: "Reprimanding people doesn't work if we want to reach a mass audience. We have to 'nudge' consumer and brand behaviour towards greener choices. Technology is one of the best tools we have to make this happen."</p>
+      <p>Among some of the key issues that consumers are concerned about includes <span class="hl">non-recyclable packaging</span> and complex recycling rules. From the businesses' perspective, the report finds that while they recognise their responsibility to take climate action, the <span class="hl">"lack of government financial support"</span> and guidance remain key barriers to making sustainable changes.</p>
+      <p>Recommendations include showing consumers that sustainable lifestyles are "increasing in popularity every day", because shoppers have indicated a greater likelihood to follow through with actions if they believe they are part of a broad trend made up of many individuals.</p>
+      <p class="src">Source: 3 Sided Cube, "Igniting A Green Revolution" report, cited 8 March.</p>
+    </div>
+  </aside>
+
+  <section class="work-pane">
+
+    <div class="step-panel" data-step="understand">
+      <div class="step-head"><div class="step-kicker">Step 1 / 7</div><h2>Understand</h2>
+        <p class="step-intro">Before you can summarise a text, you need to separate two things that students often confuse: what the text is <em>about</em>, and what the author <em>thinks about it</em>.</p></div>
+      <div class="two-col">
+        <div class="def-card"><span class="lbl">Topic</span><p>The subject the text discusses. Neutral, it doesn't tell you the author's opinion.</p></div>
+        <div class="def-card"><span class="lbl">Author's position</span><p>What the author actually argues or concludes about that topic.</p></div>
+      </div>
+      <div class="callout gold" style="margin-top:.9rem">TOPIC ≠ AUTHOR'S POSITION, a good summary always states both, separately.</div>
+
+      <div class="card" id="u1"><div class="q">What is the <em>TOPIC</em> of this article?</div>
+        <div class="opts">
+          <button class="opt-btn" onclick="checkMCQ(this,false,'u1','The report is not about the cost of green technology, but about what drives behavioural change.')"><span class="ltr">A</span> The financial cost of adopting green technologies across different business sectors.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,true,'u1','Correct, the whole article discusses a report on what drives sustainable behaviour in brands and consumers.')"><span class="ltr">B</span> The factors, like technology and peer pressure, that drive sustainable brand and consumer behaviour.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,false,'u1','The article is not about government regulation as such.')"><span class="ltr">C</span> How national governments should regulate corporate environmental practices and reporting.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,false,'u1','Social media is not discussed in the article.')"><span class="ltr">D</span> The negative impact of social media use on consumer environmental awareness and habits.</button>
+        </div>
+        <div class="fb" id="u1-fb"></div>
+      </div>
+
+      <div class="card" id="u2"><div class="q">What is the <em>AUTHOR'S POSITION</em> on this topic?</div>
+        <div class="opts">
+          <button class="opt-btn" onclick="checkMCQ(this,false,'u2','The report explicitly says reprimanding people doesn\'t work, the opposite of this option.')"><span class="ltr">A</span> Businesses and consumers should be punished more strictly for unsustainable behaviour.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,true,'u2','Correct, the report favours \u201cnudging\u201d through peer pressure and technology, while also calling for stronger government support.')"><span class="ltr">B</span> Nudging through peer pressure and technology works better than reprimands, though barriers remain.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,false,'u2','The report treats both social pressure and technology as important, not just technology.')"><span class="ltr">C</span> Technology is the only factor that matters; social and competitive pressure is irrelevant.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,false,'u2','The report discusses barriers facing businesses too, not just consumers.')"><span class="ltr">D</span> Consumers alone are responsible for driving sustainable change; businesses bear no responsibility.</button>
+        </div>
+        <div class="fb" id="u2-fb"></div>
+      </div>
+      <div class="callout" id="uSummary" style="display:none"></div>
+      <div class="footer-nav"><span></span><button class="btn gold" onclick="goStep(1)">Continue → Select</button></div>
+    </div>
+
+    <div class="step-panel" data-step="select">
+      <div class="step-head"><div class="step-kicker">Step 2 / 7</div><h2>Select</h2>
+        <p class="step-intro">Not every sentence deserves a place in your summary. Learn to recognise a <strong>main idea</strong>, and tell it apart from an example, a statistic, or a claim that is too vague to be useful.</p></div>
+
+      <div class="card" id="sa1"><h3>2.1, Spot the main idea</h3>
+        <div class="q">This passage from the text can be rewritten four ways. Which formulation actually states its <em>main idea</em>?</div>
+        <div class="quote">"One of the key findings from the report highlights the effectiveness of brand peer pressure on businesses to green their operations, suggesting that in addition to financial incentives, companies can be pushed to make more sustainable changes due to moral reasons and pressure from their industry rivals and competitors."</div>
+        <div class="opts">
+          <button class="opt-btn" onclick="checkMCQ(this,false,'sa1','This is a recommendation drawn from the finding, not the finding itself.')"><span class="ltr">A</span> Waste reduction and emission reduction campaigns should be celebrated by governments and society.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,true,'sa1','Correct, this captures the key finding about competitive and moral pressure.')"><span class="ltr">B</span> Competitive and moral pressure from industry rivals can push businesses to adopt greener practices.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,false,'sa1','This is a specific example, not the general finding.')"><span class="ltr">C</span> Some companies reduce waste and reuse materials as part of their campaigns.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,false,'sa1','Too vague, it doesn\'t say what is pushing businesses to change.')"><span class="ltr">D</span> Businesses are becoming more environmentally aware nowadays.</button>
+        </div>
+        <div class="fb" id="sa1-fb"></div>
+      </div>
+
+      <div class="card" id="sa2"><div class="q">Same task, a different passage.</div>
+        <div class="quote">"Another 'igniting' factor to push forward sustainable change is technology, which the report describes as a 'crucial tool' when it comes to consumers. […] the research believes that tech innovation will enable 'smarter, greener decisions' and 'help consumers see how they are part of a growing community focused on green issues'."</div>
+        <div class="opts">
+          <button class="opt-btn" onclick="checkMCQ(this,false,'sa2','This is the supporting survey data, not the underlying idea.')"><span class="ltr">A</span> A majority of shoppers, according to survey data, want digital tools to help them live sustainably.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,true,'sa2','Correct, this states the role technology plays according to the passage.')"><span class="ltr">B</span> Digital technology can help consumers make smarter, greener decisions and feel part of a wider community.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,false,'sa2','This is a specific, invented example, not a general claim from the text.')"><span class="ltr">C</span> Some consumers use apps to track their household recycling habits.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,false,'sa2','Too vague, it says nothing about consumers or sustainability specifically.')"><span class="ltr">D</span> Technology is changing many aspects of everyday life.</button>
+        </div>
+        <div class="fb" id="sa2-fb"></div>
+      </div>
+
+      <div class="card"><h3>2.2, Keep or leave out?</h3>
+        <p class="step-intro" style="margin-top:0">For each statement drawn from the article, decide: does it belong in a summary?</p>
+        <div id="koloList"></div>
+        <div class="callout" id="koloPrinciple" style="display:none">MAIN IDEAS → keep. EXAMPLES, FIGURES and SECONDARY SOURCES → usually leave out.</div>
+      </div>
+      <div class="footer-nav"><button class="btn ghost" onclick="goStep(0)">← Back</button><button class="btn gold" onclick="goStep(2)">Continue → Condense</button></div>
+    </div>
+
+    <div class="step-panel" data-step="condense">
+      <div class="step-head"><div class="step-kicker">Step 3 / 7</div><h2>Condense</h2>
+        <p class="step-intro">Several sentences can often collapse into one. Watch how a detailed passage becomes a single idea, then try it yourself.</p></div>
+
+      <div class="card"><h3>3.0, Worked example</h3>
+        <p class="step-intro" style="margin-top:0">Study how this example is solved before you try the next ones yourself.</p>
+        <div class="flow-step">Original</div>
+        <div class="quote">Businesses face real barriers to making sustainable changes. Consumers are concerned about non-recyclable packaging and complex recycling rules. The report specifically names the lack of government financial support as a key obstacle.</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Remove the details</div>
+        <p class="field-lbl">Tick the sentences that are examples, figures or secondary sources, not the core claim itself.</p>
+        <label class="chk-row"><input type="checkbox" disabled> Businesses face real barriers to making sustainable changes.</label>
+        <label class="chk-row"><input type="checkbox" checked disabled> Consumers are concerned about non-recyclable packaging and complex recycling rules.</label>
+        <label class="chk-row"><input type="checkbox" checked disabled> The report specifically names the lack of government financial support as a key obstacle.</label>
+        <div class="fb show ok">Correct, the first sentence is the core claim; the other two are examples/figures to drop.</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Find the common idea</div>
+        <div class="opts" id="cA-common">
+          <button class="opt-btn" disabled><span class="ltr">A</span> Consumer demand drives organic product growth</button>
+          <button class="opt-btn" disabled><span class="ltr">B</span> Green brand marketing budgets are shrinking</button>
+          <button class="opt-btn correct" disabled><span class="ltr">C</span> Unclear rules and lack of support hinder green action</button>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Condense</div>
+        <div class="condensed-box show" id="cA-result"><strong>Condensed sentence ,</strong> Businesses face real barriers to sustainable change, especially a lack of government financial support and unclear recycling guidance.</div>
+      </div>
+
+      <div class="card"><h3>3.1, Now you try</h3>
+        <div class="flow-step">Original</div>
+        <div class="quote">Shoppers are more likely to act sustainably if they believe many others are doing the same. Richard Strachan, the managing director of 3 Sided Cube, said reprimanding people doesn't work if the aim is to reach a mass audience.</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Remove the details</div>
+        <label class="chk-row"><input type="checkbox" data-correct="1" onchange="condenseCheck('cB')"> Shoppers are more likely to act sustainably if they believe many others are doing the same.</label>
+        <label class="chk-row"><input type="checkbox" data-correct="1" onchange="condenseCheck('cB')"> Richard Strachan, the managing director, said reprimanding people doesn't work.</label>
+        <div class="fb" id="cB-details-fb"></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Find the common idea</div>
+        <div class="opts" id="cB-common">
+          <button class="opt-btn" onclick="condenseCommon(this,false,'cB')"><span class="ltr">A</span> Punishing people for bad habits works best</button>
+          <button class="opt-btn" onclick="condenseCommon(this,false,'cB')"><span class="ltr">B</span> Green marketing should target only young shoppers</button>
+          <button class="opt-btn" onclick="condenseCommon(this,true,'cB')"><span class="ltr">C</span> Nudging with social proof beats reprimanding people</button>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Condense</div>
+        <div class="condensed-box" id="cB-result"><strong>Condensed sentence ,</strong> The report recommends a "nudge" approach, using technology and the sense of a growing trend, rather than reprimanding people.</div>
+      </div>
+
+      <div class="card"><h3>3.2, Now you try</h3>
+        <div class="flow-step">Original</div>
+        <div class="quote">Digital technology can help consumers make smarter, greener decisions. Feeling part of a wider sustainability-conscious community also motivates people to act. The report highlights apps and platforms that consumers already use to track their own environmental impact.</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Remove the details</div>
+        <label class="chk-row"><input type="checkbox" data-correct="0" onchange="condenseCheck('cC')"> Digital technology can help consumers make smarter, greener decisions.</label>
+        <label class="chk-row"><input type="checkbox" data-correct="1" onchange="condenseCheck('cC')"> Feeling part of a wider sustainability-conscious community also motivates people to act.</label>
+        <label class="chk-row"><input type="checkbox" data-correct="1" onchange="condenseCheck('cC')"> The report highlights apps and platforms that consumers already use to track their own environmental impact.</label>
+        <div class="fb" id="cC-details-fb"></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Find the common idea</div>
+        <div class="opts" id="cC-common">
+          <button class="opt-btn" onclick="condenseCommon(this,false,'cC')"><span class="ltr">A</span> Younger consumers spend more on eco-friendly products</button>
+          <button class="opt-btn" onclick="condenseCommon(this,false,'cC')"><span class="ltr">B</span> Government subsidies drive most green purchases</button>
+          <button class="opt-btn" onclick="condenseCommon(this,true,'cC')"><span class="ltr">C</span> Technology and a sense of belonging both drive greener choices</button>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Condense</div>
+        <div class="condensed-box" id="cC-result"><strong>Condensed sentence ,</strong> Digital technology and a sense of belonging to a wider sustainability-conscious community both help consumers make greener choices.</div>
+      </div>
+
+      <div class="card"><h3>3.3, Find the right level of detail</h3>
+        <p class="step-intro" style="margin-top:0">Match each candidate sentence about brand peer pressure to the right label.</p>
+        <div class="match-row"><span>"If one supermarket cuts plastic packaging by 12% in a year, three rivals will match the pledge within six months."</span><select id="cal1"><option value="">–</option><option value="detailed">Too detailed</option><option value="ok">Appropriate</option></select></div>
+        <div class="match-row"><span>"Competitive and moral pressure from rival brands can push a wide range of businesses to gradually adopt greener working practices."</span><select id="cal2"><option value="">–</option><option value="detailed">Too detailed</option><option value="ok">Appropriate</option></select></div>
+        <div class="match-row" style="border-bottom:none"><span>"When a clothing retailer announced a 30% cut to packaging waste last spring, two competitors launched matching schemes within four months."</span><select id="cal3"><option value="">–</option><option value="detailed">Too detailed</option><option value="ok">Appropriate</option></select></div>
+        <button class="btn" onclick="checkCalibration()">Check my answers</button>
+        <div class="fb" id="cal-fb"></div>
+      </div>
+      <div class="footer-nav"><button class="btn ghost" onclick="goStep(1)">← Back</button><button class="btn gold" onclick="goStep(3)">Continue → Reformulate</button></div>
+    </div>
+
+    <div class="step-panel" data-step="reformulate">
+      <div class="step-head"><div class="step-kicker">Step 4 / 7</div><h2>Reformulate</h2>
+        <p class="step-intro">Four reusable techniques to put ideas into your own words, the skill you'll need for every future summary, not just this one.</p></div>
+
+      <div class="card"><h3>4.1, Synonym</h3><div class="q">Replace <em>tools</em> with a suitable synonym and rewrite the sentence.</div>
+        <div class="quote">"Technology is one of the best tools we have to make this happen."</div>
+        <input class="txt" id="r1" placeholder="Rewrite the sentence with a synonym for 'tools'…">
+        <button class="btn" onclick="checkReformulate('r1','r1-fb',['means','instruments','resources','levers','assets'],'tools')">Check</button>
+        <div class="fb" id="r1-fb"></div>
+        <button class="btn ghost small" onclick="toggleModel('r1-model')">Show model</button>
+        <div class="quote" id="r1-model" style="display:none;border-left-color:var(--gold);background:var(--warn-bg);margin-top:.8rem"><strong>Model ,</strong> Technology is one of the best means we have to make this happen.</div>
+      </div>
+
+      <div class="card"><h3>4.2, Change the structure</h3><div class="q">Rewrite this sentence in the <em>passive voice</em>.</div>
+        <div class="quote">"3 Sided Cube released the Igniting A Green Revolution report."</div>
+        <input class="txt" id="r2" placeholder="Rewrite using the passive voice…">
+        <button class="btn" onclick="checkReformulate('r2','r2-fb',['was released','being released','has been released'],null)">Check</button>
+        <div class="fb" id="r2-fb"></div>
+        <button class="btn ghost small" onclick="toggleModel('r2-model')">Show model</button>
+        <div class="quote" id="r2-model" style="display:none;border-left-color:var(--gold);background:var(--warn-bg);margin-top:.8rem"><strong>Model ,</strong> The Igniting A Green Revolution report was released by 3 Sided Cube.</div>
+      </div>
+
+      <div class="card"><h3>4.3, Generalise</h3><div class="q">These three issues share something in common. Name the category in a few words.</div>
+        <div class="quote">non-recyclable packaging · complex recycling rules · lack of government financial support</div>
+        <input class="txt" id="r3" placeholder="One umbrella term…">
+        <button class="btn" onclick="checkReformulate('r3','r3-fb',['barrier','obstacle','challenge'],null)">Check</button>
+        <div class="fb" id="r3-fb"></div>
+        <button class="btn ghost small" onclick="toggleModel('r3-model')">Show model</button>
+        <div class="quote" id="r3-model" style="display:none;border-left-color:var(--gold);background:var(--warn-bg);margin-top:.8rem"><strong>Model ,</strong> practical and regulatory barriers</div>
+      </div>
+
+      <div class="card"><h3>4.4, Combine</h3><div class="q">Merge these three short sentences into one.</div>
+        <div class="quote">"Technology can help consumers make smarter decisions. Technology can help consumers make greener decisions. Technology can help consumers feel part of a community."</div>
+        <input class="txt" id="r4" placeholder="One combined sentence…">
+        <button class="btn" onclick="checkCombine()">Check</button>
+        <div class="fb" id="r4-fb"></div>
+        <button class="btn ghost small" onclick="toggleModel('r4-model')">Show model</button>
+        <div class="quote" id="r4-model" style="display:none;border-left-color:var(--gold);background:var(--warn-bg);margin-top:.8rem"><strong>Model ,</strong> Technology can help consumers make smarter, greener decisions and feel part of a wider community.</div>
+      </div>
+      <div class="footer-nav"><button class="btn ghost" onclick="goStep(2)">← Back</button><button class="btn gold" onclick="goStep(4)">Continue → Organise</button></div>
+    </div>
+
+    <div class="step-panel" data-step="organise">
+      <div class="step-head"><div class="step-kicker">Step 5 / 7</div><h2>Organise</h2>
+        <p class="step-intro">This is your plan, built from the work you've just done. <span style="color:var(--wrong,#b5302b);font-weight:700">EDIT</span> the wording if you like, and use the arrows to <span style="color:var(--wrong,#b5302b);font-weight:700">REORDER</span> the main ideas.</p></div>
+      <div class="card">
+        <div class="plan-field"><div class="lbl">Topic</div><textarea id="planTopic" style="min-height:44px"></textarea></div>
+        <div class="plan-field"><div class="lbl">Author's position</div><textarea id="planPosition" style="min-height:44px"></textarea></div>
+        <div class="plan-field"><div class="lbl">Main ideas (reorder with ▲▼)</div><div id="ideaRows"></div></div>
+        <div class="plan-field"><div class="lbl">Conclusion</div><textarea id="planConclusion" style="min-height:44px"></textarea></div>
+      </div>
+      <div class="footer-nav"><button class="btn ghost" onclick="goStep(3)">← Back</button><button class="btn gold" onclick="goStep(5)">Continue → Write</button></div>
+    </div>
+
+    <div class="step-panel" data-step="write">
+      <div class="step-head"><div class="step-kicker">Step 6 / 7</div><h2>Write</h2>
+        <p class="step-intro">Write a 130–180 word summary of the text in English, following your plan.</p></div>
+      <div class="card">
+        <div class="plan-recap" id="planRecap"></div>
+        <div class="field-lbl">Your summary</div>
+        <textarea id="summaryText" style="min-height:220px" placeholder="Write your summary here, in your own words…" oninput="onSummaryInput()"></textarea>
+        <div class="wc-row"><span class="wc-badge" id="wcBadge">0 words</span><button class="btn ghost small" onclick="toggleHelp()">Need help?</button></div>
+        <div class="help-panel" id="helpPanel">
+          <div class="help-sub">Structure</div>
+          <ul>
+          <li>The article examines…</li><li>The author argues that…</li><li>It also points out that…</li>
+          <li>Another concern is…</li><li>Finally, …</li><li>The article concludes that…</li>
+        </ul>
+          <div class="help-sub">Content, ideas to include</div>
+          <ul>
+          <li>Brand peer pressure: companies act partly because rivals' green initiatives get public attention.</li>
+          <li>Technology as a "nudge": tools and apps help turn good intentions into concrete action.</li>
+          <li>Packaging and recycling remain confusing for consumers, even when they want to act.</li>
+          <li>Businesses fear that sustainable initiatives raise costs without a clear return.</li>
+          <li>Overall assessment: are these tools enough on their own, or do they need to be combined with something else (regulation, real financial incentives)?</li>
+        </ul></div>
+      </div>
+      <div class="footer-nav"><button class="btn ghost" onclick="goStep(4)">← Back</button><button class="btn gold" onclick="goStep(6)">Continue → Check</button></div>
+    </div>
+
+    <div class="step-panel" data-step="check">
+      <div class="step-head"><div class="step-kicker">Step 7 / 7</div><h2>Check</h2>
+        <p class="step-intro">Run the check, fix what's flagged, then compare with a model answer.</p></div>
+      <div class="card">
+        <div class="field-lbl">Your current summary</div>
+        <div class="summary-preview" id="summaryPreview"></div>
+        <button class="btn gold" onclick="runCheck()">Analyser mon résumé</button>
+        <button class="btn ghost" onclick="goStep(5)">✏ Edit my summary</button>
+        <div class="fb-grid" id="checkGrid" style="margin-top:1rem"></div>
+      </div>
+      <div class="ia-box" data-ia="summary" data-ia-texte="#summaryText" data-ia-ctx="Document source=#sourcePane .source-body" data-ia-consigne="Résumé de 130 à 180 mots en anglais." data-ia-min="30"></div>
+      <div class="card">
+        <button class="btn ghost" id="compareBtn" onclick="revealModel()" disabled>Compare with a model answer</button>
+        <div class="reveal" id="modelReveal" style="display:none">
+          <p class="model-note" style="color:var(--muted);margin-bottom:.6rem">This is one possible summary. Other answers are possible.</p>
+          <div class="model-legend"><span><i class="swatch" style="background:rgba(201,163,85,.6)"></i>Main idea</span><span><i class="swatch" style="background:#8fc7e8"></i>Reformulation</span><span><i class="swatch" style="background:var(--gold)"></i>Connector</span></div>
+          <div class="model-box"><h4>Model answer</h4>
+            <p><span class="m-conn">The article examines</span> a report by 3 Sided Cube, a British technology company, on <span class="m-main">the factors that can accelerate sustainable behaviour among businesses and consumers</span>. <span class="m-conn">The author explains that</span> <span class="m-main">competitive and moral pressure between rival companies, described as "brand peer pressure", can push businesses to adopt greener practices</span>, alongside ordinary financial incentives. <span class="m-conn">It also points out that</span> <span class="m-main">digital technology helps consumers make smarter, greener choices and feel part of a wider community</span> working together on environmental issues. <span class="m-conn">Another concern is that</span> <span class="m-main">businesses face real barriers to change</span>, particularly a lack of government financial support and unclear recycling guidance, while consumers are put off by confusing packaging rules and inconsistent labelling. <span class="m-conn">Finally,</span> <span class="m-reform">the report concludes that</span> <span class="m-main">nudging people through technology and social proof works better than reprimanding them</span>, and that clearer, more consistent government support remains essential for real, lasting progress.</p>
+            <div class="mono model-note" id="modelWc"></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-nav"><button class="btn ghost" onclick="goStep(5)">← Back to Write</button><button class="btn ghost" onclick="window.print()">🖨 Imprimer</button></div>
+    </div>
+
+  </section>
+</div>
+
+<div class="modal-overlay" id="methodModal"><div class="modal-box">
+  <button class="modal-close" onclick="closeMethod()">✕</button>
+  <h3>Summary Method</h3>
+  <ol>
+    <li><strong>Understand</strong><p>What is the text about? What is the author's position?</p></li>
+    <li><strong>Select</strong><p>Keep main ideas. Remove unnecessary evidence.</p></li>
+    <li><strong>Condense</strong><p>Combine several details into one broader idea.</p></li>
+    <li><strong>Reformulate</strong><p>Use your own words and structures.</p></li>
+    <li><strong>Organise</strong><p>Build a logical plan.</p></li>
+    <li><strong>Write</strong><p>Be concise, accurate and neutral.</p></li>
+    <li><strong>Check</strong><p>Content, selection, reformulation, organisation, language and word count.</p></li>
+  </ol>
+</div></div>
+
+<script>
+const LSK='lsa-dscg-summary-trainer-greenrevolution-v1';
+const STEPS=['understand','select','condense','reformulate','organise','write','check'];
+const STEP_LABELS=['Understand','Select','Condense','Reformulate','Organise','Write','Check'];
+let state=JSON.parse(localStorage.getItem(LSK)||'null')||{cur:0,done:{},u:{},select:{kolo:{}},condense:{},reformulate:{},organise:{prefilled:false,ideas:[],topic:'',position:'',conclusion:''},write:{text:''},check:{analyzed:false}};
+function save(){localStorage.setItem(LSK,JSON.stringify(state))}
+
+function renderNav(){
+  const nav=document.getElementById('stepNav');
+  nav.innerHTML=STEPS.map((s,i)=>`<button class="step-pill${i===state.cur?' active':''}${state.done[s]?' done':''}" onclick="goStep(${i})"><span class="num"><span>${i+1}</span></span>${STEP_LABELS[i]}</button>`).join('');
+}
+function goStep(i){
+  state.cur=i; save();
+  document.querySelectorAll('.step-panel').forEach(p=>p.classList.toggle('active',p.dataset.step===STEPS[i]));
+  renderNav();
+  if(STEPS[i]==='organise')fillOrganise();
+  if(STEPS[i]==='write')fillWriteRecap();
+  if(STEPS[i]==='check')fillCheckPreview();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleDrawer(open){document.getElementById('sourcePane').classList.toggle('open',open)}
+function openMethod(){document.getElementById('methodModal').classList.add('show')}
+function closeMethod(){document.getElementById('methodModal').classList.remove('show')}
+
+function checkMCQ(btn,ok,cardId,explain){
+  const card=document.getElementById(cardId);
+  card.querySelectorAll('.opt-btn').forEach(b=>b.disabled=true);
+  const fb=document.getElementById(cardId+'-fb');
+  if(ok){btn.classList.add('correct');fb.className='fb show ok';fb.innerHTML='<strong>Correct.</strong> '+explain;}
+  else{btn.classList.add('wrong');card.querySelectorAll('.opt-btn').forEach(b=>{if(b.getAttribute('onclick').includes(',true,'))b.classList.add('correct')});fb.className='fb show no';fb.innerHTML='<strong>Not quite.</strong> '+explain;}
+  state.done[STEPS[state.cur]]=true;
+  if(cardId==='u1')state.u.topicOk=ok, state.u.topicText='The factors, like technology and peer pressure, that drive sustainable brand and consumer behaviour.';
+  if(cardId==='u2')state.u.posOk=ok, state.u.posText='Nudging through peer pressure and technology works better than reprimands, though barriers remain.';
+  if(state.u.topicOk!==undefined&&state.u.posOk!==undefined){
+    const s=document.getElementById('uSummary');s.style.display='block';
+    s.innerHTML='<strong>Topic:</strong> '+state.u.topicText+'<br><strong>Author\'s position:</strong> '+state.u.posText;
+  }
+  save(); renderNav();
+}
+
+const KOLO=[
+{t:"Competitive and moral pressure from industry rivals, 'brand peer pressure', can push businesses to adopt greener practices.",keep:true,why:"The report's central finding about businesses, belongs in the summary."},
+{t:"Digital technology can help consumers make smarter, greener decisions and feel part of a wider sustainability-conscious community.",keep:true,why:"The second key driver identified by the report."},
+{t:"The report was released by 3 Sided Cube on Monday, March 8.",keep:false,why:"A date/event detail, mention 3 Sided Cube if useful, not this level of detail."},
+{t:"Businesses face real barriers to sustainable change, especially a lack of government financial support and unclear guidance on recyclable materials.",keep:true,why:"The main obstacle the report identifies for businesses."},
+{t:"3 Sided Cube's managing director, Richard Strachan, made these comments to the press.",keep:false,why:"An anecdotal, secondary detail about a source, not an argument."},
+{t:"Consumers are concerned about non-recyclable packaging and complex recycling rules.",keep:false,why:"A supporting example under the wider barriers idea, not a separate main idea."},
+{t:"The report recommends a 'nudge' approach, using technology and social proof, rather than reprimanding people.",keep:true,why:"The report's core recommendation."},
+{t:"Shoppers are more likely to act if they believe sustainable lifestyles are increasing in popularity.",keep:false,why:"A supporting mechanism behind the nudge idea, a detail, not the idea itself."},
+{t:"Sustainable change requires both market pressure among companies and smarter use of technology, alongside clearer government support.",keep:true,why:"The report's overall conclusion."}
+];
+function renderKolo(){
+  const wrap=document.getElementById('koloList');
+  wrap.innerHTML=KOLO.map((it,i)=>{
+    const st=state.select.kolo[i];
+    let cls='';
+    if(st==='keep')cls=it.keep?'kept':'wrongpick';
+    if(st==='drop')cls=it.keep?'wrongpick':'dropped';
+    return `<div class="kolo-item ${cls}" id="kolo${i}"><div class="txt">${it.t}</div><div class="kolo-actions">
+      <button class="keep-b" ${st?'disabled':''} onclick="koloPick(${i},true)">KEEP</button>
+      <button class="drop-b" ${st?'disabled':''} onclick="koloPick(${i},false)">LEAVE OUT</button></div>
+      ${st?`<div class="kolo-fb">${(st==='keep')===it.keep?'✓ ':'✗ '}${it.why}</div>`:''}</div>`;
+  }).join('');
+}
+function koloPick(i,pickedKeep){
+  state.select.kolo[i]=pickedKeep?'keep':'drop';
+  save(); renderKolo();
+  if(Object.keys(state.select.kolo).length===KOLO.length){
+    document.getElementById('koloPrinciple').style.display='block';
+    state.done.select=true; save(); renderNav();
+  }
+}
+
+function condenseCheck(id){
+  const inputs=[...document.querySelectorAll('.step-panel[data-step="condense"] .card')].find(c=>c.querySelector('#'+id+'-details-fb'));
+  const checks=inputs.querySelectorAll('input[type=checkbox]');
+  const fb=document.getElementById(id+'-details-fb');
+  const total=checks.length; let correct=0;
+  checks.forEach(c=>{ const want=c.dataset.correct==='1'; if(c.checked===want)correct++; });
+  if(correct===total){fb.className='fb show ok';fb.innerHTML='<strong>Good.</strong> You isolated the details/figures correctly.';}
+  else{fb.className='fb show no';fb.innerHTML='Not quite, a main claim should stay unchecked, and figures/secondary sources should be checked.';}
+}
+function condenseCommon(btn,ok,id){
+  document.getElementById(id+'-common').querySelectorAll('.opt-btn').forEach(b=>b.disabled=true);
+  if(ok){btn.classList.add('correct');document.getElementById(id+'-result').classList.add('show');state.done.condense=true;save();renderNav();}
+  else{btn.classList.add('wrong');document.getElementById(id+'-common').querySelectorAll('.opt-btn').forEach(b=>{if(b.getAttribute('onclick').includes(',true,'))b.classList.add('correct')});}
+}
+function checkCalibration(){
+  const a1=document.getElementById('cal1').value,a2=document.getElementById('cal2').value,a3=document.getElementById('cal3').value;
+  const fb=document.getElementById('cal-fb');
+  if(!a1||!a2||!a3){fb.className='fb show no';fb.innerHTML='Please answer all three.';return;}
+  const correct=(a1==='detailed')+(a2==='ok')+(a3==='detailed');
+  if(correct===3){fb.className='fb show ok';fb.innerHTML='<strong>3 / 3 ,</strong> a good summary sentence stays general, specific figures and dates belong to the source text, not the summary.';}
+  else{fb.className='fb show no';fb.innerHTML='<strong>'+correct+' / 3 ,</strong> sentences 1 and 3 are too detailed (they keep the exact figures), sentence 2 is appropriate.';}
+  state.done.condense=true; save(); renderNav();
+}
+
+function toggleModel(id){const el=document.getElementById(id);el.style.display=el.style.display==='none'?'block':'none';}
+function checkReformulate(inputId,fbId,goodWords,forbidden){
+  const val=document.getElementById(inputId).value.trim().toLowerCase();
+  const fb=document.getElementById(fbId);
+  if(val.split(/\s+/).filter(Boolean).length<4){fb.className='fb show no';fb.innerHTML='Write a full sentence.';return;}
+  if(forbidden&&val.includes(forbidden)){fb.className='fb show no';fb.innerHTML='Try again without reusing the original word, compare with the model below.';return;}
+  const hit=goodWords.some(w=>val.includes(w));
+  if(hit){fb.className='fb show ok';fb.innerHTML='<strong>Good.</strong> Compare with the model below.';}
+  else{fb.className='fb show no';fb.innerHTML='Not quite the technique asked for, compare with the model below and try once more if you like.';}
+  state.done.reformulate=true; save(); renderNav();
+}
+function checkCombine(){
+  const val=document.getElementById('r4').value.trim().toLowerCase();
+  const fb=document.getElementById('r4-fb');
+  const words=val.split(/\s+/).filter(Boolean);
+  if(words.length<5){fb.className='fb show no';fb.innerHTML='Write one full combined sentence.';return;}
+  const kw=['smarter','greener','decisions','community','help'];
+  const hits=kw.filter(w=>val.includes(w)).length;
+  if(hits>=2&&words.length<22){fb.className='fb show ok';fb.innerHTML='<strong>Good.</strong> One concise sentence covering the idea. Compare with the model below.';}
+  else{fb.className='fb show no';fb.innerHTML='Try to merge the three benefits into one shorter sentence, compare with the model below.';}
+  state.done.reformulate=true; save(); renderNav();
+}
+
+function fillOrganise(){
+  if(!state.organise.prefilled){
+    state.organise.topic=state.u.topicText||'';
+    state.organise.position=state.u.posText||'';
+    state.organise.ideas=[
+      "Competitive and moral pressure from industry rivals, 'brand peer pressure', can push businesses to adopt greener practices.",
+      'Digital technology can help consumers make smarter, greener decisions and feel part of a wider sustainability-conscious community.',
+      'Businesses face real barriers to sustainable change, especially a lack of government financial support and unclear recycling guidance.',
+      "The report recommends a 'nudge' approach, using technology and social proof, rather than reprimanding people."
+    ];
+    state.organise.conclusion='Sustainable change requires both market pressure among companies and smarter use of technology, alongside clearer government support.';
+    state.organise.prefilled=true; save();
+  }
+  document.getElementById('planTopic').value=state.organise.topic;
+  document.getElementById('planPosition').value=state.organise.position;
+  document.getElementById('planConclusion').value=state.organise.conclusion;
+  renderIdeaRows();
+}
+function renderIdeaRows(){
+  const wrap=document.getElementById('ideaRows');
+  wrap.innerHTML=state.organise.ideas.map((t,i)=>`<div class="idea-row"><textarea onchange="editIdea(${i},this.value)">${t}</textarea>
+    <div class="reorder-btns"><button ${i===0?'disabled':''} onclick="moveIdea(${i},-1)">▲</button><button ${i===state.organise.ideas.length-1?'disabled':''} onclick="moveIdea(${i},1)">▼</button></div></div>`).join('');
+}
+function editIdea(i,val){state.organise.ideas[i]=val;save();}
+function moveIdea(i,dir){
+  const arr=state.organise.ideas; const j=i+dir;
+  if(j<0||j>=arr.length)return;
+  [arr[i],arr[j]]=[arr[j],arr[i]]; save(); renderIdeaRows();
+}
+document.addEventListener('change',e=>{
+  if(e.target.id==='planTopic'){state.organise.topic=e.target.value;save();}
+  if(e.target.id==='planPosition'){state.organise.position=e.target.value;save();}
+  if(e.target.id==='planConclusion'){state.organise.conclusion=e.target.value;state.done.organise=true;save();renderNav();}
+});
+
+function fillWriteRecap(){
+  const o=state.organise;
+  document.getElementById('planRecap').innerHTML=
+    '<div><span class="k">Topic</span>, '+(o.topic||',')+'</div>'+
+    '<div><span class="k">Position</span>, '+(o.position||',')+'</div>'+
+    o.ideas.map((t,i)=>'<div><span class="k">Idea '+(i+1)+'</span>, '+t+'</div>').join('')+
+    '<div><span class="k">Conclusion</span>, '+(o.conclusion||',')+'</div>';
+  document.getElementById('summaryText').value=state.write.text||'';
+  updateWc();
+}
+function onSummaryInput(){state.write.text=document.getElementById('summaryText').value;save();updateWc();state.done.write=(wc()>0);renderNav();}
+function wc(){return (document.getElementById('summaryText').value.trim().match(/\S+/g)||[]).length}
+function updateWc(){
+  const n=wc(); const b=document.getElementById('wcBadge');
+  b.textContent=n+' words';
+  b.className='wc-badge '+(n<130?'low':n>180?'high':'ok');
+  if(n>=130&&n<=180)b.textContent+=' ✓';
+}
+function toggleHelp(){document.getElementById('helpPanel').classList.toggle('show')}
+
+function fillCheckPreview(){
+  document.getElementById('summaryPreview').textContent=state.write.text||'(no summary written yet, go back to Write)';
+}
+const VERBATIM=['brand peer pressure',"reprimanding people doesn't work",'increasing in popularity every day','smarter, greener decisions','wake up to their responsibilities'];
+function runCheck(){
+  const raw=state.write.text||''; const low=raw.toLowerCase(); const n=wc();
+  const grid=document.getElementById('checkGrid');
+  if(n<20){grid.innerHTML='<div class="fb-panel lvl-bad"><div class="fb-panel-head">Write your summary first<span class="tag">,</span></div></div>';return;}
+
+  function panel(title,ok,body){return `<div class="fb-panel ${ok?'lvl-ok':'lvl-bad'}"><div class="fb-panel-head">${title}<span class="tag">${ok?'✓ Good':'⚠ Improve this'}</span></div><div class="fb-panel-body">${body}</div></div>`;}
+
+  const contentKw=['3 sided cube','peer pressure','technolog','barrier','government','nudge','recycl','sustainab','community'];
+  const contentHits=contentKw.filter(k=>low.includes(k)).length;
+  const contentOk=contentHits>=6;
+
+  const detailKw=['march 8','richard strachan','monday','managing director'];
+  const detailHits=detailKw.filter(k=>low.includes(k)).length;
+  const selectionOk=detailHits===0;
+
+  const copied=VERBATIM.filter(v=>low.includes(v));
+  const firstPerson=/\b(i think|in my opinion|i believe|\bwe\b)/i.test(raw);
+  const reformOk=copied.length===0&&!firstPerson;
+
+  const connectors=['however','because','although','finally','in conclusion','also','moreover','therefore'];
+  const connHits=connectors.filter(c=>low.includes(c)).length;
+  const orgOk=connHits>=2;
+
+  const sentences=raw.split(/[.!?]+/).filter(s=>s.trim());
+  const avgLen=sentences.reduce((a,s)=>a+s.trim().split(/\s+/).length,0)/Math.max(1,sentences.length);
+  const languageOk=avgLen<=32&&sentences.length>=4;
+
+  const lengthOk=n>=130&&n<=180;
+
+  grid.innerHTML=
+    panel('Content, topic, position, essential arguments',contentOk,contentOk?'The main arguments seem present.':'Make sure you mention the topic, the author\'s position, and the core arguments (peer pressure, technology, barriers, nudge recommendation, conclusion).')+
+    panel('Selection, no unnecessary examples/figures',selectionOk,selectionOk?'No stray details detected, good, you generalised the evidence.':'Specific details detected ('+detailHits+'). Replace them with the general idea they illustrate.')+
+    panel('Reformulation, your own words',reformOk,reformOk?'No verbatim phrases or first-person opinion detected.':(copied.length?'Phrase copied from the source: "'+copied[0]+'". Reformulate it. ':'')+(firstPerson?'Avoid first-person opinion ("I think…").':''))+
+    panel('Organisation, logical progression',orgOk,orgOk?'Connectors link your ideas ('+connHits+' found).':'Add a few connectors (however, because, finally…) to link your ideas clearly.')+
+    panel('Language, clear, neutral sentences',languageOk,languageOk?'Sentence length and structure look reasonable.':'Some sentences may be too long or too few, aim for clear, medium-length sentences.')+
+    panel('Length, 130–180 words',lengthOk,lengthOk?'Word count: '+n+'.':'Word count: '+n+'. Adjust to reach 130–180 words.');
+
+  state.check.analyzed=true; save();
+  document.getElementById('compareBtn').disabled=false;
+}
+function revealModel(){
+  document.getElementById('modelReveal').style.display='block';
+  const mwc=document.querySelector('#modelReveal .model-box p').textContent.trim().split(/\s+/).length;
+  document.getElementById('modelWc').textContent='≈ '+mwc+' words';
+}
+
+renderNav();
+renderKolo();
+document.querySelectorAll('.step-panel').forEach(p=>p.classList.toggle('active',p.dataset.step===STEPS[state.cur]));
+if(state.u.topicOk!==undefined&&state.u.posOk!==undefined){document.getElementById('uSummary').style.display='block';document.getElementById('uSummary').innerHTML='<strong>Topic:</strong> '+state.u.topicText+'<br><strong>Author\'s position:</strong> '+state.u.posText;}
+if(Object.keys(state.select.kolo).length===KOLO.length)document.getElementById('koloPrinciple').style.display='block';
+if(STEPS[state.cur]==='organise')fillOrganise();
+if(STEPS[state.cur]==='write')fillWriteRecap();
+if(STEPS[state.cur]==='check'){fillCheckPreview();if(state.check.analyzed)document.getElementById('compareBtn').disabled=false;}
+</script>
+<div class="visit-count" id="visitCount" style="text-align:center;padding:.8rem 0 1.4rem"></div>
+<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-dscg-'+encodeURIComponent(k)+'&label=Visites&countColor=%23c8a84b&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script>
+<script src="assets/ia.js"></script>
+</body>
+</html>

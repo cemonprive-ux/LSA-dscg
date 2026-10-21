@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f1a33"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="LSA DSCG"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" href="assets/icon-180.png"><script src="assets/app-nav.js"></script>
+<title>Vocabulaire · Chapitre 7 Marketing · LSA Toolbox</title>
+<link rel="icon" type="image/png" href="assets/favicon-dscg.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+:root{
+  --navy:#1a2744;--navy-deep:#0f1a33;--navy-mid:#243260;--blue:#2d5fa6;
+  --accent:#f5b60f;--accent-deep:#c98f00;--green:#2a7a4b;--red:#b5302b;
+  --bg:#f5f3ef;--surface:#ffffff;--border:#ddd5c5;--text:#2a2520;--muted:#7a7060;
+  --shadow:0 2px 14px rgba(26,39,68,.10);--shadow-lg:0 14px 40px rgba(26,39,68,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Quicksand',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased;}
+a{color:var(--blue);text-decoration:none;}
+a:hover{color:var(--navy);}
+h1,h2,h3{font-family:'Quicksand',sans-serif;}
+.topbar{background:var(--navy-deep);color:rgba(255,255,255,.7);font-size:12.5px;}
+.topbar-inner{max-width:1040px;margin:0 auto;padding:9px 28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+.topbar .place{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.12em;font-size:11px;}
+.topbar .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);}
+.topbar a.back{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:4px 13px;transition:all .2s;font-size:11.5px;}
+.topbar a.back:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(200,168,75,.6);}
+.head{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,var(--blue) 135%);border-bottom:3px solid var(--accent);}
+.head::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 88% -10%,rgba(74,123,200,.4),transparent 55%);}
+.head-inner{position:relative;z-index:2;max-width:1040px;margin:0 auto;padding:42px 28px 34px;}
+.breadcrumb{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:12px;letter-spacing:.04em;color:rgba(255,255,255,.85);margin-bottom:16px;}
+.breadcrumb a{color:rgba(255,255,255,.85);border-bottom:1px solid transparent;transition:.2s;}
+.breadcrumb a:hover{color:#fff;border-bottom-color:var(--accent);}
+.breadcrumb .sep{opacity:.5;}
+.breadcrumb .tag{background:var(--green);color:#fff;border-radius:5px;padding:2px 9px;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+.head h1{color:var(--accent);font-weight:700;font-size:clamp(2rem,4.2vw,2.9rem);line-height:1.05;}
+.head .sub{color:rgba(255,255,255,.78);font-size:clamp(14px,1.8vw,16.5px);font-style:italic;margin-top:10px;max-width:600px;}
+main{max-width:900px;margin:0 auto;padding:44px 28px 30px;}
+
+/* ─── MENU ─── */
+#screen-menu .menu-lede{text-align:center;color:var(--muted);max-width:560px;margin:0 auto 34px;}
+.menu-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.menu-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:26px 22px;box-shadow:var(--shadow);cursor:pointer;font-family:inherit;text-align:left;transition:all .2s;border-top:4px solid var(--green);display:flex;flex-direction:column;gap:12px;}
+.menu-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px);border-color:var(--green);}
+.menu-card .m-ico{width:44px;height:44px;border-radius:10px;background:color-mix(in srgb,var(--green) 13%,#fff);color:var(--green);display:flex;align-items:center;justify-content:center;}
+.menu-card h3{color:var(--navy);font-size:1.2rem;}
+.menu-card p{color:var(--muted);font-size:14px;line-height:1.5;}
+.menu-card .go{color:var(--green);font-weight:600;font-size:13.5px;display:inline-flex;align-items:center;gap:6px;margin-top:auto;}
+.list-actions{display:flex;justify-content:center;margin-bottom:22px;}
+.download-btn{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-weight:600;font-size:14px;background:var(--navy);color:#fff;border:none;border-radius:24px;padding:11px 24px;cursor:pointer;transition:all .2s;}
+.download-btn:hover{background:var(--navy-mid);}
+.vocab-list{max-width:640px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:8px 0;}
+.list-row{display:flex;justify-content:space-between;gap:16px;padding:12px 26px;border-bottom:1px solid var(--border);font-size:15px;}
+.list-row:last-child{border-bottom:none;}
+.list-fr{color:var(--navy);font-weight:600;}
+.list-sep{color:var(--muted);}
+.list-en{color:var(--text);text-align:right;}
+@media print{
+  .topbar,footer,.ex-top,.list-actions,main>section:not(#screen-list){display:none!important;}
+  #screen-list{display:block!important;}
+  body{background:#fff;}
+}
+
+
+/* ─── EXERCISE SHELL ─── */
+.ex-screen{display:none;}
+.ex-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px;flex-wrap:wrap;gap:10px;}
+.ex-back{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:13.5px;background:none;border:none;cursor:pointer;font-family:inherit;padding:0;}
+.ex-back:hover{color:var(--navy);}
+.score{font-size:13.5px;font-weight:600;color:var(--navy);background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:6px 15px;}
+.score b{color:var(--green);}
+.progress{text-align:center;color:var(--muted);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px;}
+.ex-heading{text-align:center;color:var(--navy);font-size:1.3rem;margin-bottom:4px;}
+.ex-heading .count{font-size:.8rem;font-weight:400;color:var(--muted);}
+
+/* ─── FLASHCARD ─── */
+.flash-row{display:flex;align-items:center;justify-content:center;gap:18px;}
+.flash-arrow{flex-shrink:0;width:44px;height:44px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--navy);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .18s;box-shadow:var(--shadow);}
+.flash-arrow:hover{border-color:var(--green);color:var(--green);transform:translateY(-2px);}
+.flash-arrow:disabled{opacity:.35;cursor:default;transform:none;}
+.card-wrap{width:100%;max-width:440px;perspective:1400px;}
+.card{position:relative;height:230px;cursor:pointer;}
+.card-face{position:absolute;inset:0;border-radius:16px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow-lg);backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;transition:transform .5s cubic-bezier(.4,0,.2,1);}
+.card-front{transform:rotateY(0deg);}
+.card-back{transform:rotateY(180deg);background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);border:none;}
+.card.flipped .card-front{transform:rotateY(180deg);}
+.card.flipped .card-back{transform:rotateY(360deg);}
+.card-fr{font-size:1.7rem;font-weight:600;color:var(--navy);text-align:center;text-wrap:balance;}
+.card-hint{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;}
+.card-en{font-size:1.6rem;font-weight:700;color:#fff;text-align:center;text-wrap:balance;font-family:'Quicksand',sans-serif;}
+.card-en u{text-decoration:none;border-bottom:3px solid var(--accent);}
+.card-index{position:absolute;top:14px;left:16px;font-size:11px;letter-spacing:.06em;font-weight:700;color:var(--muted);}
+.card-back .card-index{color:rgba(255,255,255,.6);}
+.speaker{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.14);border:none;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .18s;}
+.speaker:hover{background:rgba(255,255,255,.28);}
+.self-assess{display:flex;justify-content:center;gap:12px;margin-top:20px;opacity:0;transition:opacity .25s;}
+.self-assess.show{opacity:1;}
+.assess-btn{font-family:inherit;font-size:14px;font-weight:600;border-radius:24px;padding:10px 20px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--navy);transition:all .18s;}
+.assess-btn.know{border-color:var(--green);color:var(--green);}
+.assess-btn.know:hover{background:var(--green);color:#fff;}
+.assess-btn.dont{border-color:var(--red);color:var(--red);}
+.assess-btn.dont:hover{background:var(--red);color:#fff;}
+
+/* ─── MCQ / TYPE COMMON ─── */
+.ex-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:32px 34px;max-width:560px;margin:0 auto;}
+.fr-prompt{text-align:center;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-deep);font-weight:700;margin-bottom:6px;}
+.fr-word{text-align:center;font-size:1.5rem;font-weight:600;color:var(--navy);margin-bottom:22px;text-wrap:balance;}
+.fr-word.hidden{display:none;}
+.help-btn{display:block;margin:0 auto 16px;font-family:inherit;font-size:13px;font-weight:600;color:var(--green);background:none;border:1px solid var(--border);border-radius:20px;padding:7px 16px;cursor:pointer;transition:all .18s;}
+.help-btn:hover{border-color:var(--green);background:color-mix(in srgb,var(--green) 8%,#fff);}
+.sentence{text-align:center;font-size:1.15rem;line-height:1.6;color:var(--text);margin-bottom:26px;font-style:italic;}
+.blank{display:inline-block;min-width:110px;border-bottom:2px solid var(--green);color:var(--green);font-weight:700;font-style:normal;padding:0 4px;}
+
+/* dropdown */
+.dd{position:relative;margin:0 auto 18px;max-width:360px;}
+.dd-btn{width:100%;text-align:left;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:13px 16px;font-family:inherit;font-size:15px;color:var(--muted);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.dd-btn.picked{color:var(--navy);font-weight:600;}
+.dd-list{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow-lg);z-index:5;overflow:hidden;display:none;}
+.dd-list.open{display:block;}
+.dd-opt{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 15px;cursor:pointer;font-size:15px;border-bottom:1px solid var(--border);}
+.dd-opt:last-child{border-bottom:none;}
+.dd-opt:hover{background:var(--bg);}
+.dd-opt u{text-decoration:none;border-bottom:2px solid var(--accent-deep);}
+.dd-opt .speaker-mini{width:26px;height:26px;border-radius:50%;background:color-mix(in srgb,var(--green) 12%,#fff);color:var(--green);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
+.dd-opt .speaker-mini:hover{background:var(--green);color:#fff;}
+
+.type-input{display:block;width:100%;max-width:320px;margin:0 auto 18px;font-family:inherit;font-size:16px;padding:12px 16px;border:1px solid var(--border);border-radius:10px;text-align:center;}
+.type-input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(42,122,75,.15);}
+
+.verify-btn{display:block;margin:0 auto;font-family:inherit;font-weight:600;font-size:14.5px;background:var(--navy);color:#fff;border:none;border-radius:24px;padding:11px 28px;cursor:pointer;transition:all .2s;}
+.verify-btn:hover{background:var(--green);}
+.verify-btn:disabled{opacity:.4;cursor:default;}
+.feedback{text-align:center;margin-top:16px;font-weight:600;font-size:14.5px;min-height:20px;}
+.feedback.ok{color:var(--green);}
+.feedback.ko{color:var(--red);}
+.nav-arrows{display:flex;justify-content:center;gap:20px;margin-top:24px;}
+
+/* ─── FOOTER ─── */
+footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;border-top:3px solid var(--accent);}
+.foot-inner{max-width:1040px;margin:0 auto;padding:30px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:13px;}
+.foot-brand{display:flex;align-items:center;gap:13px;}
+.foot-brand img{width:38px;height:38px;border-radius:9px;}
+.foot-brand strong{color:#fff;font-weight:600;font-size:15px;display:block;}
+
+@media(max-width:640px){
+  body{font-size:16px;}
+  .menu-cards{grid-template-columns:1fr;}
+  main{padding:34px 20px 24px;}
+  .ex-card{padding:26px 20px;}
+  .card-wrap{max-width:280px;}
+  .flash-row{gap:10px;}
+}
+.visit-count{margin-top:8px}.visit-count img{height:16px;vertical-align:middle}
+</style>
+<style id="lsa-h1-or">h1,h1 em,h1 span{color:#f5b60f!important}</style></head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="place"><span class="dot"></span>Lycée Sidoine Apollinaire · Clermont-Ferrand</span>
+    <a class="back" href="index.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Retour à l'accueil
+    </a>
+  </div>
+</div>
+
+<header class="head" data-screen-label="Vocabulaire Marketing · en-tête">
+  <div class="head-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Accueil</a>
+      <span class="sep">›</span>
+      <span>DSCG</span>
+      <span class="sep">›</span>
+      <span>Vocabulaire</span>
+      <span class="tag">Chapitre 7 · Marketing</span>
+    </div>
+    <h1>Vocabulaire : Marketing</h1>
+    <p class="sub">Vocabulaire du marketing du chapitre 7 du programme DSCG.</p>
+  </div>
+</header>
+
+<main>
+
+  <section id="screen-menu" data-screen-label="Menu des exercices">
+    <p class="menu-lede">50 mots et expressions de marketing. Choisissez un exercice pour vous entraîner.</p>
+    <div class="menu-cards">
+      <button class="menu-card" onclick="goTo('list')">
+        <span class="m-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span>
+        <h3>Consulter la liste</h3>
+        <p>Affichez tous les mots de la liste et téléchargez-les au format PDF.</p>
+        <span class="go">Consulter <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </button>
+      <button class="menu-card" onclick="goTo('flash')">
+        <span class="m-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="10" rx="2"/><path d="M21 8v8"/></svg></span>
+        <h3>Flashcards</h3>
+        <p>Le mot français apparaît, retournez la carte pour découvrir sa traduction et l'écouter.</p>
+        <span class="go">Commencer <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </button>
+      <button class="menu-card" onclick="goTo('mcq')">
+        <span class="m-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18h1.5a2.5 2.5 0 0 0 0-5H13a2 2 0 0 1 0-4h4a4 4 0 0 0 4-4 5 5 0 0 0-5-5Z"/><circle cx="7.5" cy="11.5" r="1.1"/><circle cx="10.5" cy="7.5" r="1.1"/><circle cx="15" cy="7" r="1.1"/></svg></span>
+        <h3>QCM en contexte</h3>
+        <p>Une phrase à trous et quatre traductions possibles à choisir dans une liste déroulante.</p>
+        <span class="go">Commencer <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </button>
+      <button class="menu-card" onclick="goTo('type')">
+        <span class="m-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/><path d="M14 4v6h6M8 13h8M8 17h5"/></svg></span>
+        <h3>Complétez la phrase</h3>
+        <p>Tapez le mot anglais manquant pour compléter la phrase, puis vérifiez votre réponse.</p>
+        <span class="go">Commencer <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </button>
+    </div>
+  </section>
+
+  <!-- LIST -->
+  <section class="ex-screen" id="screen-list" data-screen-label="Exercice · Consulter la liste">
+    <div class="ex-top">
+      <button class="ex-back" onclick="goTo('menu')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Liste des exercices</button>
+    </div>
+    <h2 class="ex-heading">Liste complète <span class="count" id="list-heading-count"></span></h2>
+    <div class="list-actions">
+      <button class="download-btn" onclick="downloadList()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg> Télécharger la liste (PDF)</button>
+    </div>
+    <div class="vocab-list" id="vocab-list"></div>
+  </section>
+
+  <!-- FLASHCARDS -->
+  <section class="ex-screen" id="screen-flash" data-screen-label="Exercice · Flashcards">
+    <div class="ex-top">
+      <button class="ex-back" onclick="goTo('menu')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Liste des exercices</button>
+      <span class="score">Bonnes réponses : <b id="flash-score">0</b> / <span id="flash-total">0</span></span>
+    </div>
+    <h2 class="ex-heading">Flashcards <span class="count" id="flash-heading-count"></span></h2>
+    <p class="progress" id="flash-progress">Carte 1 / 50</p>
+    <div class="flash-row">
+      <button class="flash-arrow" id="flash-prev" onclick="flashNav(-1)" aria-label="Mot précédent"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 9 12l6-6"/></svg></button>
+      <div class="card-wrap">
+        <div class="card" id="flash-card" onclick="flipCard()">
+          <div class="card-face card-front">
+            <div class="card-index" id="flash-index-front"></div>
+            <div class="card-fr" id="flash-fr"></div>
+            <div class="card-hint">Appuyez pour retourner</div>
+          </div>
+          <div class="card-face card-back">
+            <div class="card-index" id="flash-index-back"></div>
+            <button class="speaker" onclick="event.stopPropagation();speak(flashCurrentTerm())" aria-label="Écouter la prononciation"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M16 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+            <div class="card-en" id="flash-en"></div>
+          </div>
+        </div>
+      </div>
+      <button class="flash-arrow" id="flash-next" onclick="flashNav(1)" aria-label="Mot suivant"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+    <div class="self-assess" id="flash-assess">
+      <button class="assess-btn dont" onclick="flashAssess(false)">Je ne savais pas ✗</button>
+      <button class="assess-btn know" onclick="flashAssess(true)">Je savais ✓</button>
+    </div>
+  </section>
+
+  <!-- MCQ -->
+  <section class="ex-screen" id="screen-mcq" data-screen-label="Exercice · QCM en contexte">
+    <div class="ex-top">
+      <button class="ex-back" onclick="goTo('menu')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Liste des exercices</button>
+      <span class="score">Bonnes réponses : <b id="mcq-score">0</b> / <span id="mcq-total">0</span></span>
+    </div>
+    <p class="progress" id="mcq-progress">Question 1 / 50</p>
+    <div class="ex-card">
+      <div class="fr-prompt">Mot français</div>
+      <button class="help-btn" id="mcq-help-btn" onclick="toggleHelp('mcq')">J'ai besoin d'aide</button>
+      <div class="fr-word hidden" id="mcq-fr"></div>
+      <div class="sentence" id="mcq-sentence"></div>
+      <div class="dd" id="mcq-dd">
+        <button class="dd-btn" id="mcq-dd-btn" onclick="toggleDD()">Choisissez une traduction<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="dd-list" id="mcq-dd-list"></div>
+      </div>
+      <button class="verify-btn" id="mcq-verify" onclick="mcqVerify()" disabled>Vérifier</button>
+      <p class="feedback" id="mcq-feedback"></p>
+    </div>
+    <div class="nav-arrows">
+      <button class="flash-arrow" onclick="mcqNav(-1)" aria-label="Question précédente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 9 12l6-6"/></svg></button>
+      <button class="flash-arrow" onclick="mcqNav(1)" aria-label="Question suivante"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+  </section>
+
+  <!-- TYPE -->
+  <section class="ex-screen" id="screen-type" data-screen-label="Exercice · Complétez la phrase">
+    <div class="ex-top">
+      <button class="ex-back" onclick="goTo('menu')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Liste des exercices</button>
+      <span class="score">Bonnes réponses : <b id="type-score">0</b> / <span id="type-total">0</span></span>
+    </div>
+    <p class="progress" id="type-progress">Phrase 1 / 50</p>
+    <div class="ex-card">
+      <div class="fr-prompt">Mot français</div>
+      <button class="help-btn" id="type-help-btn" onclick="toggleHelp('type')">J'ai besoin d'aide</button>
+      <div class="fr-word hidden" id="type-fr"></div>
+      <div class="sentence" id="type-sentence"></div>
+      <input type="text" class="type-input" id="type-input" placeholder="Tapez le mot en anglais" autocomplete="off">
+      <button class="verify-btn" id="type-verify" onclick="typeVerify()">Vérifier</button>
+      <p class="feedback" id="type-feedback"></p>
+    </div>
+    <div class="nav-arrows">
+      <button class="flash-arrow" onclick="typeNav(-1)" aria-label="Phrase précédente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 9 12l6-6"/></svg></button>
+      <button class="flash-arrow" onclick="typeNav(1)" aria-label="Phrase suivante"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <img src="assets/lsa-logo.png" alt="Logo LSA">
+      <div><strong>LSA Toolbox</strong><span>DSCG · Vocabulaire · Chapitre 7 Marketing · M. Blanchet</span></div>
+    </div>
+    <div>Lycée Sidoine Apollinaire, Clermont-Ferrand</div>
+  </div>
+<div class="visit-count" id="visitCount"></div></footer>
+
+<script>
+const VOCAB=[
+{fr:"produit",en:"product",enHTML:"<u>prod</u>uct",sentence:"The company launched a new ___ last month."},
+{fr:"gamme de produits",en:"product range",enHTML:"<u>prod</u>uct range",sentence:"They expanded their ___ into new markets."},
+{fr:"cycle de vie du produit",en:"product life cycle",enHTML:"<u>prod</u>uct life <u>cy</u>cle",sentence:"Every ___ eventually reaches a decline stage."},
+{fr:"marque",en:"brand",enHTML:"brand",sentence:"Customers trust this ___ for quality."},
+{fr:"stratégie / image de marque",en:"branding",enHTML:"<u>brand</u>ing",sentence:"Strong ___ helps a company stand out."},
+{fr:"publicité",en:"advertising",enHTML:"<u>ad</u>vertising",sentence:"___ spending increased before the holiday season."},
+{fr:"promotion",en:"promotion",enHTML:"pro<u>mo</u>tion",sentence:"The store ran a summer sales ___."},
+{fr:"ventes",en:"sales",enHTML:"sales",sentence:"___ increased sharply after the campaign."},
+{fr:"client",en:"customer",enHTML:"<u>cus</u>tomer",sentence:"Every ___ received a personalized thank-you email."},
+{fr:"consommateur",en:"consumer",enHTML:"con<u>sum</u>er",sentence:"The average ___ compares prices before buying."},
+{fr:"fidélité client",en:"customer loyalty",enHTML:"<u>cus</u>tomer <u>loy</u>alty",sentence:"Rewards programs build long-term ___."},
+{fr:"marché cible",en:"target market",enHTML:"<u>tar</u>get <u>mar</u>ket",sentence:"The brand identified young professionals as its ___."},
+{fr:"étude de marché",en:"market research",enHTML:"<u>mar</u>ket <u>re</u>search",sentence:"___ revealed strong demand for the product."},
+{fr:"enquête / sondage",en:"survey",enHTML:"<u>sur</u>vey",sentence:"The company sent a ___ to loyal customers."},
+{fr:"groupe de discussion",en:"focus group",enHTML:"<u>fo</u>cus group",sentence:"A ___ tested the new packaging design."},
+{fr:"tarification / fixation des prix",en:"pricing",enHTML:"<u>pri</u>cing",sentence:"Competitive ___ attracted many new customers."},
+{fr:"remise / réduction",en:"discount",enHTML:"<u>dis</u>count",sentence:"The store offered a seasonal ___ online."},
+{fr:"canal de distribution",en:"distribution channel",enHTML:"distri<u>bu</u>tion <u>chan</u>nel",sentence:"The company added an online ___."},
+{fr:"détaillant",en:"retailer",enHTML:"<u>re</u>tailer",sentence:"The ___ ordered extra stock for winter."},
+{fr:"grossiste",en:"wholesaler",enHTML:"<u>whole</u>saler",sentence:"The ___ supplies goods to small shops."},
+{fr:"commerce électronique",en:"e-commerce",enHTML:"e-<u>com</u>merce",sentence:"___ sales grew rapidly during the pandemic."},
+{fr:"marketing en ligne",en:"online marketing",enHTML:"<u>on</u>line <u>mar</u>keting",sentence:"___ reaches customers through social platforms."},
+{fr:"marketing viral",en:"viral marketing",enHTML:"<u>vi</u>ral <u>mar</u>keting",sentence:"The ___ campaign spread quickly online."},
+{fr:"réseaux sociaux",en:"social media",enHTML:"<u>so</u>cial <u>me</u>dia",sentence:"The brand promotes products through ___."},
+{fr:"part de marché",en:"market share",enHTML:"<u>mar</u>ket share",sentence:"The company gained ___ from its rival."},
+{fr:"concurrent",en:"competitor",enHTML:"com<u>pet</u>itor",sentence:"A new ___ entered the local market."},
+{fr:"concurrence",en:"competition",enHTML:"compe<u>ti</u>tion",sentence:"Fierce ___ forced prices down this year."},
+{fr:"avantage concurrentiel",en:"competitive advantage",enHTML:"com<u>pet</u>itive ad<u>van</u>tage",sentence:"Innovation gave the firm a clear ___."},
+{fr:"demande",en:"demand",enHTML:"de<u>mand</u>",sentence:"___ for the product rose sharply."},
+{fr:"offre",en:"supply",enHTML:"sup<u>ply</u>",sentence:"___ struggled to keep up with demand."},
+{fr:"besoins des clients",en:"customer needs",enHTML:"<u>cus</u>tomer needs",sentence:"The survey identified unmet ___ clearly."},
+{fr:"satisfaction client",en:"customer satisfaction",enHTML:"<u>cus</u>tomer satis<u>fac</u>tion",sentence:"___ scores improved after the redesign."},
+{fr:"service client",en:"customer service",enHTML:"<u>cus</u>tomer <u>serv</u>ice",sentence:"Fast ___ keeps customers coming back."},
+{fr:"avis / retour des clients",en:"customer feedback",enHTML:"<u>cus</u>tomer <u>feed</u>back",sentence:"The team reviewed ___ before the redesign."},
+{fr:"image de marque",en:"brand image",enHTML:"brand <u>im</u>age",sentence:"The scandal damaged the company's ___."},
+{fr:"notoriété de la marque",en:"brand awareness",enHTML:"brand a<u>ware</u>ness",sentence:"The campaign boosted ___ among young people."},
+{fr:"fidélité à la marque",en:"brand loyalty",enHTML:"brand <u>loy</u>alty",sentence:"Strong ___ protects sales during downturns."},
+{fr:"leader du marché",en:"market leader",enHTML:"<u>mar</u>ket <u>lead</u>er",sentence:"The company became the regional ___."},
+{fr:"segment de marché",en:"market segment",enHTML:"<u>mar</u>ket <u>seg</u>ment",sentence:"Each ___ requires a different approach."},
+{fr:"segmentation du marché",en:"market segmentation",enHTML:"<u>mar</u>ket segmen<u>ta</u>tion",sentence:"___ helps target advertising more effectively."},
+{fr:"stratégie marketing",en:"marketing strategy",enHTML:"<u>mar</u>keting <u>strat</u>egy",sentence:"The firm revised its ___ this quarter."},
+{fr:"campagne marketing",en:"marketing campaign",enHTML:"<u>mar</u>keting cam<u>paign</u>",sentence:"The ___ ran across several channels."},
+{fr:"campagne publicitaire",en:"advertising campaign",enHTML:"<u>ad</u>vertising cam<u>paign</u>",sentence:"The ___ launched during the World Cup."},
+{fr:"lancement",en:"launch",enHTML:"launch",sentence:"The product ___ attracted major media attention."},
+{fr:"lancer un produit",en:"to launch a product",enHTML:"to launch a <u>prod</u>uct",sentence:"They plan ___ next spring in Europe."},
+{fr:"chiffres de vente",en:"sales figures",enHTML:"sales <u>fig</u>ures",sentence:"Quarterly ___ exceeded management's expectations."},
+{fr:"chiffre d'affaires provenant des ventes",en:"sales revenue",enHTML:"sales <u>rev</u>enue",sentence:"___ grew by ten percent this year."},
+{fr:"marge bénéficiaire",en:"profit margin",enHTML:"<u>prof</u>it <u>mar</u>gin",sentence:"Rising costs squeezed the company's ___."},
+{fr:"comportement du consommateur",en:"consumer behaviour",enHTML:"con<u>sum</u>er be<u>hav</u>iour",sentence:"___ shifted toward online shopping quickly."},
+{fr:"habitudes d'achat",en:"buying habits",enHTML:"<u>buy</u>ing <u>hab</u>its",sentence:"The survey studied changing customer ___."}
+];
+
+function goTo(name){
+  document.querySelectorAll('.ex-screen').forEach(s=>s.style.display='none');
+  document.getElementById('screen-menu').style.display=name==='menu'?'':'none';
+  if(name!=='menu') document.getElementById('screen-'+name).style.display='block';
+  if(name==='flash') flashRender();
+  if(name==='list') listRender();
+  if(name==='mcq') mcqRender();
+  if(name==='type') typeRender();
+}
+
+function toggleHelp(kind){
+  document.getElementById(kind+'-fr').classList.remove('hidden');
+  document.getElementById(kind+'-help-btn').style.display='none';
+}
+function speak(text){
+  if(!('speechSynthesis' in window)) return;
+  const u=new SpeechSynthesisUtterance(text.replace(/^to\s+/,''));
+  u.lang='en-GB';u.rate=.92;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
+}
+
+/* ─── FLASHCARDS ─── */
+let flashQueue=VOCAB.map((_,i)=>i),flashPos=0,flashFlipped=false,flashScore=0,flashAnswered=0;
+function flashCurrentIdx(){return flashQueue[flashPos];}
+function flashCurrentTerm(){return VOCAB[flashCurrentIdx()].en;}
+document.getElementById('flash-heading-count').textContent='('+VOCAB.length+' mots)';
+document.getElementById('list-heading-count').textContent='('+VOCAB.length+' mots)';
+function listRender(){document.getElementById('vocab-list').innerHTML=VOCAB.map(v=>'<div class="list-row"><span class="list-fr">'+v.fr+'</span><span class="list-sep">-</span><span class="list-en">'+v.en+'</span></div>').join('');}
+function downloadList(){window.print();}
+function flashRender(){
+  const item=VOCAB[flashCurrentIdx()];
+  document.getElementById('flash-fr').textContent=item.fr;
+  document.getElementById('flash-en').innerHTML=item.enHTML;
+  document.getElementById('flash-progress').textContent='Carte '+(flashPos+1)+' / '+flashQueue.length;
+  document.getElementById('flash-index-front').textContent=(flashPos+1)+'/'+flashQueue.length;
+  document.getElementById('flash-index-back').textContent=(flashPos+1)+'/'+flashQueue.length;
+  document.getElementById('flash-card').classList.remove('flipped');
+  document.getElementById('flash-assess').classList.remove('show');
+  flashFlipped=false;
+  document.getElementById('flash-prev').disabled=flashPos===0;
+  document.getElementById('flash-next').disabled=flashPos===flashQueue.length-1;
+}
+function flipCard(){
+  flashFlipped=!flashFlipped;
+  document.getElementById('flash-card').classList.toggle('flipped',flashFlipped);
+  document.getElementById('flash-assess').classList.toggle('show',flashFlipped);
+}
+function flashNav(d){
+  const n=flashPos+d;
+  if(n<0||n>=flashQueue.length) return;
+  flashPos=n;flashRender();
+}
+function flashAssess(known){
+  flashAnswered++;
+  if(known){
+    flashScore++;
+  } else {
+    const idx=flashQueue[flashPos];
+    const insertAt=Math.min(flashPos+4,flashQueue.length);
+    flashQueue.splice(insertAt,0,idx);
+  }
+  document.getElementById('flash-score').textContent=flashScore;
+  document.getElementById('flash-total').textContent=flashAnswered;
+  if(flashPos<flashQueue.length-1){ flashPos++; }
+  flashRender();
+}
+
+/* ─── MCQ ─── */
+let mcqIdx=0,mcqScore=0,mcqAnswered=0,mcqOptions=[],mcqPicked=null,mcqLocked=false;
+function shuffled(arr){return arr.map(v=>[Math.random(),v]).sort((a,b)=>a[0]-b[0]).map(v=>v[1]);}
+const MCQ_ORDER=shuffled(VOCAB.map((_,i)=>i));
+const TYPE_ORDER=shuffled(VOCAB.map((_,i)=>i));
+function mcqBuildOptions(i){
+  const correct=VOCAB[i];
+  const pool=VOCAB.filter((v,idx)=>idx!==i);
+  const distractors=shuffled(pool).slice(0,3);
+  return shuffled([correct,...distractors]);
+}
+function mcqRender(){
+  const item=VOCAB[MCQ_ORDER[mcqIdx]];
+  document.getElementById('mcq-fr').textContent=item.fr;
+  document.getElementById('mcq-fr').classList.add('hidden');
+  document.getElementById('mcq-help-btn').style.display='';
+  document.getElementById('mcq-sentence').innerHTML=item.sentence.replace('___','<span class="blank">?</span>');
+  document.getElementById('mcq-progress').textContent='Question '+(mcqIdx+1)+' / '+VOCAB.length;
+  mcqOptions=mcqBuildOptions(MCQ_ORDER[mcqIdx]);
+  mcqPicked=null;mcqLocked=false;
+  const btn=document.getElementById('mcq-dd-btn');
+  btn.textContent='Choisissez une traduction';btn.classList.remove('picked');
+  document.getElementById('mcq-dd-list').classList.remove('open');
+  document.getElementById('mcq-verify').disabled=true;
+  document.getElementById('mcq-feedback').textContent='';
+  document.getElementById('mcq-feedback').className='feedback';
+  const list=document.getElementById('mcq-dd-list');
+  list.innerHTML=mcqOptions.map((o,idx)=>
+    '<div class="dd-opt" onclick="mcqPick('+idx+')"><span>'+o.enHTML+'</span><button class="speaker-mini" onclick="event.stopPropagation();speak(\''+o.en.replace(/'/g,"\\'")+'\')" aria-label="Écouter"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M16 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></div>'
+  ).join('');
+}
+function toggleDD(){
+  if(mcqLocked) return;
+  document.getElementById('mcq-dd-list').classList.toggle('open');
+}
+function mcqPick(idx){
+  if(mcqLocked) return;
+  mcqPicked=idx;
+  const btn=document.getElementById('mcq-dd-btn');
+  btn.innerHTML='<span>'+mcqOptions[idx].enHTML+'</span>';btn.classList.add('picked');
+  document.getElementById('mcq-dd-list').classList.remove('open');
+  document.getElementById('mcq-verify').disabled=false;
+}
+function mcqVerify(){
+  if(mcqPicked===null||mcqLocked) return;
+  mcqLocked=true;mcqAnswered++;
+  const correct=mcqOptions[mcqPicked].en===VOCAB[MCQ_ORDER[mcqIdx]].en;
+  if(correct) mcqScore++;
+  document.getElementById('mcq-score').textContent=mcqScore;
+  document.getElementById('mcq-total').textContent=mcqAnswered;
+  const fb=document.getElementById('mcq-feedback');
+  fb.textContent=correct?'Bonne réponse !':'Réponse attendue : '+VOCAB[MCQ_ORDER[mcqIdx]].en;
+  fb.className='feedback '+(correct?'ok':'ko');
+}
+function mcqNav(d){
+  const n=mcqIdx+d;
+  if(n<0||n>=VOCAB.length) return;
+  mcqIdx=n;mcqRender();
+}
+
+/* ─── TYPE ─── */
+let typeIdx=0,typeScore=0,typeAnswered=0,typeLocked=false;
+function typeRender(){
+  const item=VOCAB[TYPE_ORDER[typeIdx]];
+  document.getElementById('type-fr').textContent=item.fr;
+  document.getElementById('type-fr').classList.add('hidden');
+  document.getElementById('type-help-btn').style.display='';
+  document.getElementById('type-sentence').innerHTML=item.sentence.replace('___','<span class="blank">'+blankMask(item.en)+'</span>');
+  document.getElementById('type-progress').textContent='Phrase '+(typeIdx+1)+' / '+VOCAB.length;
+  document.getElementById('type-input').value='';
+  document.getElementById('type-input').disabled=false;
+  document.getElementById('type-feedback').textContent='';
+  document.getElementById('type-feedback').className='feedback';
+  typeLocked=false;
+  document.getElementById('type-input').focus();
+}
+function normalize(s){return s.trim().toLowerCase().replace(/^to\s+/,'').replace(/\s+/g,' ');}
+function blankMask(en){return en.replace(/^to\s+/,'').replace(/[A-Za-z]/g,'-');}
+function typeVerify(){
+  if(typeLocked) return;
+  const val=document.getElementById('type-input').value;
+  if(!val.trim()) return;
+  typeLocked=true;typeAnswered++;
+  const correct=normalize(val)===normalize(VOCAB[TYPE_ORDER[typeIdx]].en);
+  if(correct) typeScore++;
+  document.getElementById('type-score').textContent=typeScore;
+  document.getElementById('type-total').textContent=typeAnswered;
+  const fb=document.getElementById('type-feedback');
+  fb.textContent=correct?'Bonne réponse !':'Réponse attendue : '+VOCAB[TYPE_ORDER[typeIdx]].en;
+  fb.className='feedback '+(correct?'ok':'ko');
+  document.getElementById('type-input').disabled=true;
+}
+document.getElementById('type-input').addEventListener('keydown',e=>{if(e.key==='Enter') typeVerify();});
+function typeNav(d){
+  const n=typeIdx+d;
+  if(n<0||n>=VOCAB.length) return;
+  typeIdx=n;typeRender();
+}
+
+flashRender();
+</script>
+<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-dscg-'+encodeURIComponent(k)+'&label=Visites&countColor=%23c8a84b&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script>
+</body>
+</html>

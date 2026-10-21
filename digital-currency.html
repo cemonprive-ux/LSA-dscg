@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f1a33"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="LSA DSCG"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" href="assets/icon-180.png"><script src="assets/app-nav.js"></script>
+<title>1-Finance · LSA Toolbox, DSCG</title>
+<link rel="icon" type="image/png" href="assets/favicon-dscg.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+
+:root{
+  --navy:#1a2744;
+  --navy-deep:#0f1a33;
+  --navy-mid:#243260;
+  --blue:#2d5fa6;
+  --blue-deep:#21477d;
+  --accent:#f5b60f;
+  --accent-deep:#c98f00;
+  --green:#2a7a4b;
+  --bg:#f5f3ef;
+  --surface:#ffffff;
+  --border:#ddd5c5;
+  --text:#2a2520;
+  --muted:#7a7060;
+  --shadow:0 2px 14px rgba(26,39,68,.10);
+  --shadow-lg:0 14px 40px rgba(26,39,68,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Quicksand',Georgia,serif;
+  background:var(--bg);color:var(--text);line-height:1.72;font-size:17px;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;}
+
+/* ── TOP BAR ── */
+.topbar{background:var(--navy-deep);color:rgba(255,255,255,.7);font-size:12.5px;}
+.topbar-inner{
+  max-width:1040px;margin:0 auto;padding:9px 28px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.topbar .place{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.12em;font-size:11px;}
+.topbar .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);}
+.topbar a.back{
+  display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.78);text-decoration:none;
+  border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:4px 13px;transition:all .2s;font-size:11.5px;
+}
+.topbar a.back:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(200,168,75,.6);}
+
+/* ── HEADER ── */
+.head{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,var(--blue) 135%);
+  border-bottom:3px solid var(--accent);
+}
+.head::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 88% -10%,rgba(74,123,200,.4),transparent 55%);
+}
+.head-inner{position:relative;z-index:2;max-width:1040px;margin:0 auto;padding:46px 28px 40px;}
+.breadcrumb{
+  display:flex;align-items:center;gap:9px;flex-wrap:wrap;
+  font-size:12px;letter-spacing:.04em;color:rgba(255,255,255,.85);margin-bottom:18px;
+}
+.breadcrumb a{color:rgba(255,255,255,.85);text-decoration:none;border-bottom:1px solid transparent;transition:.2s;}
+.breadcrumb a:hover{color:#fff;border-bottom-color:var(--accent);}
+.breadcrumb .sep{opacity:.5;}
+.breadcrumb .tag{
+  background:var(--green);color:#fff;border-radius:5px;padding:2px 9px;
+  font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+}
+.head h1{
+  font-family:'Quicksand',serif;color:#fff;font-weight:700;
+  font-size:clamp(2.1rem,4.6vw,3.1rem);line-height:1.05;
+}
+.head h1 em{font-style:normal;color:var(--accent);}
+.head .sub{color:rgba(255,255,255,.78);font-size:clamp(15px,2vw,18px);font-style:italic;margin-top:12px;max-width:620px;}
+
+/* ── WRAP ── */
+.wrap{max-width:880px;margin:0 auto;padding:48px 28px 30px;}
+.intro{
+  color:var(--muted);font-size:16px;max-width:680px;margin:0 auto 38px;text-align:center;
+}
+
+/* ── TOOL CARDS ── */
+.tools{display:flex;flex-direction:column;gap:22px;}
+.tool-card{
+  display:flex;align-items:stretch;gap:0;text-decoration:none;
+  border-radius:12px;overflow:hidden;border:1px solid var(--border);
+  background:var(--surface);box-shadow:var(--shadow);transition:all .25s;
+}
+.tool-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px);border-color:var(--blue);}
+.tool-icon{
+  width:118px;flex-shrink:0;
+  background:linear-gradient(150deg,var(--blue) 0%,var(--blue-deep) 100%);
+  display:flex;align-items:center;justify-content:center;color:#fff;position:relative;
+}
+.tool-icon::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 70% 20%,rgba(255,255,255,.18),transparent 60%);
+}
+.tool-icon svg{position:relative;z-index:1;}
+.tool-body{padding:24px 28px;display:flex;flex-direction:column;justify-content:center;gap:8px;flex:1;min-width:0;}
+.tool-body .kicker{
+  font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);
+}
+.tool-body h2{font-family:'Quicksand',serif;color:var(--navy);font-weight:600;font-size:1.5rem;line-height:1.12;}
+.tool-body p{color:var(--muted);font-size:15px;line-height:1.5;margin:0;}
+.tool-body .go{
+  display:inline-flex;align-items:center;gap:8px;margin-top:6px;
+  color:var(--blue);font-weight:600;font-size:14px;
+}
+.tool-card:hover .go{color:var(--blue-deep);}
+.tool-card:hover .go svg{transform:translateX(4px);}
+.tool-body .go svg{transition:transform .2s;}
+
+/* ── BACK LINK ── */
+.tofoot{text-align:center;margin:44px 0 10px;}
+.tofoot a{
+  display:inline-flex;align-items:center;gap:9px;text-decoration:none;
+  color:var(--navy);font-weight:600;font-size:15px;
+  border:1px solid var(--border);background:var(--surface);border-radius:30px;padding:11px 24px;
+  transition:all .2s;box-shadow:var(--shadow);
+}
+.tofoot a:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+
+/* ── FOOTER ── */
+footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;border-top:3px solid var(--accent);}
+.foot-inner{
+  max-width:1040px;margin:0 auto;padding:30px 28px;
+  display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:13px;
+}
+.foot-brand{display:flex;align-items:center;gap:13px;}
+.foot-brand img{width:38px;height:38px;border-radius:9px;}
+.foot-brand strong{color:#fff;font-family:'Quicksand',serif;font-weight:600;font-size:15px;display:block;}
+.foot-brand span{font-size:12px;}
+
+@media(max-width:640px){
+  body{font-size:16px;}
+  .wrap{padding:36px 22px 24px;}
+  .tool-body h2{font-size:1.35rem;}
+  .tool-card{flex-direction:column;}
+  .tool-icon{width:100%;height:96px;}
+}
+</style>
+<style>.visit-count{margin-top:8px}.visit-count img{height:16px;vertical-align:middle}</style><style id="lsa-h1-or">h1,h1 em,h1 span{color:#f5b60f!important}</style></head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="place"><span class="dot"></span>Lycée Sidoine Apollinaire · Clermont-Ferrand</span>
+    <a class="back" href="index.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Retour à l'accueil
+    </a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="head" data-screen-label="1-Finance · header">
+  <div class="head-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Accueil</a>
+      <span class="sep">›</span>
+      <span>DSCG</span>
+      <span class="tag">DSCG</span>
+    </div>
+    <h1><em>1-Finance</em></h1>
+    <p class="sub">Des ressources en anglais autour des monnaies numériques et de la finance : un article de fond, l'entraînement à la synthèse et à l'essai.</p>
+  </div>
+</header>
+
+<!-- TOOLS -->
+<main class="wrap">
+  <p class="intro">Commencez par l'article pour découvrir le sujet, puis entraînez-vous avec les deux outils.</p>
+
+  <div class="tools">
+
+    <!-- ARTICLE · FIL ROUGE -->
+    <a class="tool-card" href="finance-fil-rouge.html">
+      <div class="tool-icon">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/><path d="M14 4v6h6M8 13h8M8 17h5"/></svg>
+      </div>
+      <div class="tool-body">
+        <span class="kicker">Article · Fil rouge</span>
+        <h2>Risk, protection and the changing face of money</h2>
+        <p>L'analyse des thèmes récurrents en Finance : les angles qui reviennent, les questions déjà tombées et les réflexes à mobiliser.</p>
+        <span class="go">
+          Lire l'article
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </div>
+    </a>
+
+    <!-- ARTICLE -->
+    <a class="tool-card" href="cryptocurrencies.html">
+      <div class="tool-icon">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/><path d="M9 7h7M9 11h7"/></svg>
+      </div>
+      <div class="tool-body">
+        <span class="kicker">Article</span>
+        <h2>Cryptocurrencies in a few words</h2>
+        <p>Un article de fond : nouveau paradigme monétaire, opportunités et risques, enjeux réglementaires et politiques.</p>
+        <span class="go">
+          Lire l'article
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </div>
+    </a>
+
+    <!-- SUMMARY TRAINER -->
+    <a class="tool-card" href="Digital-currency-summary-trainer.html">
+      <div class="tool-icon">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 10h16M4 15h10M4 20h7"/></svg>
+      </div>
+      <div class="tool-body">
+        <span class="kicker">Synthèse</span>
+        <h2>Summary trainer</h2>
+        <p>Entraînement guidé à la rédaction de la synthèse de documents en anglais.</p>
+        <span class="go">
+          Ouvrir l'outil
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </div>
+    </a>
+
+    <!-- ESSAY TRAINER -->
+    <a class="tool-card" href="Digital-currency-essay-trainer.html">
+      <div class="tool-icon">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+      </div>
+      <div class="tool-body">
+        <span class="kicker">Essai</span>
+        <h2>Essay trainer</h2>
+        <p>Entraînement guidé à la rédaction de l'essai argumenté en anglais.</p>
+        <span class="go">
+          Ouvrir l'outil
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="tofoot">
+    <a href="index.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Retour à l'accueil
+    </a>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <img src="assets/lsa-logo.png" alt="Logo LSA">
+      <div>
+        <strong>LSA Toolbox</strong>
+        <span>DSCG · 1-Finance · M. Blanchet</span>
+      </div>
+    </div>
+    <div>Lycée Sidoine Apollinaire, Clermont-Ferrand</div>
+  </div>
+<div class="visit-count" id="visitCount"></div></footer>
+
+<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-dscg-'+encodeURIComponent(k)+'&label=Visites&countColor=%23c8a84b&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script></body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f1a33"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="LSA DSCG"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" href="assets/icon-180.png"><script src="assets/app-nav.js"></script>
+<title>Crashes, Collapses and Scandals · LSA Toolbox, General Knowledge</title>
+<link rel="icon" type="image/png" href="assets/favicon-dscg.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+:root{--navy:#1a2744;--navy-deep:#0f1a33;--blue:#2d5fa6;--accent:#f5b60f;--accent-deep:#c98f00;--green:#2a7a4b;--red:#b5302b;--bg:#f5f3ef;--surface:#ffffff;--border:#ddd5c5;--text:#2a2520;--muted:#6e6556;--shadow:0 2px 14px rgba(26,39,68,.10);--shadow-lg:0 14px 40px rgba(26,39,68,.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Quicksand',sans-serif;background:var(--bg);color:var(--text);line-height:1.75;font-size:17px;-webkit-font-smoothing:antialiased}
+a{color:var(--blue)}a:hover{color:var(--accent-deep)}
+.topbar{background:var(--navy-deep);color:rgba(255,255,255,.7);font-size:12.5px}
+.topbar-inner{max-width:1140px;margin:0 auto;padding:9px 28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.topbar .place{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.12em;font-size:11px}
+.topbar .dot{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.topbar .links{display:flex;gap:8px;flex-wrap:wrap}
+.topbar a.back{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.82);text-decoration:none;border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:4px 13px;transition:all .2s;font-size:11.5px}
+.topbar a.back:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(245,182,15,.6)}
+.hero{position:relative;overflow:hidden;background:var(--navy);border-bottom:3px solid var(--accent)}
+.hero-img{position:relative;height:clamp(340px,52vh,560px)}
+.hero-img img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;display:block;filter:sepia(.15)}
+.hero-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,26,51,.25) 0%,rgba(15,26,51,.15) 30%,rgba(15,26,51,.7) 66%,rgba(15,26,51,.95) 100%)}
+.hero-cap{position:absolute;left:0;right:0;bottom:0;z-index:2;max-width:1040px;margin:0 auto;padding:0 28px 34px;width:100%}
+.breadcrumb{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:12px;letter-spacing:.04em;color:rgba(255,255,255,.92);margin-bottom:16px;text-shadow:0 1px 6px rgba(15,26,51,.7)}
+.breadcrumb a{color:rgba(255,255,255,.82);text-decoration:none;border-bottom:1px solid transparent}
+.breadcrumb a:hover{color:#fff;border-bottom-color:var(--accent)}
+.breadcrumb .sep{opacity:.5}
+.breadcrumb .tag{background:var(--green);color:#fff;border-radius:5px;padding:2px 9px;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.hero h1{color:#fff;font-weight:700;font-size:clamp(2rem,5vw,3.3rem);line-height:1.06;text-wrap:balance;text-shadow:0 2px 24px rgba(0,0,0,.45);max-width:860px}
+.hero .sub{color:rgba(255,255,255,.88);font-size:clamp(15px,2vw,19px);margin-top:12px;max-width:680px;font-weight:500}
+.credit{position:absolute;right:14px;top:12px;z-index:3;font-size:10px;color:rgba(255,255,255,.8);background:rgba(15,26,51,.55);padding:3px 9px;border-radius:5px}
+.wrap{max-width:780px;margin:0 auto;padding:54px 28px 30px}
+.lead{font-size:20px;line-height:1.7;color:var(--navy);border-left:3px solid var(--accent);padding-left:22px;margin-bottom:34px;text-wrap:pretty}
+.lead::first-letter{font-weight:700;color:var(--accent-deep);font-size:3.2em;line-height:.8;float:left;margin:6px 10px 0 0}
+.chrono{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.chrono a{text-decoration:none;font-size:13px;font-weight:700;color:var(--navy);background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 13px;transition:all .2s}
+.chrono a:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-2px)}
+.era{position:relative;padding-left:34px;margin-top:54px;scroll-margin-top:20px}
+.era::before{content:"";position:absolute;left:8px;top:14px;bottom:-54px;width:2px;background:var(--border)}
+.era:last-of-type::before{bottom:0}
+.era::after{content:"";position:absolute;left:1px;top:8px;width:16px;height:16px;border-radius:50%;background:var(--surface);border:3px solid var(--accent)}
+.year{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.08em;color:#fff;background:var(--navy);border-radius:6px;padding:3px 11px;margin-bottom:8px}
+h2{color:var(--navy);font-weight:700;font-size:1.75rem;line-height:1.15;text-wrap:balance}
+.h2-rule{height:2px;background:linear-gradient(90deg,var(--accent),transparent);margin:12px 0 18px}
+p{margin:14px 0;text-wrap:pretty}
+strong{color:var(--navy);font-weight:700}
+.reform{display:flex;gap:14px;align-items:flex-start;margin:20px 0;padding:16px 20px;border-radius:10px;background:#f3f8f4;border:1px solid #cfe3d6}
+.reform .ttl{flex-shrink:0;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green);padding-top:3px}
+.reform p{margin:0}
+.side{margin:20px 0;padding:16px 20px;border-radius:10px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow)}
+.side .ttl{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:2px}
+.side p{margin:0}
+.side+.side{margin-top:12px}
+.figure{margin:26px 0 8px;border-radius:12px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow-lg);background:var(--surface)}
+.figure img{display:block;width:100%;height:auto}
+.figure.crop img{aspect-ratio:3/2;object-fit:cover}
+.figure figcaption{padding:12px 20px;font-size:13.5px;color:var(--muted);background:#fcfbf8;border-top:1px solid var(--border);line-height:1.5}
+.bignum{display:flex;align-items:center;gap:18px;margin:20px 0;padding:18px 22px;border-radius:10px;background:var(--navy);color:#fff;box-shadow:var(--shadow-lg)}
+.bignum .n{font-size:2.6rem;font-weight:700;color:var(--accent);line-height:1;flex-shrink:0}
+.bignum .l{font-size:15px;line-height:1.45}
+.common{margin:64px 0 10px}
+.common h2{margin-bottom:0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:20px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;box-shadow:var(--shadow);border-top:4px solid var(--accent)}
+.card:nth-child(2){border-top-color:var(--blue)}.card:nth-child(3){border-top-color:var(--red)}.card:nth-child(4){border-top-color:var(--green)}
+.card .k{font-size:1.15rem;font-weight:700;color:var(--navy);margin-bottom:4px}
+.card p{margin:0;font-size:15.5px;line-height:1.55}
+.vocab{margin:56px 0 10px}
+table{width:100%;border-collapse:collapse;margin-top:20px;background:var(--surface);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--border)}
+th{background:var(--navy);color:#fff;text-align:left;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:12px 18px}
+td{padding:12px 18px;border-top:1px solid var(--border);font-size:16px;vertical-align:top}
+td:first-child{font-weight:700;color:var(--navy);white-space:nowrap;width:30%}
+tr:nth-child(even) td{background:#fcfbf8}
+.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:50px 0 10px}
+.actions a{display:inline-flex;align-items:center;gap:9px;text-decoration:none;color:var(--navy);font-weight:600;font-size:15px;border:1px solid var(--border);background:var(--surface);border-radius:30px;padding:11px 24px;transition:all .2s;box-shadow:var(--shadow)}
+.actions a:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;border-top:3px solid var(--accent)}
+.foot-inner{max-width:1040px;margin:0 auto;padding:30px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:13px}
+.foot-brand{display:flex;align-items:center;gap:13px}
+.foot-brand img{width:38px;height:38px;border-radius:9px}
+.foot-brand strong{color:#fff;font-weight:600;font-size:15px;display:block}
+.foot-brand span{font-size:12px}
+.visit-count{margin-top:8px}.visit-count img{height:16px;vertical-align:middle}
+@media(max-width:640px){body{font-size:16px}.wrap{padding:38px 20px 24px}h2{font-size:1.45rem}.lead{font-size:18px}.grid{grid-template-columns:minmax(0,1fr)}.era{padding-left:28px}.reform{flex-direction:column;gap:4px}.bignum .n{font-size:2.1rem}td,th{padding:10px 12px}td:first-child{white-space:normal}.topbar-inner{padding:9px 18px}}
+@media print{.topbar,.actions,.chrono,footer{display:none}.hero-img{height:300px}.figure,.card,.side,.reform{break-inside:avoid}}
+</style>
+<style id="lsa-h1-or">h1,h1 em,h1 span{color:#f5b60f!important}</style></head>
+<body>
+<div class="topbar"><div class="topbar-inner"><span class="place"><span class="dot"></span>Lycée Sidoine Apollinaire · Clermont-Ferrand</span><div class="links"><a class="back" href="general-knowledge.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>Retour à General Knowledge</a><a class="back" href="index.html">Accueil</a></div></div></div>
+<header class="hero" data-screen-label="Crises · hero">
+<div class="hero-img"><img src="assets/crisis-1929.jpg" alt="Une du Brooklyn Daily Eagle du 24 octobre 1929 : « Wall St. in panic as stocks crash »"><span class="credit">Brooklyn Daily Eagle, 24 October 1929</span></div>
+<div class="hero-cap">
+<div class="breadcrumb"><a href="index.html">Accueil</a><span class="sep">›</span><span class="lvl">DSCG</span><span class="sep">›</span><a href="general-knowledge.html">General Knowledge</a><span class="tag lvl">DSCG</span></div>
+<h1>Crashes, Collapses and Scandals</h1>
+<p class="sub">A Century of Crises in the English-Speaking World</p>
+</div>
+</header>
+<article class="wrap">
+<p class="lead">Since 1900, the United States and the United Kingdom have been at the centre of global finance. They have also seen some of its biggest failures. Each crisis shows how greed, weak rules or poor control can hurt millions of people. Each one also led to reforms.</p>
+<nav class="chrono" aria-label="Chronologie"><a href="#c1929">1929</a><a href="#c1973">1973 · 1987</a><a href="#c1995">1995</a><a href="#c2001">2001–2002</a><a href="#c2007">2007–2009</a><a href="#c2010">2010s</a><a href="#c2020">2020s</a><a href="#common">Common points</a><a href="#vocab">Vocabulary</a></nav>
+
+<section class="era" id="c1929">
+<span class="year">1929</span><h2>The Wall Street Crash</h2><div class="h2-rule"></div>
+<p>In the 1920s, many Americans bought shares with borrowed money. Prices went up fast, but they were not based on real company value. In October 1929, panic started and share prices fell sharply. Banks closed, businesses went bankrupt and millions of people lost their jobs. This was the beginning of the <strong>Great Depression</strong>.</p>
+<div class="reform"><span class="ttl">Reform</span><p>In response, President Roosevelt launched the <strong>New Deal</strong>. In 1934, the United States created the <strong>Securities and Exchange Commission (SEC)</strong> to watch the stock market and protect investors.</p></div>
+</section>
+
+<section class="era" id="c1973">
+<span class="year">1973 · 1987</span><h2>Oil Shock and Black Monday</h2><div class="h2-rule"></div>
+<p>In 1973, oil-producing countries cut their exports. The price of oil rose quickly and many economies suffered from high inflation and slow growth.</p>
+<figure class="figure"><img src="assets/crisis-oil.gif" alt="Station-service fermée, panneau « Pumps closed », 1973"><figcaption>“Pumps closed”: a petrol station during the 1973 oil crisis, United States.</figcaption></figure>
+<p>In October 1987, on a day called <strong>Black Monday</strong>, the American stock market lost more than 20% of its value in a single day. Computer trading made the fall faster. Markets recovered, but investors learned how fragile confidence can be.</p>
+<div class="bignum"><span class="n">−20%</span><span class="l">More than a fifth of the American stock market's value lost in a single day, October 1987.</span></div>
+</section>
+
+<section class="era" id="c1995">
+<span class="year">1995</span><h2>Barings Bank</h2><div class="h2-rule"></div>
+<p>Barings was one of the oldest banks in Britain. A young trader in Singapore, <strong>Nick Leeson</strong>, hid his large losses in a secret account. His managers did not check his work carefully. The bank collapsed in 1995 and was sold for <strong>one pound</strong>. The case is now a classic example of weak internal control.</p>
+</section>
+
+<section class="era" id="c2001">
+<span class="year">2001–2002</span><h2>Enron and WorldCom</h2><div class="h2-rule"></div>
+<p><strong>Enron</strong>, an American energy company, looked very successful. In fact, it used complex financial structures to hide debt and show false profits. Its auditor, <strong>Arthur Andersen</strong>, did not stop the fraud. When the truth appeared in 2001, Enron went bankrupt. A similar scandal hit <strong>WorldCom</strong> in 2002.</p>
+<div class="reform"><span class="ttl">Reform</span><p>In response, the US government passed the <strong>Sarbanes-Oxley Act (2002)</strong>, which made company managers and auditors more responsible.</p></div>
+</section>
+
+<section class="era" id="c2007">
+<span class="year">2007–2009</span><h2>The Global Financial Crisis</h2><div class="h2-rule"></div>
+<p>Banks gave <strong>subprime mortgages</strong> to people who could not easily repay them. They then sold these risky loans to investors in complicated products. When house prices fell, the system broke down. In the UK, customers queued outside <strong>Northern Rock</strong> in 2007 to take out their savings. In September 2008, the American bank <strong>Lehman Brothers</strong> collapsed, and the crisis became global. Governments used public money to save banks, and many people lost their homes or jobs.</p>
+<figure class="figure crop"><img src="assets/crisis-subprime.jpg" alt="Maison saisie avec un panneau « Bank owned / Foreclosure, Property for sale »"><figcaption>“Bank owned / Foreclosure”: a repossessed house for sale after the subprime crisis.</figcaption></figure>
+<div class="side"><div class="ttl">Same period</div><p>In the same period, <strong>Bernard Madoff</strong> was arrested for running the largest Ponzi scheme in history. He paid early investors with money from new ones. He was sentenced to 150 years in prison.</p></div>
+<div class="side"><div class="ttl">2012</div><p>Later, in 2012, the <strong>LIBOR scandal</strong> showed that some banks had manipulated an important interest rate.</p></div>
+</section>
+
+<section class="era" id="c2010">
+<span class="year">2010s</span><h2>Trust Under Pressure</h2><div class="h2-rule"></div>
+<p>In 2018, the British construction company <strong>Carillion</strong> collapsed, and many workers and suppliers lost money. People asked why auditors had not given a warning. The same year, <strong>Facebook</strong> was criticised in the <strong>Cambridge Analytica</strong> case, where the data of millions of users was used without their clear permission. In 2022, <strong>Elizabeth Holmes</strong>, founder of the health company Theranos, was found guilty of defrauding investors.</p>
+<div class="side"><div class="ttl">UK · Post Office Horizon</div><p>In the UK, the Post Office Horizon scandal also shocked the public. From 1999, a faulty accounting software system showed missing money in local post offices. Hundreds of subpostmasters were wrongly accused and prosecuted. Many convictions were later overturned.</p></div>
+</section>
+
+<section class="era" id="c2020">
+<span class="year">2020s</span><h2>New Shocks</h2><div class="h2-rule"></div>
+<p>In 2020, the <strong>COVID-19 pandemic</strong> stopped economic activity in many countries and governments spent huge sums to support companies and workers. In 2022, the cryptocurrency exchange <strong>FTX</strong> collapsed, and its founder, Sam Bankman-Fried, was later convicted of fraud. In March 2023, <strong>Silicon Valley Bank</strong> failed after a very fast run on its deposits.</p>
+</section>
+
+<section class="common" id="common">
+<h2>What Do These Events Have in Common?</h2><div class="h2-rule"></div>
+<div class="grid">
+<div class="card"><div class="k">Greed and excessive risk</div><p>People wanted fast profits.</p></div>
+<div class="card"><div class="k">Weak control</div><p>Auditors, boards and regulators did not always do their job.</p></div>
+<div class="card"><div class="k">Lack of transparency</div><p>Bad news was hidden for too long.</p></div>
+<div class="card"><div class="k">Reform after crisis</div><p>New laws and institutions usually appear after the damage is done.</p></div>
+</div>
+</section>
+
+<section class="vocab" id="vocab">
+<h2>Vocabulary</h2><div class="h2-rule"></div>
+<table><thead><tr><th>Word</th><th>Meaning</th></tr></thead><tbody>
+<tr><td>crash</td><td>a sudden, severe fall in prices</td></tr>
+<tr><td>bankruptcy</td><td>when a company cannot pay its debts</td></tr>
+<tr><td>fraud</td><td>deliberate lie to gain money</td></tr>
+<tr><td>audit</td><td>an independent check of a company's accounts</td></tr>
+<tr><td>bailout</td><td>public money given to save a failing company</td></tr>
+<tr><td>regulation</td><td>official rules to control an activity</td></tr>
+</tbody></table>
+</section>
+
+<div class="actions"><a href="general-knowledge.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>Retour à General Knowledge</a><a href="index.html">Retour à l'accueil</a></div>
+</article>
+<footer><div class="foot-inner"><div class="foot-brand"><img src="assets/lsa-logo.png" alt="Logo LSA"><div><strong>LSA Toolbox</strong><span class="lvl-foot">General Knowledge · M. Blanchet</span></div></div><div>Lycée Sidoine Apollinaire, Clermont-Ferrand</div></div><div class="visit-count" id="visitCount"></div></footer>
+<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-dscg-'+encodeURIComponent(k)+'&label=Visites&countColor=%23f5b60f&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script>
+<script id="gk-from">(function(){if(!/[?&]from=dcg/.test(location.search))return;document.querySelectorAll('a[href="general-knowledge.html"]').forEach(function(a){a.href="general-knowledge.html"});document.querySelectorAll(".lvl").forEach(function(s){s.textContent="DCG"})})();</script>
+</body>
+</html>

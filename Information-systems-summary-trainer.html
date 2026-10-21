@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f1a33"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="LSA DSCG"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" href="assets/icon-180.png"><script src="assets/app-nav.js"></script>
+<title>DSCG UE12, Summary Writing Trainer · Information Systems and New Technologies</title>
+<link rel="icon" type="image/png" href="assets/favicon-dscg.png">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1a2744;--navy-mid:#0f1a33;--gold:#f5b60f;--gold-light:#ddb96a;--ice:#f1eee7;--paper:#f5f3ef;--white:#ffffff;--text:#1c2b3a;--muted:#6b7f90;--correct:#2a7a4b;--correct-bg:#eaf4ed;--wrong:#b5302b;--wrong-bg:#fbeeec;--warn:#8a6d1f;--warn-bg:#faf2dc;--border:#ddd5c5}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--text);font-family:'Quicksand',Georgia,serif;line-height:1.6}
+h1,h2,h3,h4{font-family:'Quicksand',serif}
+.mono{font-family:'Quicksand',Georgia,serif}
+.topbar{background:var(--navy);color:#fff;padding:1.1rem 1.4rem}
+.topbar-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.brand .badge{font-family:'Quicksand',Georgia,serif;font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:.2rem}
+.brand h1{font-size:1.15rem;font-weight:700;color:#fff}
+.brand h1 em{color:var(--gold-light);font-style:italic}
+.method-btn{font-family:'Quicksand',Georgia,serif;font-size:.72rem;letter-spacing:.04em;background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;padding:.5rem .9rem;border-radius:6px;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.method-btn:hover{border-color:var(--gold);color:var(--gold-light)}
+.nav-links{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.nav-link{font-family:'Quicksand',Georgia,serif;font-size:.72rem;letter-spacing:.04em;background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;padding:.5rem .9rem;border-radius:6px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block}
+.nav-link:hover{border-color:var(--gold);color:var(--gold-light)}
+.step-nav-wrap{background:var(--navy-mid);position:sticky;top:0;z-index:60;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.step-nav{max-width:1400px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none}
+.step-nav::-webkit-scrollbar{display:none}
+.step-pill{flex:1;min-width:108px;display:flex;flex-direction:column;align-items:center;gap:.25rem;padding:.6rem .5rem;background:none;border:none;color:rgba(255,255,255,.55);cursor:pointer;font-family:'Quicksand',Georgia,serif;font-size:.68rem;letter-spacing:.03em;text-transform:uppercase;border-bottom:3px solid transparent;transition:all .15s}
+.step-pill .num{width:1.5rem;height:1.5rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;border:1.5px solid rgba(255,255,255,.35)}
+.step-pill.active{color:#fff;border-bottom-color:var(--gold)}
+.step-pill.active .num{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.step-pill.done .num{background:rgba(46,125,94,.85);border-color:transparent;color:#fff}
+.step-pill.done .num::before{content:'✓'}
+.step-pill.done .num span{display:none}
+.workspace{max-width:1400px;margin:0 auto;padding:1.4rem;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:1.4rem;align-items:start}
+.source-pane{position:sticky;top:52px;background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(13,27,42,.05);max-height:calc(100vh - 72px);display:flex;flex-direction:column}
+.source-head{background:var(--navy);color:#fff;padding:.8rem 1.1rem;display:flex;align-items:center;gap:.5rem;font-family:'Quicksand',Georgia,serif;font-size:.72rem;letter-spacing:.05em;flex-shrink:0}
+.source-head .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.source-body{padding:1.2rem 1.3rem;overflow-y:auto;font-size:.87rem}
+.source-body p{margin-bottom:.8rem}
+.source-body p.lede{font-weight:600;color:var(--navy);font-size:.94rem}
+.source-body .src{font-size:.74rem;color:var(--muted);font-style:italic;border-top:1px solid var(--border);padding-top:.7rem;margin-top:.3rem}
+.hl{background:linear-gradient(transparent 55%,rgba(201,163,85,.35) 55%);padding:0 .1rem;font-weight:500}
+.close-drawer{display:none}
+.work-pane{min-width:0}
+.step-panel{display:none}
+.step-panel.active{display:block}
+.step-head{margin-bottom:1.3rem}
+.step-kicker{font-family:'Quicksand',Georgia,serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem}
+.step-head h2{font-size:1.5rem;color:var(--navy);font-weight:700}
+.step-intro{color:var(--muted);font-size:.9rem;max-width:680px;margin-top:.5rem}
+.card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1.3rem 1.4rem;margin-bottom:1.1rem;box-shadow:0 2px 12px rgba(13,27,42,.04)}
+.card h3{font-size:1rem;color:var(--navy);margin-bottom:.7rem}
+.card .q{font-weight:600;color:var(--navy);margin-bottom:.9rem;font-size:.95rem}
+.card .sub{display:block;font-weight:400;color:var(--muted);font-size:.8rem;margin-top:.25rem}
+.callout{background:var(--ice);border-left:3px solid var(--navy-mid);border-radius:0 8px 8px 0;padding:.8rem 1rem;font-size:.85rem;color:var(--navy);margin-bottom:1rem}
+.callout.gold{background:var(--warn-bg);border-left-color:var(--gold)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.def-card{background:var(--ice);border-radius:8px;padding:.9rem 1rem}
+.def-card .lbl{font-family:'Quicksand',Georgia,serif;font-size:.68rem;letter-spacing:.08em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:.3rem}
+.def-card p{font-size:.85rem;color:var(--navy)}
+.opts{display:flex;flex-direction:column;gap:.5rem}
+.opt-btn{text-align:left;background:var(--paper);border:1.5px solid var(--border);border-radius:7px;padding:.7rem .85rem;font-family:inherit;font-size:.87rem;color:var(--text);cursor:pointer;transition:all .15s;display:flex;gap:.6rem;align-items:flex-start;line-height:1.45}
+.opt-btn:hover:not(:disabled){border-color:var(--gold);background:#fff}
+.opt-btn .ltr{font-family:'Quicksand',Georgia,serif;font-weight:500;color:var(--gold);flex-shrink:0}
+.opt-btn:disabled{cursor:default}
+.opt-btn.correct{border-color:var(--correct);background:var(--correct-bg)}
+.opt-btn.correct .ltr{color:var(--correct)}
+.opt-btn.wrong{border-color:var(--wrong);background:var(--wrong-bg)}
+.opt-btn.wrong .ltr{color:var(--wrong)}
+.fb{margin-top:.8rem;padding:.75rem .9rem;border-radius:7px;font-size:.83rem;line-height:1.55;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--correct-bg);border-left:3px solid var(--correct);color:#1d5340}
+.fb.no{background:var(--wrong-bg);border-left:3px solid var(--wrong);color:#6e1826}
+.btn{font-family:'Quicksand',Georgia,serif;font-size:.78rem;letter-spacing:.02em;background:var(--navy);color:#fff;border:none;border-radius:7px;padding:.6rem 1.2rem;cursor:pointer;transition:all .15s;margin-top:.8rem;margin-right:.5rem}
+.btn:hover{background:var(--navy-mid)}
+.btn.gold{background:var(--gold);color:var(--navy);font-weight:500}
+.btn.gold:hover{background:var(--gold-light)}
+.btn.ghost{background:transparent;color:var(--navy);border:1.5px solid var(--border)}
+.btn.ghost:hover{border-color:var(--gold)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.small{padding:.4rem .8rem;font-size:.7rem}
+textarea,input.txt{width:100%;font-family:inherit;font-size:.88rem;border:1.5px solid var(--border);border-radius:7px;padding:.65rem .8rem;color:var(--text);background:#fff;resize:vertical}
+textarea:focus,input.txt:focus{outline:none;border-color:var(--gold)}
+textarea{min-height:80px}
+.field-lbl{font-size:.78rem;color:var(--muted);margin-bottom:.35rem}
+.quote{background:var(--ice);border-left:3px solid var(--navy-mid);padding:.65rem .85rem;border-radius:0 6px 6px 0;font-style:italic;font-size:.87rem;margin-bottom:.8rem;color:var(--navy)}
+.kolo-item{background:var(--white);border:1.5px solid var(--border);border-radius:8px;padding:.75rem .9rem;margin-bottom:.6rem}
+.kolo-item .txt{font-size:.87rem;margin-bottom:.6rem}
+.kolo-item.kept{border-color:var(--correct);background:var(--correct-bg)}
+.kolo-item.dropped{border-color:var(--border);background:var(--paper);opacity:.7}
+.kolo-item.dropped .txt{text-decoration:line-through}
+.kolo-item.wrongpick{border-color:var(--wrong);background:var(--wrong-bg)}
+.kolo-actions{display:flex;gap:.5rem}
+.kolo-actions button{font-family:'Quicksand',Georgia,serif;font-size:.72rem;padding:.35rem .8rem;border-radius:6px;border:1.5px solid var(--border);background:#fff;cursor:pointer}
+.kolo-actions button:disabled{opacity:.35;cursor:default}
+.kolo-actions button.keep-b:hover:not(:disabled){border-color:var(--correct);color:var(--correct)}
+.kolo-actions button.drop-b:hover:not(:disabled){border-color:var(--wrong);color:var(--wrong)}
+.kolo-fb{font-size:.78rem;margin-top:.5rem;color:var(--muted)}
+.flow{display:flex;flex-direction:column;gap:.15rem;margin:.9rem 0}
+.flow-step{font-family:'Quicksand',Georgia,serif;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);text-align:center}
+.flow-arrow{text-align:center;color:var(--border);font-size:1rem}
+.chk-row{display:flex;align-items:flex-start;gap:.6rem;padding:.4rem 0;font-size:.86rem}
+.chk-row input{margin-top:.25rem;flex-shrink:0}
+.condensed-box{background:var(--navy);color:#eef3f7;border-radius:9px;padding:1rem 1.2rem;margin-top:.4rem;font-size:.9rem;display:none}
+.condensed-box.show{display:block}
+.condensed-box strong{color:var(--gold-light)}
+.match-row{display:grid;grid-template-columns:1fr 140px;gap:.7rem;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.85rem}
+.match-row select{font-family:inherit;font-size:.82rem;border:1.5px solid var(--border);border-radius:6px;padding:.35rem .4rem}
+.plan-field{margin-bottom:1rem}
+.plan-field .lbl{font-family:'Quicksand',Georgia,serif;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem;display:flex;justify-content:space-between;align-items:center}
+.idea-row{display:flex;gap:.5rem;align-items:flex-start;margin-bottom:.6rem}
+.idea-row textarea{min-height:52px}
+.reorder-btns{display:flex;flex-direction:column;gap:.2rem;flex-shrink:0;padding-top:.1rem}
+.reorder-btns button{width:1.7rem;height:1.5rem;border:1px solid var(--border);background:#fff;border-radius:4px;cursor:pointer;font-size:.7rem}
+.reorder-btns button:disabled{opacity:.25;cursor:default}
+.write-tools{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:.8rem}
+.plan-recap{background:var(--ice);border-radius:8px;padding:.9rem 1rem;font-size:.83rem;margin-bottom:.9rem}
+.plan-recap div{margin-bottom:.35rem}
+.plan-recap .k{font-family:'Quicksand',Georgia,serif;font-size:.66rem;color:var(--gold);text-transform:uppercase;letter-spacing:.05em}
+.wc-row{display:flex;align-items:center;gap:.8rem;margin-top:.6rem;flex-wrap:wrap}
+.wc-badge{font-family:'Quicksand',Georgia,serif;font-size:.78rem;padding:.35rem .8rem;border-radius:6px;font-weight:500}
+.wc-badge.low{background:var(--warn-bg);color:var(--warn)}
+.wc-badge.ok{background:var(--correct-bg);color:var(--correct)}
+.wc-badge.high{background:var(--warn-bg);color:var(--warn)}
+.help-panel{display:none;background:var(--ice);border-radius:8px;padding:.9rem 1rem;margin-top:.8rem;font-size:.84rem}
+.help-panel.show{display:block}
+.help-panel ul{list-style:none}
+.help-panel li{padding:.25rem 0;font-family:'Quicksand',Georgia,serif;font-size:.8rem;color:var(--navy)}
+.help-sub{font-family:'DM Mono',monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:.7rem 0 .2rem}
+.help-sub:first-child{margin-top:0}
+.fb-grid{display:grid;gap:.8rem}
+.fb-panel{border:1px solid var(--border);border-radius:9px;background:#fff;overflow:hidden}
+.fb-panel-head{padding:.65rem .95rem;font-size:.85rem;font-weight:600;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.fb-panel-body{padding:.75rem .95rem;font-size:.84rem;color:var(--muted)}
+.tag{font-family:'Quicksand',Georgia,serif;font-size:.7rem;padding:.2rem .55rem;border-radius:5px}
+.lvl-ok .fb-panel-head{background:var(--correct-bg)} .lvl-ok .tag{background:var(--correct);color:#fff}
+.lvl-bad .fb-panel-head{background:var(--wrong-bg)} .lvl-bad .tag{background:var(--wrong);color:#fff}
+.summary-preview{background:var(--ice);border-radius:8px;padding:.9rem 1rem;font-size:.85rem;margin-bottom:1rem;max-height:180px;overflow-y:auto}
+.model-box{background:var(--navy);color:#eef3f7;border-radius:10px;padding:1.4rem 1.5rem;margin-top:1rem}
+.model-box h4{color:var(--gold-light);font-size:1rem;margin-bottom:.7rem}
+.model-box p{font-size:.88rem;line-height:1.75;color:rgba(255,255,255,.9)}
+.model-legend{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.9rem;font-size:.75rem}
+.model-legend span{display:inline-flex;align-items:center;gap:.35rem}
+.swatch{width:.7rem;height:.7rem;border-radius:2px;display:inline-block}
+.m-main{background:rgba(201,163,85,.35);padding:0 .15rem;border-radius:2px}
+.m-reform{text-decoration:underline;text-decoration-color:#8fc7e8;text-decoration-thickness:2px}
+.m-conn{font-weight:700;color:var(--gold-light)}
+.model-note{font-size:.78rem;color:rgba(255,255,255,.55);margin-top:.9rem;font-style:italic}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(13,27,42,.6);z-index:200;align-items:center;justify-content:center;padding:1.5rem}
+.modal-overlay.show{display:flex}
+.modal-box{background:#fff;border-radius:12px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto;padding:1.8rem 2rem}
+.modal-box h3{color:var(--navy);font-size:1.3rem;margin-bottom:1rem}
+.modal-box ol{list-style:none;counter-reset:m}
+.modal-box ol li{counter-increment:m;margin-bottom:.9rem;padding-left:2.1rem;position:relative}
+.modal-box ol li::before{content:counter(m);position:absolute;left:0;top:0;width:1.5rem;height:1.5rem;background:var(--navy);color:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Quicksand',Georgia,serif;font-size:.75rem}
+.modal-box ol li strong{color:var(--navy)}
+.modal-box ol li p{font-size:.85rem;color:var(--muted);margin-top:.15rem}
+.modal-close{position:sticky;top:0;float:right;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--muted)}
+.footer-nav{display:flex;justify-content:space-between;margin-top:1.6rem;padding-top:1.2rem;border-top:1px solid var(--border)}
+.drawer-toggle{display:none}
+@media print{.topbar,.step-nav-wrap,.drawer-toggle,.footer-nav,.visit-count,.modal-overlay,.source-pane{display:none!important}.workspace{grid-template-columns:1fr}.step-panel{display:block!important}}
+@media (max-width:960px){
+  .workspace{grid-template-columns:1fr;padding:1rem}
+  .drawer-toggle{display:inline-flex;align-items:center;gap:.4rem;background:var(--navy);color:#fff;border:none;border-radius:7px;padding:.6rem 1rem;font-family:'Quicksand',Georgia,serif;font-size:.78rem;cursor:pointer;margin-bottom:1rem}
+  .source-pane{position:fixed;inset:0;z-index:150;max-height:100vh;border-radius:0;transform:translateY(100%);transition:transform .25s;display:flex}
+  .source-pane.open{transform:translateY(0)}
+  .close-drawer{display:block;background:var(--navy);border:none;color:#fff;font-size:1.2rem;padding:.2rem .6rem;cursor:pointer;margin-left:auto}
+  .two-col{grid-template-columns:1fr}
+  .step-pill{min-width:88px;font-size:.62rem}
+}
+@media (max-width:600px){
+  .topbar-inner{flex-wrap:wrap}
+  .card{padding:1rem}
+  .idea-row{flex-direction:row}
+}
+</style>
+<style>.visit-count{margin-top:8px}.visit-count img{height:16px;vertical-align:middle}</style>
+<style id="lsa-h1-or">h1,h1 em,h1 span{color:#f5b60f!important}</style></head>
+<body>
+
+<header class="topbar"><div class="topbar-inner">
+  <div class="brand"><span class="badge">DSCG, UE12 Business English</span><h1>Summary Writing Trainer <em>· Information Systems &amp; New Technologies</em></h1></div>
+  <div class="nav-links"><a class="nav-link" href="information-systems.html">← 4-Information Systems</a><a class="nav-link" href="index.html">🏠 Accueil</a><button class="method-btn" onclick="openMethod()">✎ Summary Method</button></div>
+</div></header>
+
+<div class="step-nav-wrap"><nav class="step-nav" id="stepNav"></nav></div>
+
+<button class="drawer-toggle" onclick="toggleDrawer(true)">📄 Show source text</button>
+
+<div class="workspace">
+
+  <aside class="source-pane" id="sourcePane">
+    <div class="source-head"><div class="dot"></div><span>Source Document</span><button class="close-drawer" onclick="toggleDrawer(false)">✕</button></div>
+    <div class="source-body">
+      <p class="lede">Millions could be working a four-day week by 2033 thanks to AI</p>
+      <p>Incorporating artificial intelligence (AI) into workflows could mean we work less for the same pay, according to the think tank Autonomy.</p>
+      <p>Nearly a third of the UK's workforce could be working a <span class="hl">four-day week by 2033</span> thanks to the rollout of advanced artificial intelligence (AI) technology, a new report claims.</p>
+      <p>One of the biggest concerns around the increasing power and popularity of AI tech over the past couple of years is whether it will <span class="hl">take jobs away from humans</span>, as it is proven to be capable of taking on more of the tasks that humans currently perform.</p>
+      <p>A recent survey from LinkedIn found nearly half of European workers are expecting AI to make a major impact on their working lives within the next year.</p>
+      <p>Generative text AI tools like OpenAI's ChatGPT and Google's Bard can write whole articles or business plans in seconds, producing a close approximation of what a human can do when fed the right prompts and information. Image generation tools meanwhile can conjure up photorealistic pictures nearly instantaneously, raising questions about job security for human artists and illustrators.</p>
+      <p>But the new report from Autonomy, an independent think tank that looks at the future of work and economic planning, sets out a <span class="hl">more promising vision</span> of AI's impact on our working lives.</p>
+      <p>In its GPT-4 report, the authors suggest <span class="hl">8.8 million workers in the UK, 28 per cent of the workforce</span>, could be working 32-hour, four-day weeks thanks to AI. A further 27.9 million meanwhile, representing 88 per cent of the country's workforce, could have working hours reduced by at least 10 per cent too.</p>
+      <p>Autonomy made its calculations using the 1.5 per cent annual productivity increase from AI that was estimated by <span class="hl">Goldman Sachs</span> in a recent study on the topic of AI and GDP, as well as data from the US Department of Labor's Occupational Information Network (O*NET).</p>
+      <p>The Autonomy report outlines two forecasts for leveraging AI to boost productivity while delivering better conditions for workers, specifically looking at how the ideas could be rolled out in local authorities in the UK. The two scenarios are a 20 per cent reduction in working hours while keeping the same pay for workers, or one in which worker productivity increases by 10 per cent, enabling a 10 per cent reduction in working hours, while keeping the same pay.</p>
+      <p>"Our research offers a fresh perspective in debates around how AI can be utilised for good," said Will Stronge, director of research at Autonomy. <span class="hl">"A shorter working week is the most tangible way of ensuring that AI delivers benefits to workers as well as companies.</span> If AI is to be implemented fairly across the economy, it should usher in a new era of four-day working weeks for all".</p>
+      <p>Various four-day week trials are either underway or have been recently completed, with the majority of results pointing towards either maintained or improved levels of productivity, with substantial benefits for worker well-being.</p>
+      <p class="src">Source: Euronews.com, "Millions could be working a four-day week by 2033 thanks to AI", Luke Hurst, 11 November 2023.</p>
+    </div>
+  </aside>
+
+  <section class="work-pane">
+
+    <div class="step-panel" data-step="understand">
+      <div class="step-head"><div class="step-kicker">Step 1 / 7</div><h2>Understand</h2>
+        <p class="step-intro">Before you can summarise a text, you need to separate two things that students often confuse: what the text is <em>about</em>, and what the author <em>thinks about it</em>.</p></div>
+      <div class="two-col">
+        <div class="def-card"><span class="lbl">Topic</span><p>The subject the text discusses. Neutral, it doesn't tell you the author's opinion.</p></div>
+        <div class="def-card"><span class="lbl">Author's position</span><p>What the author actually argues or concludes about that topic.</p></div>
+      </div>
+      <div class="callout gold" style="margin-top:.9rem">TOPIC ≠ AUTHOR'S POSITION, a good summary always states both, separately.</div>
+
+      <div class="card" id="u1"><div class="q">What is the <em>TOPIC</em> of this article?</div>
+        <div class="opts">
+          <button class="opt-btn" onclick="checkMCQ(this,false,'u1','The article is not a technical comparison of AI models.')"><span class="ltr">A</span> A detailed technical comparison of the different generative AI models released since 2021.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,true,'u1','Correct, the whole article discusses this think tank\'s report and its implications.')"><span class="ltr">B</span> A think tank's report suggesting AI could let millions of UK workers move to a four-day week.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,false,'u1','No such government proposal is discussed in the article.')"><span class="ltr">C</span> A government proposal to legally cap working hours across all sectors of the UK economy.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,false,'u1','Freelance photographers are not discussed in the article.')"><span class="ltr">D</span> A study on how AI image generators are affecting the earnings of freelance photographers.</button>
+        </div>
+        <div class="fb" id="u1-fb"></div>
+      </div>
+
+      <div class="card" id="u2"><div class="q">What is the <em>AUTHOR'S POSITION</em> on this topic?</div>
+        <div class="opts">
+          <button class="opt-btn" onclick="checkMCQ(this,false,'u2','The article presents a more balanced, even hopeful, view rather than a purely negative one.')"><span class="ltr">A</span> AI is a purely negative force that will inevitably destroy far more jobs than it creates.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,true,'u2','Correct, beyond the usual job-loss fears, the article presents the four-day week as a genuine, concrete benefit of AI.')"><span class="ltr">B</span> Beyond job-loss fears, AI could also offer a genuine, tangible benefit: shorter working hours.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,false,'u2','The article cites a specific, detailed report and figures, not an absence of research.')"><span class="ltr">C</span> AI's impact on work remains entirely uncertain and no credible research exists on the topic.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,false,'u2','The article focuses on the wider UK workforce, not just creative professions.')"><span class="ltr">D</span> AI mainly affects creative professions and has almost no relevance for other sectors of work.</button>
+        </div>
+        <div class="fb" id="u2-fb"></div>
+      </div>
+      <div class="callout" id="uSummary" style="display:none"></div>
+      <div class="footer-nav"><span></span><button class="btn gold" onclick="goStep(1)">Continue → Select</button></div>
+    </div>
+
+    <div class="step-panel" data-step="select">
+      <div class="step-head"><div class="step-kicker">Step 2 / 7</div><h2>Select</h2>
+        <p class="step-intro">Not every sentence deserves a place in your summary. Learn to recognise a <strong>main idea</strong>, and tell it apart from an example, a statistic, or a claim that is too vague to be useful.</p></div>
+
+      <div class="card" id="sa1"><h3>2.1, Spot the main idea</h3>
+        <div class="q">This passage from the text can be rewritten four ways. Which formulation actually states its <em>main idea</em>?</div>
+        <div class="quote">"In its GPT-4 report, the authors suggest 8.8 million workers in the UK, 28 per cent of the workforce, could be working 32-hour, four-day weeks thanks to AI. A further 27.9 million, representing 88 per cent of the country's workforce, could have working hours reduced by at least 10 per cent too."</div>
+        <div class="opts">
+          <button class="opt-btn" onclick="checkMCQ(this,false,'sa1','This is one of the two supporting statistics, not the underlying idea.')"><span class="ltr">A</span> 8.8 million UK workers, or 28% of the workforce, could work 32-hour weeks by 2033.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,true,'sa1','Correct, this generalises both figures into one idea a summary can use.')"><span class="ltr">B</span> AI could let a significant share of the UK workforce work fewer hours for the same pay.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,false,'sa1','This is a hypothetical, invented example, not a claim from the text.')"><span class="ltr">C</span> One local authority in the UK could trial a 32-hour week.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,false,'sa1','Too vague, it doesn\'t say how AI will change work.')"><span class="ltr">D</span> AI is going to change the way people work.</button>
+        </div>
+        <div class="fb" id="sa1-fb"></div>
+      </div>
+
+      <div class="card" id="sa2"><div class="q">Same task, a different passage.</div>
+        <div class="quote">"'A shorter working week is the most tangible way of ensuring that AI delivers benefits to workers as well as companies. If AI is to be implemented fairly across the economy, it should usher in a new era of four-day working weeks for all.'"</div>
+        <div class="opts">
+          <button class="opt-btn" onclick="checkMCQ(this,false,'sa2','This is a biographical detail about the speaker, not the point being made.')"><span class="ltr">A</span> Will Stronge is the director of research at the Autonomy think tank.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,true,'sa2','Correct, this captures the argument the quote is making.')"><span class="ltr">B</span> A shorter working week is the clearest way to make sure AI's gains benefit workers, not just companies.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,false,'sa2','This is a specific, invented example, not a general claim from the text.')"><span class="ltr">C</span> Some companies have already reduced their staff's hours by 10%.</button>
+          <button class="opt-btn" onclick="checkMCQ(this,false,'sa2','Too vague, it doesn\'t say how or for whom AI would be good.')"><span class="ltr">D</span> AI will be good for the economy in general.</button>
+        </div>
+        <div class="fb" id="sa2-fb"></div>
+      </div>
+
+      <div class="card"><h3>2.2, Keep or leave out?</h3>
+        <p class="step-intro" style="margin-top:0">For each statement drawn from the article, decide: does it belong in a summary?</p>
+        <div id="koloList"></div>
+        <div class="callout" id="koloPrinciple" style="display:none">MAIN IDEAS → keep. EXAMPLES, FIGURES and SECONDARY SOURCES → usually leave out.</div>
+      </div>
+      <div class="footer-nav"><button class="btn ghost" onclick="goStep(0)">← Back</button><button class="btn gold" onclick="goStep(2)">Continue → Condense</button></div>
+    </div>
+
+    <div class="step-panel" data-step="condense">
+      <div class="step-head"><div class="step-kicker">Step 3 / 7</div><h2>Condense</h2>
+        <p class="step-intro">Several sentences can often collapse into one. Watch how a detailed passage becomes a single idea, then try it yourself.</p></div>
+
+      <div class="card"><h3>3.0, Worked example</h3>
+        <p class="step-intro" style="margin-top:0">Study how this example is solved before you try the next ones yourself.</p>
+        <div class="flow-step">Original</div>
+        <div class="quote">8.8 million UK workers, or 28% of the workforce, could work 32-hour weeks by 2033. A further 88% of the workforce could see working hours cut by at least 10%.</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Remove the details</div>
+        <p class="field-lbl">Tick the sentences that are examples, figures or secondary sources, not the core claim itself.</p>
+        <label class="chk-row"><input type="checkbox" checked disabled> 8.8 million UK workers, or 28% of the workforce, could work 32-hour weeks by 2033.</label>
+        <label class="chk-row"><input type="checkbox" checked disabled> A further 88% of the workforce could see working hours cut by at least 10%.</label>
+        <div class="fb show ok">Correct, both these sentences are supporting figures; keep only the general idea below.</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Find the common idea</div>
+        <div class="opts" id="cA-common">
+          <button class="opt-btn" disabled><span class="ltr">A</span> AI will replace most human jobs within a decade</button>
+          <button class="opt-btn correct" disabled><span class="ltr">B</span> AI could let many UK workers work fewer hours</button>
+          <button class="opt-btn" disabled><span class="ltr">C</span> UK productivity has fallen sharply this year</button>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Condense</div>
+        <div class="condensed-box show" id="cA-result"><strong>Condensed sentence ,</strong> AI could let a significant share of the UK workforce work fewer hours for the same pay.</div>
+      </div>
+
+      <div class="card"><h3>3.1, Now you try</h3>
+        <div class="flow-step">Original</div>
+        <div class="quote">Many people fear that AI will take jobs away from humans. A LinkedIn survey found nearly half of European workers expect AI to have a major impact on their working lives within a year.</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Remove the details</div>
+        <label class="chk-row"><input type="checkbox" data-correct="0" onchange="condenseCheck('cB')"> Many people fear that AI will take jobs away from humans.</label>
+        <label class="chk-row"><input type="checkbox" data-correct="1" onchange="condenseCheck('cB')"> A LinkedIn survey found nearly half of European workers expect AI to have a major impact within a year.</label>
+        <div class="fb" id="cB-details-fb"></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Find the common idea</div>
+        <div class="opts" id="cB-common">
+          <button class="opt-btn" onclick="condenseCommon(this,false,'cB')"><span class="ltr">A</span> AI has no meaningful impact on jobs at all</button>
+          <button class="opt-btn" onclick="condenseCommon(this,false,'cB')"><span class="ltr">B</span> Only European workers care about AI's impact</button>
+          <button class="opt-btn" onclick="condenseCommon(this,true,'cB')"><span class="ltr">C</span> Job-loss fears are real, but AI also raises hopes</button>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Condense</div>
+        <div class="condensed-box" id="cB-result"><strong>Condensed sentence ,</strong> Beyond concerns about job losses, AI is also raising hopes of a shorter working week.</div>
+      </div>
+
+      <div class="card"><h3>3.2, Now you try</h3>
+        <div class="flow-step">Original</div>
+        <div class="quote">Early four-day week trials already show steady or improved productivity, alongside real gains in wellbeing. Autonomy's estimates about a 32-hour week rely on productivity data collected by Goldman Sachs and the US Department of Labor.</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Remove the details</div>
+        <label class="chk-row"><input type="checkbox" data-correct="0" onchange="condenseCheck('cC')"> Early four-day week trials already show steady or improved productivity, alongside real gains in wellbeing.</label>
+        <label class="chk-row"><input type="checkbox" data-correct="1" onchange="condenseCheck('cC')"> Autonomy's estimates about a 32-hour week rely on productivity data collected by Goldman Sachs and the US Department of Labor.</label>
+        <div class="fb" id="cC-details-fb"></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Find the common idea</div>
+        <div class="opts" id="cC-common">
+          <button class="opt-btn" onclick="condenseCommon(this,false,'cC')"><span class="ltr">A</span> AI trials have all failed to show any benefit</button>
+          <button class="opt-btn" onclick="condenseCommon(this,true,'cC')"><span class="ltr">B</span> Evidence so far supports the case for a shorter week</button>
+          <button class="opt-btn" onclick="condenseCommon(this,false,'cC')"><span class="ltr">C</span> Only US companies have tested shorter working weeks</button>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Condense</div>
+        <div class="condensed-box" id="cC-result"><strong>Condensed sentence ,</strong> Early evidence, including the productivity data behind Autonomy's estimates, supports the case for a shorter working week.</div>
+      </div>
+
+      <div class="card"><h3>3.3, Find the right level of detail</h3>
+        <p class="step-intro" style="margin-top:0">Match each candidate sentence about AI and working hours to the right label.</p>
+        <div class="match-row"><span>"Autonomy's report says 8.8 million UK workers could move to a 32-hour week by 2033."</span><select id="cal1"><option value="">–</option><option value="detailed">Too detailed</option><option value="ok">Appropriate</option></select></div>
+        <div class="match-row"><span>"AI could let a significant share of UK workers work fewer hours for the same pay."</span><select id="cal2"><option value="">–</option><option value="detailed">Too detailed</option><option value="ok">Appropriate</option></select></div>
+        <div class="match-row" style="border-bottom:none"><span>"Autonomy's report also estimates that a further 88% of the UK workforce could see hours cut by at least 10%."</span><select id="cal3"><option value="">–</option><option value="detailed">Too detailed</option><option value="ok">Appropriate</option></select></div>
+        <button class="btn" onclick="checkCalibration()">Check my answers</button>
+        <div class="fb" id="cal-fb"></div>
+      </div>
+      <div class="footer-nav"><button class="btn ghost" onclick="goStep(1)">← Back</button><button class="btn gold" onclick="goStep(3)">Continue → Reformulate</button></div>
+    </div>
+
+    <div class="step-panel" data-step="reformulate">
+      <div class="step-head"><div class="step-kicker">Step 4 / 7</div><h2>Reformulate</h2>
+        <p class="step-intro">Four reusable techniques to put ideas into your own words, the skill you'll need for every future summary, not just this one.</p></div>
+
+      <div class="card"><h3>4.1, Synonym</h3><div class="q">Replace <em>tangible</em> with a suitable synonym and rewrite the sentence.</div>
+        <div class="quote">"A shorter working week is the most tangible way of ensuring that AI delivers benefits to workers."</div>
+        <input class="txt" id="r1" placeholder="Rewrite the sentence with a synonym for 'tangible'…">
+        <button class="btn" onclick="checkReformulate('r1','r1-fb',['concrete','practical','real','clear','solid'],'tangible')">Check</button>
+        <div class="fb" id="r1-fb"></div>
+        <button class="btn ghost small" onclick="toggleModel('r1-model')">Show model</button>
+        <div class="quote" id="r1-model" style="display:none;border-left-color:var(--gold);background:var(--warn-bg);margin-top:.8rem"><strong>Model ,</strong> A shorter working week is the most concrete way of ensuring that AI delivers benefits to workers.</div>
+      </div>
+
+      <div class="card"><h3>4.2, Change the structure</h3><div class="q">Rewrite this sentence in the <em>passive voice</em>.</div>
+        <div class="quote">"Autonomy published a report on AI and the four-day week."</div>
+        <input class="txt" id="r2" placeholder="Rewrite using the passive voice…">
+        <button class="btn" onclick="checkReformulate('r2','r2-fb',['was published','being published','has been published'],null)">Check</button>
+        <div class="fb" id="r2-fb"></div>
+        <button class="btn ghost small" onclick="toggleModel('r2-model')">Show model</button>
+        <div class="quote" id="r2-model" style="display:none;border-left-color:var(--gold);background:var(--warn-bg);margin-top:.8rem"><strong>Model ,</strong> A report on AI and the four-day week was published by Autonomy.</div>
+      </div>
+
+      <div class="card"><h3>4.3, Generalise</h3><div class="q">These three sources share something in common. Name the category in a few words.</div>
+        <div class="quote">Goldman Sachs · the US Department of Labor · LinkedIn</div>
+        <input class="txt" id="r3" placeholder="One umbrella term…">
+        <button class="btn" onclick="checkReformulate('r3','r3-fb',['data','source','organisation','organization','research'],null)">Check</button>
+        <div class="fb" id="r3-fb"></div>
+        <button class="btn ghost small" onclick="toggleModel('r3-model')">Show model</button>
+        <div class="quote" id="r3-model" style="display:none;border-left-color:var(--gold);background:var(--warn-bg);margin-top:.8rem"><strong>Model ,</strong> external data sources</div>
+      </div>
+
+      <div class="card"><h3>4.4, Combine</h3><div class="q">Merge these three short sentences into one.</div>
+        <div class="quote">"AI could reduce working hours. AI could keep pay the same. AI could improve worker wellbeing."</div>
+        <input class="txt" id="r4" placeholder="One combined sentence…">
+        <button class="btn" onclick="checkCombine()">Check</button>
+        <div class="fb" id="r4-fb"></div>
+        <button class="btn ghost small" onclick="toggleModel('r4-model')">Show model</button>
+        <div class="quote" id="r4-model" style="display:none;border-left-color:var(--gold);background:var(--warn-bg);margin-top:.8rem"><strong>Model ,</strong> AI could reduce working hours and improve worker wellbeing while keeping pay the same.</div>
+      </div>
+      <div class="footer-nav"><button class="btn ghost" onclick="goStep(2)">← Back</button><button class="btn gold" onclick="goStep(4)">Continue → Organise</button></div>
+    </div>
+
+    <div class="step-panel" data-step="organise">
+      <div class="step-head"><div class="step-kicker">Step 5 / 7</div><h2>Organise</h2>
+        <p class="step-intro">This is your plan, built from the work you've just done. <span style="color:var(--wrong);font-weight:700">EDIT</span> the wording if you like, and use the arrows to <span style="color:var(--wrong);font-weight:700">REORDER</span> the main ideas.</p></div>
+      <div class="card">
+        <div class="plan-field"><div class="lbl">Topic</div><textarea id="planTopic" style="min-height:44px"></textarea></div>
+        <div class="plan-field"><div class="lbl">Author's position</div><textarea id="planPosition" style="min-height:44px"></textarea></div>
+        <div class="plan-field"><div class="lbl">Main ideas (reorder with ▲▼)</div><div id="ideaRows"></div></div>
+        <div class="plan-field"><div class="lbl">Conclusion</div><textarea id="planConclusion" style="min-height:44px"></textarea></div>
+      </div>
+      <div class="footer-nav"><button class="btn ghost" onclick="goStep(3)">← Back</button><button class="btn gold" onclick="goStep(5)">Continue → Write</button></div>
+    </div>
+
+    <div class="step-panel" data-step="write">
+      <div class="step-head"><div class="step-kicker">Step 6 / 7</div><h2>Write</h2>
+        <p class="step-intro">Write a 130–180 word summary of the text in English, following your plan.</p></div>
+      <div class="card">
+        <div class="plan-recap" id="planRecap"></div>
+        <div class="field-lbl">Your summary</div>
+        <textarea id="summaryText" style="min-height:220px" placeholder="Write your summary here, in your own words…" oninput="onSummaryInput()"></textarea>
+        <div class="wc-row"><span class="wc-badge" id="wcBadge">0 words</span><button class="btn ghost small" onclick="toggleHelp()">Need help?</button></div>
+        <div class="help-panel" id="helpPanel">
+          <div class="help-sub">Structure</div>
+          <ul><li>The article examines…</li><li>The author argues that…</li><li>It also points out that…</li>
+          <li>Another concern is…</li><li>Finally, …</li><li>The article concludes that…</li></ul>
+          <div class="help-sub">Content, ideas to include</div>
+          <ul><li>AI could let a significant share of UK workers work fewer hours for the same pay.</li>
+          <li>Beyond job-loss fears, AI also raises hopes of a shorter working week.</li>
+          <li>Early four-day week trials already show steady or improved productivity and wellbeing gains.</li>
+          <li>Overall assessment: is a shorter week guaranteed, or does it depend on how the gains are shared?</li></ul>
+        </div>
+      </div>
+      <div class="footer-nav"><button class="btn ghost" onclick="goStep(4)">← Back</button><button class="btn gold" onclick="goStep(6)">Continue → Check</button></div>
+    </div>
+
+    <div class="step-panel" data-step="check">
+      <div class="step-head"><div class="step-kicker">Step 7 / 7</div><h2>Check</h2>
+        <p class="step-intro">Run the check, fix what's flagged, then compare with a model answer.</p></div>
+      <div class="card">
+        <div class="field-lbl">Your current summary</div>
+        <div class="summary-preview" id="summaryPreview"></div>
+        <button class="btn gold" onclick="runCheck()">Analyser mon résumé</button>
+        <button class="btn ghost" onclick="goStep(5)">✏ Edit my summary</button>
+        <div class="fb-grid" id="checkGrid" style="margin-top:1rem"></div>
+      </div>
+      <div class="ia-box" data-ia="summary" data-ia-texte="#summaryText" data-ia-ctx="Document source=#sourcePane .source-body" data-ia-consigne="Résumé de 130 à 180 mots en anglais." data-ia-min="30"></div>
+      <div class="card">
+        <button class="btn ghost" id="compareBtn" onclick="revealModel()" disabled>Compare with a model answer</button>
+        <div class="reveal" id="modelReveal" style="display:none">
+          <p class="model-note" style="color:var(--muted);margin-bottom:.6rem">This is one possible summary. Other answers are possible.</p>
+          <div class="model-legend"><span><i class="swatch" style="background:rgba(201,163,85,.6)"></i>Main idea</span><span><i class="swatch" style="background:#8fc7e8"></i>Reformulation</span><span><i class="swatch" style="background:var(--gold)"></i>Connector</span></div>
+          <div class="model-box"><h4>Model answer</h4>
+            <p><span class="m-conn">The article examines</span> a report by the think tank Autonomy suggesting that <span class="m-main">AI could let millions of UK workers move to a four-day week</span>. <span class="m-conn">The author explains that</span> although <span class="m-main">AI's growing power raises widespread fears of job losses</span>, Autonomy offers a more hopeful view. <span class="m-conn">It also points out that</span> <span class="m-main">a significant share of the UK workforce could work fewer hours for the same pay by 2033</span>, according to the report. <span class="m-conn">Another point is that</span> <span class="m-reform">these estimates rely on</span> <span class="m-main">productivity data from external sources such as Goldman Sachs and the US Department of Labor</span>. The report's director of research argues that <span class="m-main">a shorter week is the clearest way to share AI's benefits fairly between workers and companies</span>. <span class="m-conn">Finally,</span> <span class="m-conn">the article concludes that</span> early four-day week trials already show steady or improved productivity, along with real gains in employee wellbeing.</p>
+            <div class="mono model-note" id="modelWc"></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-nav"><button class="btn ghost" onclick="goStep(5)">← Back to Write</button><button class="btn ghost" onclick="window.print()">🖨 Imprimer</button></div>
+    </div>
+
+  </section>
+</div>
+
+<div class="modal-overlay" id="methodModal"><div class="modal-box">
+  <button class="modal-close" onclick="closeMethod()">✕</button>
+  <h3>Summary Method</h3>
+  <ol>
+    <li><strong>Understand</strong><p>What is the text about? What is the author's position?</p></li>
+    <li><strong>Select</strong><p>Keep main ideas. Remove unnecessary evidence.</p></li>
+    <li><strong>Condense</strong><p>Combine several details into one broader idea.</p></li>
+    <li><strong>Reformulate</strong><p>Use your own words and structures.</p></li>
+    <li><strong>Organise</strong><p>Build a logical plan.</p></li>
+    <li><strong>Write</strong><p>Be concise, accurate and neutral.</p></li>
+    <li><strong>Check</strong><p>Content, selection, reformulation, organisation, language and word count.</p></li>
+  </ol>
+</div></div>
+
+<script>
+const LSK='lsa-dscg-summary-trainer-infosys-v1';
+const STEPS=['understand','select','condense','reformulate','organise','write','check'];
+const STEP_LABELS=['Understand','Select','Condense','Reformulate','Organise','Write','Check'];
+let state=JSON.parse(localStorage.getItem(LSK)||'null')||{cur:0,done:{},u:{},select:{kolo:{}},condense:{},reformulate:{},organise:{prefilled:false,ideas:[],topic:'',position:'',conclusion:''},write:{text:''},check:{analyzed:false}};
+function save(){localStorage.setItem(LSK,JSON.stringify(state))}
+
+function renderNav(){
+  const nav=document.getElementById('stepNav');
+  nav.innerHTML=STEPS.map((s,i)=>`<button class="step-pill${i===state.cur?' active':''}${state.done[s]?' done':''}" onclick="goStep(${i})"><span class="num"><span>${i+1}</span></span>${STEP_LABELS[i]}</button>`).join('');
+}
+function goStep(i){
+  state.cur=i; save();
+  document.querySelectorAll('.step-panel').forEach(p=>p.classList.toggle('active',p.dataset.step===STEPS[i]));
+  renderNav();
+  if(STEPS[i]==='organise')fillOrganise();
+  if(STEPS[i]==='write')fillWriteRecap();
+  if(STEPS[i]==='check')fillCheckPreview();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleDrawer(open){document.getElementById('sourcePane').classList.toggle('open',open)}
+function openMethod(){document.getElementById('methodModal').classList.add('show')}
+function closeMethod(){document.getElementById('methodModal').classList.remove('show')}
+
+function checkMCQ(btn,ok,cardId,explain){
+  const card=document.getElementById(cardId);
+  card.querySelectorAll('.opt-btn').forEach(b=>b.disabled=true);
+  const fb=document.getElementById(cardId+'-fb');
+  if(ok){btn.classList.add('correct');fb.className='fb show ok';fb.innerHTML='<strong>Correct.</strong> '+explain;}
+  else{btn.classList.add('wrong');card.querySelectorAll('.opt-btn').forEach(b=>{if(b.getAttribute('onclick').includes(',true,'))b.classList.add('correct')});fb.className='fb show no';fb.innerHTML='<strong>Not quite.</strong> '+explain;}
+  state.done[STEPS[state.cur]]=true;
+  if(cardId==='u1')state.u.topicOk=ok, state.u.topicText='A think tank\'s report suggesting AI could let millions of UK workers move to a four-day week.';
+  if(cardId==='u2')state.u.posOk=ok, state.u.posText='Beyond job-loss fears, AI could also offer a genuine, tangible benefit: shorter working hours.';
+  if(state.u.topicOk!==undefined&&state.u.posOk!==undefined){
+    const s=document.getElementById('uSummary');s.style.display='block';
+    s.innerHTML='<strong>Topic:</strong> '+state.u.topicText+'<br><strong>Author\'s position:</strong> '+state.u.posText;
+  }
+  save(); renderNav();
+}
+
+const KOLO=[
+{t:"AI could let a significant share of the UK workforce work fewer hours for the same pay.",keep:true,why:"The report's central finding, belongs in the summary."},
+{t:"Beyond concerns about job losses, AI is also raising hopes of a shorter working week.",keep:true,why:"Frames the article's overall angle, belongs in the summary."},
+{t:"8.8 million UK workers, or 28% of the workforce, could work 32-hour weeks by 2033.",keep:false,why:"A supporting statistic for the main idea above, generalise it, don't quote it."},
+{t:"Autonomy's estimates rely on productivity data from Goldman Sachs and the US Department of Labor.",keep:true,why:"An important methodological point about where the figures come from."},
+{t:"Nearly half of European workers expect AI to have a major impact on their working lives within a year, according to a LinkedIn survey.",keep:false,why:"A supporting survey statistic, not the idea itself."},
+{t:"A shorter working week is the clearest way to make sure AI's gains benefit workers, not just companies.",keep:true,why:"The report's central argument, worth keeping."},
+{t:"Generative tools like ChatGPT and Bard can write articles or business plans in seconds.",keep:false,why:"A tangential example about AI capability, not about working hours."},
+{t:"A further 88% of the workforce could see working hours cut by at least 10%.",keep:false,why:"Another supporting statistic, leave it out of the summary itself."},
+{t:"Early four-day week trials already show steady or improved productivity, alongside real gains in wellbeing.",keep:true,why:"The article's conclusion."}
+];
+function renderKolo(){
+  const wrap=document.getElementById('koloList');
+  wrap.innerHTML=KOLO.map((it,i)=>{
+    const st=state.select.kolo[i];
+    let cls='';
+    if(st==='keep')cls=it.keep?'kept':'wrongpick';
+    if(st==='drop')cls=it.keep?'wrongpick':'dropped';
+    return `<div class="kolo-item ${cls}" id="kolo${i}"><div class="txt">${it.t}</div><div class="kolo-actions">
+      <button class="keep-b" ${st?'disabled':''} onclick="koloPick(${i},true)">KEEP</button>
+      <button class="drop-b" ${st?'disabled':''} onclick="koloPick(${i},false)">LEAVE OUT</button></div>
+      ${st?`<div class="kolo-fb">${(st==='keep')===it.keep?'✓ ':'✗ '}${it.why}</div>`:''}</div>`;
+  }).join('');
+}
+function koloPick(i,pickedKeep){
+  state.select.kolo[i]=pickedKeep?'keep':'drop';
+  save(); renderKolo();
+  if(Object.keys(state.select.kolo).length===KOLO.length){
+    document.getElementById('koloPrinciple').style.display='block';
+    state.done.select=true; save(); renderNav();
+  }
+}
+
+function condenseCheck(id){
+  const inputs=[...document.querySelectorAll('.step-panel[data-step="condense"] .card')].find(c=>c.querySelector('#'+id+'-details-fb'));
+  const checks=inputs.querySelectorAll('input[type=checkbox]');
+  const fb=document.getElementById(id+'-details-fb');
+  const total=checks.length; let correct=0;
+  checks.forEach(c=>{ const want=c.dataset.correct==='1'; if(c.checked===want)correct++; });
+  if(correct===total){fb.className='fb show ok';fb.innerHTML='<strong>Good.</strong> You isolated the details/figures correctly.';}
+  else{fb.className='fb show no';fb.innerHTML='Not quite, a main claim should stay unchecked, and figures/secondary sources should be checked.';}
+}
+function condenseCommon(btn,ok,id){
+  document.getElementById(id+'-common').querySelectorAll('.opt-btn').forEach(b=>b.disabled=true);
+  if(ok){btn.classList.add('correct');document.getElementById(id+'-result').classList.add('show');state.done.condense=true;save();renderNav();}
+  else{btn.classList.add('wrong');document.getElementById(id+'-common').querySelectorAll('.opt-btn').forEach(b=>{if(b.getAttribute('onclick').includes(',true,'))b.classList.add('correct')});}
+}
+function checkCalibration(){
+  const a1=document.getElementById('cal1').value,a2=document.getElementById('cal2').value,a3=document.getElementById('cal3').value;
+  const fb=document.getElementById('cal-fb');
+  if(!a1||!a2||!a3){fb.className='fb show no';fb.innerHTML='Please answer all three.';return;}
+  const correct=(a1==='detailed')+(a2==='ok')+(a3==='detailed');
+  if(correct===3){fb.className='fb show ok';fb.innerHTML='<strong>3 / 3 ,</strong> a good summary sentence stays general, specific figures belong to the source text, not the summary.';}
+  else{fb.className='fb show no';fb.innerHTML='<strong>'+correct+' / 3 ,</strong> sentences 1 and 3 are too detailed, sentence 2 is appropriate.';}
+  state.done.condense=true; save(); renderNav();
+}
+
+function toggleModel(id){const el=document.getElementById(id);el.style.display=el.style.display==='none'?'block':'none';}
+function checkReformulate(inputId,fbId,goodWords,forbidden){
+  const val=document.getElementById(inputId).value.trim().toLowerCase();
+  const fb=document.getElementById(fbId);
+  if(val.split(/\s+/).filter(Boolean).length<4){fb.className='fb show no';fb.innerHTML='Write a full sentence.';return;}
+  if(forbidden&&val.includes(forbidden)){fb.className='fb show no';fb.innerHTML='Try again without reusing the original word, compare with the model below.';return;}
+  const hit=goodWords.some(w=>val.includes(w));
+  if(hit){fb.className='fb show ok';fb.innerHTML='<strong>Good.</strong> Compare with the model below.';}
+  else{fb.className='fb show no';fb.innerHTML='Not quite the technique asked for, compare with the model below and try once more if you like.';}
+  state.done.reformulate=true; save(); renderNav();
+}
+function checkCombine(){
+  const val=document.getElementById('r4').value.trim().toLowerCase();
+  const fb=document.getElementById('r4-fb');
+  const words=val.split(/\s+/).filter(Boolean);
+  if(words.length<5){fb.className='fb show no';fb.innerHTML='Write one full combined sentence.';return;}
+  const kw=['hours','pay','wellbeing','workers','productivity'];
+  const hits=kw.filter(w=>val.includes(w)).length;
+  if(hits>=2&&words.length<22){fb.className='fb show ok';fb.innerHTML='<strong>Good.</strong> One concise sentence covering the idea. Compare with the model below.';}
+  else{fb.className='fb show no';fb.innerHTML='Try to merge the three benefits into one shorter sentence, compare with the model below.';}
+  state.done.reformulate=true; save(); renderNav();
+}
+
+function fillOrganise(){
+  if(!state.organise.prefilled){
+    state.organise.topic=state.u.topicText||'';
+    state.organise.position=state.u.posText||'';
+    state.organise.ideas=[
+      'AI could let a significant share of the UK workforce work fewer hours for the same pay.',
+      'Beyond concerns about job losses, AI is also raising hopes of a shorter working week.',
+      "Autonomy's estimates rely on productivity data from Goldman Sachs and the US Department of Labor.",
+      "A shorter working week is the clearest way to make sure AI's gains benefit workers, not just companies."
+    ];
+    state.organise.conclusion='Early four-day week trials already show steady or improved productivity, alongside real gains in wellbeing.';
+    state.organise.prefilled=true; save();
+  }
+  document.getElementById('planTopic').value=state.organise.topic;
+  document.getElementById('planPosition').value=state.organise.position;
+  document.getElementById('planConclusion').value=state.organise.conclusion;
+  renderIdeaRows();
+}
+function renderIdeaRows(){
+  const wrap=document.getElementById('ideaRows');
+  wrap.innerHTML=state.organise.ideas.map((t,i)=>`<div class="idea-row"><textarea onchange="editIdea(${i},this.value)">${t}</textarea>
+    <div class="reorder-btns"><button ${i===0?'disabled':''} onclick="moveIdea(${i},-1)">▲</button><button ${i===state.organise.ideas.length-1?'disabled':''} onclick="moveIdea(${i},1)">▼</button></div></div>`).join('');
+}
+function editIdea(i,val){state.organise.ideas[i]=val;save();}
+function moveIdea(i,dir){
+  const arr=state.organise.ideas; const j=i+dir;
+  if(j<0||j>=arr.length)return;
+  [arr[i],arr[j]]=[arr[j],arr[i]]; save(); renderIdeaRows();
+}
+document.addEventListener('change',e=>{
+  if(e.target.id==='planTopic'){state.organise.topic=e.target.value;save();}
+  if(e.target.id==='planPosition'){state.organise.position=e.target.value;save();}
+  if(e.target.id==='planConclusion'){state.organise.conclusion=e.target.value;state.done.organise=true;save();renderNav();}
+});
+
+function fillWriteRecap(){
+  const o=state.organise;
+  document.getElementById('planRecap').innerHTML=
+    '<div><span class="k">Topic</span>, '+(o.topic||',')+'</div>'+
+    '<div><span class="k">Position</span>, '+(o.position||',')+'</div>'+
+    o.ideas.map((t,i)=>'<div><span class="k">Idea '+(i+1)+'</span>, '+t+'</div>').join('')+
+    '<div><span class="k">Conclusion</span>, '+(o.conclusion||',')+'</div>';
+  document.getElementById('summaryText').value=state.write.text||'';
+  updateWc();
+}
+function onSummaryInput(){state.write.text=document.getElementById('summaryText').value;save();updateWc();state.done.write=(wc()>0);renderNav();}
+function wc(){return (document.getElementById('summaryText').value.trim().match(/\S+/g)||[]).length}
+function updateWc(){
+  const n=wc(); const b=document.getElementById('wcBadge');
+  b.textContent=n+' words';
+  b.className='wc-badge '+(n<130?'low':n>180?'high':'ok');
+  if(n>=130&&n<=180)b.textContent+=' ✓';
+}
+function toggleHelp(){document.getElementById('helpPanel').classList.toggle('show')}
+
+function fillCheckPreview(){
+  document.getElementById('summaryPreview').textContent=state.write.text||'(no summary written yet, go back to Write)';
+}
+const VERBATIM=['a shorter working week is the most tangible way','usher in a new era of four-day working weeks',"nearly a third of the uk's workforce",'could be working 32-hour'];
+function runCheck(){
+  const raw=state.write.text||''; const low=raw.toLowerCase(); const n=wc();
+  const grid=document.getElementById('checkGrid');
+  if(n<20){grid.innerHTML='<div class="fb-panel lvl-bad"><div class="fb-panel-head">Write your summary first<span class="tag">,</span></div></div>';return;}
+
+  function panel(title,ok,body){return `<div class="fb-panel ${ok?'lvl-ok':'lvl-bad'}"><div class="fb-panel-head">${title}<span class="tag">${ok?'✓ Good':'⚠ Improve this'}</span></div><div class="fb-panel-body">${body}</div></div>`;}
+
+  const contentKw=['autonomy','four-day','ai','productivity','goldman sachs','department of labor','workforce','working hours','stronge'];
+  const contentHits=contentKw.filter(k=>low.includes(k)).length;
+  const contentOk=contentHits>=6;
+
+  const detailKw=['8.8 million','28 per cent','28%','27.9 million','88 per cent','88%','1.5 per cent','linkedin'];
+  const detailHits=detailKw.filter(k=>low.includes(k)).length;
+  const selectionOk=detailHits===0;
+
+  const copied=VERBATIM.filter(v=>low.includes(v));
+  const firstPerson=/\b(i think|in my opinion|i believe|\bwe\b)/i.test(raw);
+  const reformOk=copied.length===0&&!firstPerson;
+
+  const connectors=['however','because','although','finally','in conclusion','also','moreover','therefore'];
+  const connHits=connectors.filter(c=>low.includes(c)).length;
+  const orgOk=connHits>=2;
+
+  const sentences=raw.split(/[.!?]+/).filter(s=>s.trim());
+  const avgLen=sentences.reduce((a,s)=>a+s.trim().split(/\s+/).length,0)/Math.max(1,sentences.length);
+  const languageOk=avgLen<=32&&sentences.length>=4;
+
+  const lengthOk=n>=130&&n<=180;
+
+  grid.innerHTML=
+    panel('Content, topic, position, essential arguments',contentOk,contentOk?'The main arguments seem present.':'Make sure you mention the topic, the author\'s position, and the core arguments (fewer hours, job-loss context, data sources, the fairness argument, conclusion).')+
+    panel('Selection, no unnecessary examples/figures',selectionOk,selectionOk?'No stray statistics detected, good, you generalised the evidence.':'Specific figures detected ('+detailHits+'). Replace them with the general idea they illustrate.')+
+    panel('Reformulation, your own words',reformOk,reformOk?'No verbatim phrases or first-person opinion detected.':(copied.length?'Phrase copied from the source: "'+copied[0]+'". Reformulate it. ':'')+(firstPerson?'Avoid first-person opinion ("I think…").':''))+
+    panel('Organisation, logical progression',orgOk,orgOk?'Connectors link your ideas ('+connHits+' found).':'Add a few connectors (however, because, finally…) to link your ideas clearly.')+
+    panel('Language, clear, neutral sentences',languageOk,languageOk?'Sentence length and structure look reasonable.':'Some sentences may be too long or too few, aim for clear, medium-length sentences.')+
+    panel('Length, 130–180 words',lengthOk,lengthOk?'Word count: '+n+'.':'Word count: '+n+'. Adjust to reach 130–180 words.');
+
+  state.check.analyzed=true; save();
+  document.getElementById('compareBtn').disabled=false;
+}
+function revealModel(){
+  document.getElementById('modelReveal').style.display='block';
+  const mwc=document.querySelector('#modelReveal .model-box p').textContent.trim().split(/\s+/).length;
+  document.getElementById('modelWc').textContent='≈ '+mwc+' words';
+}
+
+renderNav();
+renderKolo();
+document.querySelectorAll('.step-panel').forEach(p=>p.classList.toggle('active',p.dataset.step===STEPS[state.cur]));
+if(state.u.topicOk!==undefined&&state.u.posOk!==undefined){document.getElementById('uSummary').style.display='block';document.getElementById('uSummary').innerHTML='<strong>Topic:</strong> '+state.u.topicText+'<br><strong>Author\'s position:</strong> '+state.u.posText;}
+if(Object.keys(state.select.kolo).length===KOLO.length)document.getElementById('koloPrinciple').style.display='block';
+if(STEPS[state.cur]==='organise')fillOrganise();
+if(STEPS[state.cur]==='write')fillWriteRecap();
+if(STEPS[state.cur]==='check'){fillCheckPreview();if(state.check.analyzed)document.getElementById('compareBtn').disabled=false;}
+</script>
+<div class="visit-count" id="visitCount" style="text-align:center;padding:.8rem 0 1.4rem"></div>
+<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-dscg-'+encodeURIComponent(k)+'&label=Visites&countColor=%23c8a84b&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script>
+<script src="assets/ia.js"></script>
+</body>
+</html>
