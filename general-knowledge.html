@@ -196,7 +196,7 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
 <!-- RESOURCES -->
 <main class="wrap">
 
-  <details class="fmt-group"><summary class="fmt"><h2 class="fmt-title">Vidéos</h2><span class="fmt-count">4</span><svg class="fmt-chev" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="fmt-body"><section class="res">
+  <details class="fmt-group"><summary class="fmt"><h2 class="fmt-title">Vidéos</h2><span class="fmt-count">4</span><svg class="fmt-chev" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="fmt-body"><section class="res" id="gb-uk">
     <div class="res-head">
       <span class="idx">1</span>
       <div>
@@ -209,7 +209,7 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
       <iframe src="https://www.youtube.com/embed/xoP0HYz5oUE" title="GB vs UK" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
   </section>
-<section class="res">
+<section class="res" id="bitcoin">
     <div class="res-head">
       <span class="idx">2</span>
       <div>
@@ -222,7 +222,7 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
       <iframe title="Le mystère Satoshi : enquête sur l'inventeur du bitcoin | ARTE" src="https://video.ploud.fr/videos/embed/bd6cef2c-9abb-45ff-b45d-94834903fad4" loading="lazy" allowfullscreen sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
     </div>
   </section>
-<section class="res">
+<section class="res" id="enron">
     <div class="res-head">
       <span class="idx">3</span>
       <div>
@@ -235,7 +235,7 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
     <div class="video wide">
       <iframe src="https://www.youtube.com/embed/vMj0t2Vsyvs" title="The Enron Scandal" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
-  </section><section class="res">
+  </section><section class="res" id="nhs">
     <div class="res-head">
       <span class="idx">4</span>
       <div>
@@ -249,7 +249,7 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
       <iframe src="https://tube-langues-vivantes.apps.education.fr/videos/embed/tJZKvP6pydMvdihnuxuoty" title="NHS JT France 2" loading="lazy" allow="fullscreen" allowfullscreen sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
     </div>
   </section></div></details>
-<details class="fmt-group"><summary class="fmt"><h2 class="fmt-title">Podcasts</h2><span class="fmt-count">1</span><svg class="fmt-chev" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="fmt-body"><section class="res">
+<details class="fmt-group"><summary class="fmt"><h2 class="fmt-title">Podcasts</h2><span class="fmt-count">1</span><svg class="fmt-chev" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="fmt-body"><section class="res" id="fifty-states">
     <div class="res-head">
       <span class="idx">5</span>
       <div>
@@ -331,5 +331,33 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
   </div>
 <div class="visit-count" id="visitCount"></div></footer>
 
-<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-dscg-'+encodeURIComponent(k)+'&label=Visites&countColor=%23c8a84b&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script></body>
+<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-dscg-'+encodeURIComponent(k)+'&label=Visites&countColor=%23c8a84b&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script><style>
+.gk-all{display:none;margin:0 0 22px;font-weight:700;font-size:15px;color:var(--navy);text-decoration:none}
+.gk-all:hover{color:var(--blue)}
+body.gk-focus .gk-all{display:inline-block}
+body.gk-focus .fmt-group:not(.gk-on){display:none}
+body.gk-focus .fmt-group.gk-on>summary{display:none}
+body.gk-focus .fmt-group.gk-on .res:not(.gk-on){display:none}
+</style>
+<script>
+/* Accès direct à une ressource : general-knowledge.html#bitcoin n'affiche que cette ressource */
+(function(){
+var main=document.querySelector("main.wrap");
+if(main&&!document.querySelector(".gk-all")){var a=document.createElement("a");a.className="gk-all";a.href="general-knowledge.html";a.textContent="\u2190 Toutes les ressources General Knowledge";main.insertBefore(a,main.firstChild);}
+function apply(){
+var on=document.querySelectorAll(".gk-on");for(var i=0;i<on.length;i++)on[i].classList.remove("gk-on");
+document.body.classList.remove("gk-focus");
+var id="";try{id=decodeURIComponent(location.hash.slice(1));}catch(e){}
+var t=id?document.getElementById(id):null;
+if(!t||!t.classList.contains("res"))return;
+var g=t.closest("details");
+if(g){g.open=true;g.classList.add("gk-on");}
+t.classList.add("gk-on");
+document.body.classList.add("gk-focus");
+window.scrollTo(0,0);
+}
+window.addEventListener("hashchange",apply);apply();
+})();
+</script>
+</body>
 </html>
