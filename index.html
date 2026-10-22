@@ -180,12 +180,13 @@ let lastSeg='sum';
 const route=()=>(location.hash.slice(1)||'home').split('/');
 function remember(e){const a=e.target.closest('a[data-t]');if(a)try{localStorage.setItem('dscg-last',JSON.stringify({t:a.dataset.t,c:a.dataset.c,h:a.getAttribute('href')}))}catch(_){}}
 document.addEventListener('click',remember);
-const row=x=>`<a class="r" href="${x.h}" data-t="${x.t.replace(/"/g,'&quot;')}" data-c="${x.ct||''}"><span class="ic ${x.k==='fil'?'read':x.k==='train'?'ess':x.k==='pod'?'vid':x.k==='ppl'?'read':x.k}">${ic(x.k==='fil'?'read':x.k==='train'?'leaf':x.k,19)}</span><span><small>${T[x.k]||'Repères'}${x.c?' · Ch. '+x.c:''}</small><b>${x.t}</b></span><span class="ar">${ic('arr',18,2.4)}</span></a>`;
+const bust=h=>{let v='';try{v=localStorage.getItem('dscg-version')||''}catch(_){}if(!v||!/\.html/.test(h)||/^https?:/.test(h))return h;const i=h.indexOf('#'),p=i<0?h:h.slice(0,i),f=i<0?'':h.slice(i),b=p.replace(/([?&])v=[^&]*&?/,'$1').replace(/[?&]$/,'');return b+(b.indexOf('?')>-1?'&':'?')+'v='+encodeURIComponent(v)+f};
+const row=x=>`<a class="r" href="${bust(x.h)}" data-t="${x.t.replace(/"/g,'&quot;')}" data-c="${x.ct||''}"><span class="ic ${x.k==='fil'?'read':x.k==='train'?'ess':x.k==='pod'?'vid':x.k==='ppl'?'read':x.k}">${ic(x.k==='fil'?'read':x.k==='train'?'leaf':x.k,19)}</span><span><small>${T[x.k]||'Repères'}${x.c?' · Ch. '+x.c:''}</small><b>${x.t}</b></span><span class="ar">${ic('arr',18,2.4)}</span></a>`;
 const chCard=c=>`<a class="ch" href="#ch/${c.n}"><span class="im" style="background-image:url(assets/${c.img})"><i>${c.n}</i></span><span class="tx"><b>${c.t}</b><p>${c.q}</p></span><span class="ar">${ic('arr',18,2.4)}</span></a>`;
 const foot=`<footer class="foot"><img class="l" src="assets/lsa-logo.png" alt="Logo LSA"><span>Lycée Sidoine Apollinaire · M. Blanchet</span><div class="visit-count" id="visitCount"></div></footer>`;
 const V={
 home(){let l=null;try{l=JSON.parse(localStorage.getItem('dscg-last'))}catch(_){}
-return `<section class="hello"><h1>DSCG <span>Toolbox</span></h1><p>Les 7 chapitres du programme, les entraînements à la synthèse et à l'essai, le vocabulaire et la culture générale.</p>${l?`<a class="resume" href="${l.h}"><span class="g"><small>Reprendre</small><b>${l.t}</b></span>${ic('play',20,2.4)}</a>`:''}</section>
+return `<section class="hello"><h1>DSCG <span>Toolbox</span></h1><p>Les 7 chapitres du programme, les entraînements à la synthèse et à l'essai, le vocabulaire et la culture générale.</p>${l?`<a class="resume" href="${bust(l.h)}"><span class="g"><small>Reprendre</small><b>${l.t}</b></span>${ic('play',20,2.4)}</a>`:''}</section>
 <div class="sec"><h2>Chapitres au programme</h2><span>7 chapitres</span></div><div class="chs">${CH.map(chCard).join('')}</div>
 <div class="sec"><h2>Aussi</h2></div><div class="tiles">
 <a class="tile" href="#entrainer/voc"><span class="ic">${ic('voc')}</span><b>Vocabulaire<small>7 fiches</small></b></a>
