@@ -49,6 +49,13 @@ h1{font-size:clamp(1.6rem,5vw,2.4rem);line-height:1.1;font-weight:700}
 .ch b{display:block;color:var(--navy);font-size:15.5px;line-height:1.25}
 .ch p{font-size:13.5px;color:var(--muted);line-height:1.4;margin-top:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .ch .ar{color:var(--blue)}
+/* présentation de l'épreuve */
+.epr{margin-top:14px;background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow);color:var(--text);font-size:14.5px;line-height:1.5}
+.epr h2{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--navy)}
+.epr .lv{margin-top:4px;font-weight:600;color:var(--navy)}
+.epr .ty{margin-top:2px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-deep)}
+.epr p{margin-top:10px}
+.epr ul{margin:6px 0 0 20px}.epr li{margin-top:3px}
 /* tiles */
 .tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .tile{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;color:var(--navy);display:flex;flex-direction:column;gap:10px;min-height:96px;box-shadow:var(--shadow)}
@@ -193,7 +200,7 @@ return `<section class="hello"><h1>DSCG <span>Toolbox</span></h1><p>Les 7 chapit
 <a class="tile" href="#culture"><span class="ic">${ic('globe')}</span><b>General Knowledge<small>Vidéos, podcast, articles</small></b></a>
 <a class="tile" href="economistes.html" data-t="Les économistes" data-c="General Knowledge"><span class="ic">${ic('ppl')}</span><b>Les économistes<small>Repères</small></b></a>
 <a class="tile" href="https://1cours1bot.fr" target="_blank" rel="noopener"><span class="ic bot"><img src="assets/1cours1bot-logo.png" alt=""></span><b>1cours1bot<small>Externe ↗</small></b></a></div>`},
-chapitres(){return `<h1>Chapitres</h1><div class="sec"><h2>Programme DSCG</h2><span>7 chapitres</span></div><div class="chs">${CH.map(chCard).join('')}</div>`},
+chapitres(){return `<h1>Chapitres</h1><div class="epr"><h2>ANGLAIS DES AFFAIRES</h2><div class="lv">Niveau M : 120 heures - 15 ECTS</div><div class="ty">Epreuve orale</div><p>Cette unité d’enseignement conduit à préparer une épreuve ayant pour but de montrer la capacité du candidat à maîtriser l’anglais des affaires en présentant et défendant un point de vue à partir d'un court document écrit en langue anglaise.</p><p>Pour permettre de tester de façon pertinente les aptitudes recherchées, le sujet proposé au candidat sera tiré de l’un des thèmes précisés infra.</p><p>Les aptitudes évaluées sont les suivantes :</p><ul><li>dégager une problématique à partir d’un sujet donné ;</li><li>construire un exposé structuré ;</li><li>s’exprimer de façon rigoureuse en anglais ;</li><li>défendre ses positions de façon argumentée ;</li><li>mobiliser de façon pertinente un vocabulaire lié à l’anglais des affaires ;</li><li>intégrer à bon escient dans le discours les faits d’actualité.</li></ul></div><div class="sec"><h2>Programme DSCG</h2><span>7 chapitres</span></div><div class="chs">${CH.map(chCard).join('')}</div>`},
 ch(n){const c=CH.find(x=>x.n==n);if(!c)return V.chapitres();const x=c.r.map(r=>({...r,ct:c.t}));const g=k=>x.filter(r=>k.includes(r.k));
 const read=g(['fil','read','train']),tr=g(['sum','ess']),vo=g(['voc']);
 return `<a class="back" href="#chapitres">${ic('left',18,2.4)}Chapitres</a><section class="cover" style="background-image:url(assets/${c.img})"><div class="in"><span class="k">Chapitre ${c.n}</span><h1>${c.t}</h1><p>${c.q}</p></div></section>
