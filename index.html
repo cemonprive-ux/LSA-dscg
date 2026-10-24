@@ -216,7 +216,7 @@ culture(){const gs=[...new Set(GK.map(x=>x.g))];return `<h1>General Knowledge</h
 recherche(){return `<h1>Recherche</h1><label class="sbox" style="margin-top:16px">${ic('search')}<input id="q" type="search" placeholder="Chapitre, article, entraînement…" autocomplete="off"></label><div id="out" class="res" style="margin-top:14px"></div>`}
 };
 function chrome(cur){
-document.getElementById('tabs').innerHTML=TABS.map(([k,l,i])=>`<a href="#${k}" class="${cur===k?'on':''}"${cur===k?' aria-current="page"':''}>${ic(i,22)}${l}</a>`).join('')+`<a href="https://1cours1bot.fr" target="_blank" rel="noopener"><img class="tbot" src="assets/1cours1bot-logo.png" alt="">1cours1bot</a>`;
+document.getElementById('tabs').innerHTML=TABS.filter(t=>t[0]!=='recherche').map(([k,l,i])=>`<a href="#${k}" class="${cur===k?'on':''}"${cur===k?' aria-current="page"':''}>${ic(i,22)}${l}</a>`).join('')+`<a href="https://1cours1bot.fr" target="_blank" rel="noopener"><img class="tbot" src="assets/1cours1bot-logo.png" alt="">1cours1bot</a>`;
 document.getElementById('top').innerHTML=`<img src="assets/lsa-logo.png" alt=""><div class="tt"><b>DSCG</b><small>LSA Toolbox · M. Blanchet</small></div><a class="ib" href="#recherche" aria-label="Rechercher">${ic('search',22)}</a>`;
 document.getElementById('side').innerHTML=`<div class="brand"><img src="assets/lsa-logo.png" alt=""><div><b>DSCG</b><small>LSA Toolbox · M. Blanchet</small></div></div>
 <nav>${TABS.map(([k,l,i])=>`<a href="#${k}" class="${cur===k?'on':''}"${cur===k?' aria-current="page"':''}>${ic(i,19)}${l}</a>`).join('')}</nav>
