@@ -1,0 +1,76 @@
+/* ============================================================
+   LSA DSCG, correctifs d'accessibilité et d'ergonomie (principes HIG)
+   Chargée en dernier sur toutes les pages : elle complète les styles
+   propres à chaque page sans les remplacer.
+   ============================================================ */
+
+/* 1. Focus clavier visible (les champs avaient outline:none, les boutons aucun style) */
+:where(a,button,summary,[role="button"],[tabindex]):focus-visible,
+:where(input,textarea,select):focus-visible{
+  outline:3px solid #2d5fa6;outline-offset:2px;border-radius:6px;
+}
+:where(.topbar,.site-header,.head,.hero,.hello,.cover,.side,.top,.tabs,.lsa-appnav,.source-head,footer) :where(a,button,[role="button"]):focus-visible{
+  outline-color:#f5b60f;
+}
+textarea:focus-visible,input[type=text]:focus-visible,input.txt:focus-visible,.type-input:focus-visible{
+  outline:3px solid #2d5fa6;outline-offset:1px;
+}
+
+/* 2. Mouvement réduit (rotation 3D des cartes, défilement animé, survols animés) */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;scroll-behavior:auto !important;
+  }
+}
+
+/* 3. Pas de survol « collant » sur écran tactile */
+@media (hover:none){
+  .tool-card:hover,.actions a:hover,.actions button:hover,.ch:hover,.tile:hover,.r:hover{transform:none !important;}
+}
+
+/* 4. Cibles tactiles d'au moins 44 x 44 pt */
+.topbar a.back,.source-toggle,.source-head button,.btn,.method-btn,.nav-link,
+.help-btn,.ex-back,.assess-btn,.seg button,.download-btn{
+  min-height:44px;
+}
+.topbar a.back{display:inline-flex;align-items:center;padding-left:16px;padding-right:16px;}
+.source-head button{min-width:44px;}
+.ex-back{padding:0 8px;margin-left:-8px;}
+.sort-btn,.ia-btn,.drawer-toggle,.chrono a,a.back{min-height:44px;}
+.sort-btn,.ia-btn,.drawer-toggle,.chrono a,a.back{display:inline-flex;align-items:center;}
+.breadcrumb a{display:inline-block;padding:12px 3px;margin:-12px -3px;}
+.speaker{width:44px;height:44px;}
+.speaker-mini{position:relative;}
+.speaker-mini::after{content:"";position:absolute;inset:-9px;} /* zone de toucher étendue à 44 pt */
+
+/* 5. Textes secondaires : jamais sous 11 pt, 12 pt pour les libellés en majuscules */
+.credit{font-size:11px !important;}
+.topbar .place,.topbar a.back{font-size:12px !important;}
+.badge,.q-label,.strategy-box .lbl,.scaffold-row label,.step-kicker,.def-card .lbl,.field-lbl,.note-tip,
+.byline,.src,.tool-body .kicker,.eyebrow,.qlist .yr,.breadcrumb .tag,.card-index,.card-hint{
+  font-size:max(.75rem,12px) !important;
+}
+
+.part-tag,.step-pill,.src-tag,.lvl-lbl,.question .qlabel,.qtype-grid .h,.section-badge,.zoom-hint,.youtube-tag,.source-head button{
+  font-size:11px !important;
+}
+.source-head button{font-size:12px !important;}
+
+/* 6. Contraste des libellés dorés sur fond clair (1,8:1 avant, 5:1 après) */
+.mcq-btn .letter,.scaffold-row label,.strategy-box .lbl,.step-kicker,.def-card .lbl{color:#8a6100 !important;}
+.eyebrow,.tool-body .kicker,.epr .ty,.r small{color:#8a6100;}
+.note-tip{color:#8a6100;}
+
+/* 7. Zone de texte lisible quand l'utilisateur agrandit les caractères */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+
+/* 8. Retour instantané au toucher : l'état « pressé » apparaît dès le doigt posé, pas au relâchement */
+:where(.btn,.mcq-btn,.sort-btn,.assess-btn,.verify-btn,.menu-card,.download-btn,.help-btn,.flash-arrow,.method-btn,.nav-link,.source-toggle,
+  .tool-card,.ch,.tile,.r,.actions a,.actions button):active{
+  transform:scale(.97);transition:transform 100ms ease-out;
+}
+:where(.btn,.mcq-btn,.menu-card,.tool-card,.ch,.tile,.r):disabled:active{transform:none;}
+
+/* 9. Typographie : approche serrée sur les grands titres, interlignage serré à grande taille */
+.hero h1,.head h1,.site-header h1,.hello h1,.cover h1{letter-spacing:-.02em;line-height:1.08;}

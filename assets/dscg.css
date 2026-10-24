@@ -11,21 +11,21 @@
   --blue:#2d5fa6;
   --blue-deep:#21477d;
   --accent:#f5b60f;
-  --accent-deep:#c98f00;
+  --accent-deep:#8a6100;
   --green:#2a7a4b;
   --red:#b5302b;
   --bg:#f5f3ef;
   --surface:#ffffff;
   --border:#ddd5c5;
   --text:#2a2520;
-  --muted:#7a7060;
+  --muted:#6f6555;
   --shadow:0 2px 14px rgba(26,39,68,.10);
   --shadow-lg:0 14px 40px rgba(26,39,68,.18);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{
-  font-family:'Quicksand',Georgia,serif;
+  font-family:'Quicksand',-apple-system,BlinkMacSystemFont,'SF Pro Text',system-ui,sans-serif;
   background:var(--bg);color:var(--text);line-height:1.72;font-size:17px;
   -webkit-font-smoothing:antialiased;
 }
@@ -41,7 +41,7 @@ a{color:inherit;}
 .topbar .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);}
 .topbar a.back{
   display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.78);text-decoration:none;
-  border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:4px 13px;transition:all .2s;font-size:11.5px;
+  border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:4px 13px;transition:background-color .2s,border-color .2s,color .2s,box-shadow .2s,transform .2s,opacity .2s;font-size:11.5px;
 }
 .topbar a.back:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(200,168,75,.6);}
 
@@ -200,7 +200,7 @@ a{color:inherit;}
 .actions a,.actions button{
   font-family:inherit;cursor:pointer;text-decoration:none;
   display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:15px;
-  border-radius:30px;padding:12px 22px;transition:all .2s;
+  border-radius:30px;padding:12px 22px;transition:background-color .2s,border-color .2s,color .2s,box-shadow .2s,transform .2s,opacity .2s;
   border:1px solid var(--border);background:var(--surface);color:var(--navy);box-shadow:var(--shadow);
 }
 .actions a:hover,.actions button:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-2px);box-shadow:var(--shadow-lg);}
@@ -214,7 +214,7 @@ a{color:inherit;}
 .tool-card{
   display:flex;align-items:stretch;text-decoration:none;
   border-radius:12px;overflow:hidden;border:1px solid var(--border);
-  background:var(--surface);box-shadow:var(--shadow);transition:all .25s;
+  background:var(--surface);box-shadow:var(--shadow);transition:background-color .25s,border-color .25s,color .25s,box-shadow .25s,transform .25s,opacity .25s;
 }
 .tool-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px);border-color:var(--blue);}
 .tool-card.soon{cursor:default;opacity:.85;}
