@@ -70,6 +70,16 @@ p.art:first-of-type::first-letter{}
 .hemi{position:relative}
 .hemi svg{width:100%;height:auto;display:block}
 .hemi circle{opacity:0;animation:pop .5s forwards}
+/* surligneur */
+mark.hl{color:inherit;padding:.02em .14em;margin:0 -.14em;border-radius:.3em .7em .35em .8em / .8em .3em .7em .35em;
+  background-color:transparent;
+  background-image:linear-gradient(103deg,rgba(255,222,40,0) 0,rgba(255,222,40,.92) 1.6%,rgba(255,210,0,.78) 42%,rgba(255,224,60,.88) 96%,rgba(255,222,40,0) 100%),
+                   linear-gradient(97deg,rgba(255,238,110,0) 0,rgba(255,238,110,.6) 3%,rgba(255,238,110,.35) 62%,rgba(255,238,110,0) 100%);
+  background-repeat:no-repeat;background-position:0 90%,2% 40%;background-size:100% 64%,98% 40%;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone}
+.js mark.hl{background-size:0% 64%,0% 40%;transition:background-size .85s cubic-bezier(.35,.55,.2,1) var(--d,0s)}
+.js mark.hl.on{background-size:100% 64%,98% 40%}
+@media(prefers-reduced-motion:reduce){.js mark.hl{background-size:100% 64%,98% 40%!important;transition:none!important}}
 .hemi .dl{fill:#8fb2ee;stroke:var(--d);stroke-width:1.4} .hemi .o{fill:#e9a3a3}
 .hemi .d{fill:var(--d)} .hemi .r{fill:var(--r)} .hemi .v{fill:#c9c3b2} .hemi .i{fill:#f08c8c;stroke:var(--r);stroke-width:1.4}
 @keyframes pop{from{opacity:0;transform:scale(.3)}to{opacity:1}}
@@ -336,7 +346,7 @@ footer .src{columns:2;column-gap:30px;font-size:13px}
   <div class="narrow">
     <div class="tag">The basics</div>
     <h2>What are the midterms?</h2>
-    <p class="art lead">Millions of Americans voted in the midterm elections on 3 November 2026. They are called “midterms” because they happen halfway through a president’s four-year term. Donald Trump was not on the ballot, but the vote was widely seen as a verdict on his presidency. Unlike a presidential election, there is no single winner: voters elect hundreds of representatives, so the result is the sum of many local fights.</p>
+    <p class="art lead">Millions of Americans voted in the midterm elections on 3 November 2026. They are called “midterms” because they happen halfway through a president’s four-year term. Donald Trump was not on the ballot, but the vote was widely seen as <mark class="hl">a verdict on his presidency</mark>. Unlike a presidential election, there is no single winner: voters elect hundreds of representatives, so the result is <mark class="hl">the sum of many local fights</mark>.</p>
   </div>
 
   <div class="grid2" style="grid-template-columns:1fr">
@@ -359,8 +369,8 @@ footer .src{columns:2;column-gap:30px;font-size:13px}
   <div class="narrow">
     <div class="tag">The result</div>
     <h2>Who controls Congress now?</h2>
-    <p class="art"><b>Before the vote,</b> Republicans controlled both chambers. In the House they held 218 seats, plus one independent who voted with them, against 214 for Democrats and two vacancies. In the Senate they led 53 to 47.</p>
-    <p class="art"><b>After the vote, Democrats control both.</b> CNN projected the Senate flip at 11:35 p.m. on election night, and NBC News counts seven Republican-held seats won by Democrats: Iowa, Kansas, Ohio, Maine, North Carolina, South Carolina and Texas. In the House, the Associated Press count reported by Al Jazeera gives Democrats 228 seats called and 34 more leading, including 25 seats flipped from Republicans, more than the 21 they took in 2008. NBC News projects the party’s largest House majority in nearly two decades.</p>
+    <p class="art"><b>Before the vote,</b> <mark class="hl">Republicans controlled both chambers</mark>. In the House they held 218 seats, plus one independent who voted with them, against 214 for Democrats and two vacancies. In the Senate they led 53 to 47.</p>
+    <p class="art"><b>After the vote, Democrats control both.</b> CNN projected the Senate flip at 11:35 p.m. on election night, and NBC News counts <mark class="hl">seven Republican-held seats</mark> won by Democrats: Iowa, Kansas, Ohio, Maine, North Carolina, South Carolina and Texas. In the House, the Associated Press count reported by Al Jazeera gives Democrats <mark class="hl">228 seats called and 34 more leading</mark>, including 25 seats flipped from Republicans, more than the 21 they took in 2008. NBC News projects the party’s <mark class="hl">largest House majority in nearly two decades</mark>.</p>
     <p class="note-sm">Counts are provisional (4 November): some races, such as Alaska and Mississippi in the Senate, were still uncalled.</p>
   </div>
 
@@ -391,11 +401,11 @@ footer .src{columns:2;column-gap:30px;font-size:13px}
     <h3>What the result changes</h3>
     <p class="sub">The new Congress takes office in January</p>
     <ul class="facts">
-      <li><i>🏛️</i><div><b>New House leadership.</b> Speaker Mike Johnson will not seek to remain House Republican leader (TIME). Hakeem Jeffries, re-elected, is positioned to become the first Black Speaker if Democrats choose him (Northeastern University).</div></li>
-      <li><i>🔍</i><div><b>Oversight.</b> Democrats will be able to launch congressional investigations with subpoena power (CNBC). Committee chairs pass from Republicans to Democrats.</div></li>
-      <li><i>⚖️</i><div><b>Divided government.</b> Trump is the first president in 20 years to lose both the House and the Senate in a midterm (CBC). Republican bills can no longer pass without Democratic votes, and Vice President JD Vance’s tie-breaking vote no longer decides the Senate. Trump keeps his veto, and Democrats do not have the two-thirds majority needed to override it.</div></li>
-      <li><i>🗳️</i><div><b>Nominations.</b> The Senate confirms cabinet members and federal judges, so a Democratic majority can now block or slow the president’s choices.</div></li>
-      <li><i>🌍</i><div><b>Foreign policy.</b> Analysts at Northeastern University London expect Democrats to challenge the executive more on NATO, Russia sanctions and Greenland.</div></li>
+      <li><i>🏛️</i><div><b>New House leadership.</b> Speaker Mike Johnson will not seek to remain House Republican leader (TIME). Hakeem Jeffries, re-elected, is positioned to become the <mark class="hl">first Black Speaker</mark> if Democrats choose him (Northeastern University).</div></li>
+      <li><i>🔍</i><div><b>Oversight.</b> Democrats will be able to launch congressional investigations with <mark class="hl">subpoena power</mark> (CNBC). Committee chairs pass from Republicans to Democrats.</div></li>
+      <li><i>⚖️</i><div><b>Divided government.</b> Trump is the <mark class="hl">first president in 20 years to lose both the House and the Senate</mark> in a midterm (CBC). Republican bills can no longer pass without Democratic votes, and Vice President JD Vance’s tie-breaking vote no longer decides the Senate. Trump keeps his veto, and Democrats do not have the two-thirds majority needed to override it.</div></li>
+      <li><i>🗳️</i><div><b>Nominations.</b> The Senate confirms cabinet members and federal judges, so a Democratic majority can now <mark class="hl">block or slow the president’s choices</mark>.</div></li>
+      <li><i>🌍</i><div><b>Foreign policy.</b> Analysts at Northeastern University London expect Democrats to <mark class="hl">challenge the executive more</mark> on NATO, Russia sanctions and Greenland.</div></li>
       <li><i>📣</i><div><b>Reactions.</b> Trump congratulated Democrats but insisted the result is not a rebuke of his presidency (TIME), saying Republicans would have won in a landslide had he been on the ballot (Northeastern). Vice President Vance blamed the war with Iran (NBC Washington). Analysts disagree: one called the result a repudiation of Trump, another said it is not a clear endorsement of the Democratic agenda (Northeastern).</div></li>
     </ul>
     <p class="note-sm" style="margin-top:10px">Points on committees, vetoes and nominations describe how the US system works; the other points come from the sources listed below.</p>
@@ -407,7 +417,7 @@ footer .src{columns:2;column-gap:30px;font-size:13px}
   <div class="narrow">
     <div class="tag">The mood of the country</div>
     <h2>A difficult climate for Republicans</h2>
-    <p class="art">History is not on the president’s side: his party usually loses seats at midterms. In 2018, during Trump’s first term, Democrats gained 40 seats in the House. Before the vote, the polls pointed the same way. A Reuters/Ipsos survey at the end of October gave Trump an approval rating of just 32%, and Democrats led Republicans by 47% to 36% when voters were asked which party they would choose for Congress. Democrats also appeared more motivated: 46% of them said they were very enthusiastic about voting, against 30% of Republicans. The result confirmed that mood.</p>
+    <p class="art">History is not on the president’s side: <mark class="hl">his party usually loses seats at midterms</mark>. In 2018, during Trump’s first term, Democrats gained 40 seats in the House. Before the vote, the polls pointed the same way. A Reuters/Ipsos survey at the end of October gave Trump an <mark class="hl">approval rating of just 32%</mark>, and Democrats led Republicans by <mark class="hl">47% to 36%</mark> when voters were asked which party they would choose for Congress. Democrats also appeared more motivated: 46% of them said they were very enthusiastic about voting, against 30% of Republicans. The result confirmed that mood.</p>
   </div>
 
   <div class="card">
@@ -510,6 +520,22 @@ footer .src{columns:2;column-gap:30px;font-size:13px}
   if(!('IntersectionObserver' in window)){targets.forEach(function(t){t.classList.add('in')});return;}
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){show(e.target);io.unobserve(e.target);}})},{threshold:.12});
   targets.forEach(function(t){io.observe(t)});
+})();
+</script>
+<script>
+(function(){
+  var ms=[].slice.call(document.querySelectorAll('mark.hl'));
+  function on(m){m.classList.add('on')}
+  if(!('IntersectionObserver' in window)){ms.forEach(on);return;}
+  /* chaque surlignage se dessine quand le passage atteint la zone de lecture (haut de l'écran) */
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting){on(e.target);io.unobserve(e.target);}
+  })},{rootMargin:'0px 0px -35% 0px',threshold:0});
+  ms.forEach(function(m){
+    var sibs=[].slice.call(m.parentNode.querySelectorAll('mark.hl'));
+    m.style.setProperty('--d',(0.45+0.18*sibs.indexOf(m))+'s');
+    io.observe(m);
+  });
 })();
 </script>
 <script src="assets/app-nav.js"></script>
