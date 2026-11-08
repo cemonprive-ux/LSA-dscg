@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="DSCG-Prof">
+<meta name="theme-color" content="#c97905">
+<title>DSCG-Prof</title>
+<link rel="apple-touch-icon" href="https://cemonprive-ux.github.io/LSA-dscg/assets/dscg-icon-180.png">
+<style>
+:root{--or:#c97905;--or2:#e0910b;--navy:#1a2744;--bg:#f5f3ef;--bd:#ddd5c5;--tx:#2a2520;--mu:#6f6555;--ok:#2a7a4b;--ko:#b5302b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:0 0 40px}
+header{background:linear-gradient(135deg,var(--or2),var(--or));color:#fff;padding:calc(12px + env(safe-area-inset-top)) 16px 12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+header h1{font-size:18px;margin:0;flex:1;min-width:140px}
+button,.btn{font:inherit;border:1px solid var(--bd);background:#fff;color:var(--navy);border-radius:9px;padding:8px 12px;cursor:pointer}
+button.pri{background:var(--navy);color:#fff;border-color:var(--navy)}
+button.warn{color:var(--ko);border-color:#e3b8b5}
+button.sm{padding:5px 9px;font-size:13px}
+header button{background:rgba(255,255,255,.18);color:#fff;border-color:rgba(255,255,255,.5)}
+main{max-width:900px;margin:0 auto;padding:14px}
+.card{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:14px;margin:0 0 14px;box-shadow:0 1px 6px rgba(26,39,68,.06)}
+h2{font-size:16px;margin:0 0 10px;color:var(--navy)}
+input,select,textarea{font:inherit;border:1px solid var(--bd);border-radius:9px;padding:9px 10px;width:100%;background:#fff}
+textarea{min-height:110px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row>*{flex:0 0 auto}.row>.grow{flex:1 1 150px}
+.tabs{display:flex;gap:6px;margin:0 0 14px}
+.tabs button{flex:1}
+.tabs button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.cnt{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
+.cnt span{background:#fbf1de;border:1px solid #efd9a8;border-radius:20px;padding:4px 12px;font-weight:600;color:#7a4a00}
+.el{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:9px 0;border-top:1px solid #eee7d8}
+.el:first-of-type{border-top:0}
+.el .nm{flex:1 1 180px;font-weight:600}
+.el .st{font-size:13px;color:var(--mu);flex:1 1 200px}
+.el .ac{display:flex;gap:6px;flex-wrap:wrap}
+.b{display:inline-block;font-size:12px;border-radius:12px;padding:1px 8px;margin-left:4px}
+.b.on{background:#e2efe8;color:var(--ok)}.b.lock{background:#fbe4e1;color:var(--ko)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid #eee7d8;vertical-align:top}
+th{color:var(--mu);font-weight:600}
+.mu{color:var(--mu);font-size:13px}.err{color:var(--ko);min-height:20px}.ok{color:var(--ok)}
+.hide{display:none!important}
+#login{max-width:340px;margin:60px auto;padding:0 16px}
+</style></head><body>
+<div id="login" class="hide">
+  <div class="card">
+    <h2>Console enseignant DSCG</h2>
+    <p class="mu">Mot de passe</p>
+    <input id="pw" type="password" autocomplete="current-password" autocapitalize="none">
+    <p class="err" id="lerr"></p>
+    <button class="pri" id="lgo" style="width:100%">Se connecter</button>
+  </div>
+</div>
+<div id="app" class="hide">
+<header>
+  <h1>DSCG · Console enseignant</h1>
+  <button id="open">Ouvrir l'application</button>
+  <button id="out">Se déconnecter</button>
+</header>
+<main>
+  <div class="tabs"><button data-t="comptes" class="on">Comptes</button><button data-t="journaux">Journaux</button><button data-t="outils">Outils</button></div>
+
+  <section id="t-comptes">
+    <div class="card" id="locked" style="display:none"><h2>🔒 Comptes verrouillés</h2><div id="lockedList"></div></div>
+    <div class="card">
+      <h2>État des comptes</h2>
+      <div class="cnt" id="counters"></div>
+      <label class="row"><input type="checkbox" id="onlyNew" style="width:auto"> Afficher seulement les non-activés</label>
+      <div id="list" style="margin-top:8px"></div>
+    </div>
+    <div class="card">
+      <h2>Ajouter un étudiant</h2>
+      <div class="row"><input class="grow" id="addNom" placeholder="NOM Prénom"><input id="addCl" style="width:110px" placeholder="Classe" value="DSCG"><button class="pri" id="addGo">Ajouter</button></div>
+      <h2 style="margin-top:16px">Importer une liste</h2>
+      <p class="mu">Un étudiant par ligne, au format NOM Prénom (copier-coller).</p>
+      <textarea id="impTxt" placeholder="BLANCHON Mathis&#10;BOIVIN Alexis"></textarea>
+      <div class="row" style="margin-top:8px"><input id="impCl" style="width:110px" placeholder="Classe" value="DSCG"><button class="pri" id="impGo">Importer</button></div>
+      <p id="msgA" class="mu"></p>
+    </div>
+  </section>
+
+  <section id="t-journaux" class="hide">
+    <div class="card">
+      <h2>Filtres</h2>
+      <div class="row">
+        <select id="fCl" style="width:130px"></select>
+        <select id="fPer" style="width:150px"><option value="7">7 derniers jours</option><option value="30">30 derniers jours</option><option value="0">Toute la période</option><option value="x">Dates précises</option></select>
+        <input type="date" id="fDu" class="hide" style="width:150px"><input type="date" id="fAu" class="hide" style="width:150px">
+        <button class="pri" id="fGo">Actualiser</button>
+        <button id="xl">Export Excel</button>
+      </div>
+    </div>
+    <div class="card"><h2>Connexions</h2><div class="cnt" id="kpi"></div><div id="never" class="mu"></div></div>
+    <div class="card"><h2>Rubriques les plus consultées</h2><div id="top"></div></div>
+    <div class="card"><h2>Dernières connexions</h2><div id="last"></div></div>
+  </section>
+
+  <section id="t-outils" class="hide">
+    <div class="card"><h2>Sauvegarde de la liste des comptes</h2><p class="mu">Fichier CSV sans les codes : élève, classe, état d'activation.</p><button id="bk">Télécharger la sauvegarde</button></div>
+    <div class="card"><h2>Purge de fin d'année</h2><p class="mu">Supprime tous les comptes, les sessions et les journaux. Irréversible. Pensez à faire l'export Excel avant.</p>
+      <div class="row"><input id="pgTxt" class="grow" placeholder="Tapez PURGER pour confirmer"><button class="warn" id="pgGo">Purger</button></div><p id="msgP" class="mu"></p></div>
+  </section>
+</main>
+</div>
+<script>
+(function(){
+var TK="dscg-prof-token", $=function(i){return document.getElementById(i)};
+var token=""; try{token=localStorage.getItem(TK)||""}catch(e){}
+var DATA={eleves:[]}, JOUR=null;
+var fmt=function(iso){if(!iso)return"";return new Date(iso).toLocaleString("fr-FR",{timeZone:"Europe/Paris",day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"})};
+var esc=function(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
+var coll=new Intl.Collator("fr",{ignorePunctuation:true,sensitivity:"base"});
+function api(path,body){
+  var o={method:body===undefined?"GET":"POST",headers:{Authorization:"Bearer "+token}};
+  if(body!==undefined){o.headers["Content-Type"]="application/json";o.body=JSON.stringify(body)}
+  return fetch(path,o).then(function(r){return r.json().then(function(j){if(r.status===401&&j.error==="non_autorise"){showLogin();throw new Error("auth")}return j})});
+}
+function showLogin(){token="";try{localStorage.removeItem(TK)}catch(e){}$("app").classList.add("hide");$("login").classList.remove("hide");$("pw").focus()}
+function showApp(){$("login").classList.add("hide");$("app").classList.remove("hide");loadEtat()}
+$("lgo").onclick=function(){
+  $("lerr").textContent="";
+  fetch("/api/prof/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:$("pw").value})}).then(function(r){return r.json()}).then(function(j){
+    if(j.token){token=j.token;try{localStorage.setItem(TK,token)}catch(e){}$("pw").value="";showApp()}
+    else if(j.error==="verrouille")$("lerr").textContent="Trop d'essais. Réessayez dans "+j.minutes+" min.";
+    else $("lerr").textContent="Mot de passe incorrect"+(j.restants!=null?" ("+j.restants+" essai"+(j.restants>1?"s":"")+" restant"+(j.restants>1?"s":"")+").":".");
+  }).catch(function(){$("lerr").textContent="Connexion impossible."});
+};
+$("pw").addEventListener("keydown",function(e){if(e.key==="Enter")$("lgo").click()});
+$("out").onclick=function(){api("/api/prof/logout",{}).catch(function(){}).then(showLogin)};
+$("open").onclick=function(){
+  var w=window.open("","_blank");
+  api("/api/prof/ouvrir",{}).then(function(j){if(!j.url){if(w)w.close();return}if(w)w.location.href=j.url;else location.href=j.url}).catch(function(){if(w)w.close()});
+};
+document.querySelectorAll(".tabs button").forEach(function(b){b.onclick=function(){
+  document.querySelectorAll(".tabs button").forEach(function(x){x.classList.toggle("on",x===b)});
+  ["comptes","journaux","outils"].forEach(function(t){$("t-"+t).classList.toggle("hide",t!==b.dataset.t)});
+  if(b.dataset.t==="journaux")loadJournal();
+}});
+
+/* ---------- comptes ---------- */
+function loadEtat(){return api("/api/prof/etat").then(function(j){DATA=j;renderEtat();fillClasses()})}
+function classes(){var s={};DATA.eleves.forEach(function(e){s[e.classe]=1});return Object.keys(s).sort(coll.compare)}
+function fillClasses(){var cur=$("fCl").value,h='<option value="">Toutes les classes</option>';classes().forEach(function(c){h+='<option>'+esc(c)+'</option>'});$("fCl").innerHTML=h;$("fCl").value=cur}
+function renderEtat(){
+  var now=DATA.maintenant,cs=classes(),h="";
+  cs.forEach(function(c){var l=DATA.eleves.filter(function(e){return e.classe===c});var a=l.filter(function(e){return e.activated_at}).length;h+="<span>"+esc(c)+" : "+a+" activé"+(a>1?"s":"")+" sur "+l.length+"</span>"});
+  $("counters").innerHTML=h||'<span>Aucun étudiant</span>';
+  var locked=DATA.eleves.filter(function(e){return e.locked_until&&e.locked_until>now});
+  $("locked").style.display=locked.length?"":"none";
+  $("lockedList").innerHTML=locked.map(function(e){return row(e,now)}).join("");
+  var only=$("onlyNew").checked,out="";
+  cs.forEach(function(c){var l=DATA.eleves.filter(function(e){return e.classe===c&&(!only||!e.activated_at)});if(!l.length)return;out+='<p class="mu" style="margin:12px 0 2px"><b>'+esc(c)+"</b></p>"+l.map(function(e){return row(e,now)}).join("")});
+  $("list").innerHTML=out||'<p class="mu">Rien à afficher.</p>';
+}
+function row(e,now){
+  var st=e.activated_at?"✅ Activé le "+fmt(e.activated_at):"⏳ Pas encore activé";
+  var bd=(e.connecte?'<span class="b on">connecté</span>':"")+(e.locked_until&&e.locked_until>now?'<span class="b lock">🔒 verrouillé</span>':"");
+  var ac="";
+  if(e.locked_until&&e.locked_until>now)ac+='<button class="sm" data-a="debloquer" data-id="'+e.id+'">Débloquer</button>';
+  if(e.connecte)ac+='<button class="sm" data-a="deconnecter" data-id="'+e.id+'">Déconnecter</button>';
+  if(e.activated_at)ac+='<button class="sm" data-a="reinit" data-id="'+e.id+'">Réinitialiser</button>';
+  ac+='<button class="sm warn" data-a="supprimer" data-id="'+e.id+'">Supprimer</button>';
+  return '<div class="el"><div class="nm">'+esc(e.nom)+bd+'</div><div class="st">'+st+'</div><div class="ac">'+ac+"</div></div>";
+}
+document.addEventListener("click",function(ev){
+  var b=ev.target.closest&&ev.target.closest("button[data-a]");if(!b)return;
+  var a=b.dataset.a,id=+b.dataset.id,e=DATA.eleves.filter(function(x){return x.id===id})[0];if(!e)return;
+  var q={supprimer:"Supprimer "+e.nom+" ? Ses journaux de connexion sont conservés.",reinit:"Réinitialiser le compte de "+e.nom+" ? Il reviendra à « pas encore activé » et sera déconnecté.",deconnecter:"Déconnecter "+e.nom+" ?",debloquer:""}[a];
+  if(q&&!confirm(q))return;
+  api("/api/prof/"+a,{id:id}).then(loadEtat);
+});
+$("onlyNew").onchange=renderEtat;
+$("addGo").onclick=function(){var n=$("addNom").value;if(!n.trim())return;api("/api/prof/ajout",{nom:n,classe:$("addCl").value}).then(function(j){$("msgA").textContent=j.ajoutes?"Étudiant ajouté.":"Déjà dans la liste.";$("addNom").value="";loadEtat()})};
+$("impGo").onclick=function(){api("/api/prof/import",{classe:$("impCl").value,texte:$("impTxt").value}).then(function(j){$("msgA").textContent=(j.ajoutes||0)+" ajouté(s), "+(j.ignores||0)+" déjà présent(s).";$("impTxt").value="";loadEtat()})};
+
+/* ---------- journaux ---------- */
+$("fPer").onchange=function(){var x=$("fPer").value==="x";$("fDu").classList.toggle("hide",!x);$("fAu").classList.toggle("hide",!x)};
+function bounds(){
+  var v=$("fPer").value,from="",to="";
+  if(v==="x"){if($("fDu").value)from=new Date($("fDu").value+"T00:00:00").toISOString();if($("fAu").value)to=new Date($("fAu").value+"T23:59:59").toISOString()}
+  else if(v!=="0"){from=new Date(Date.now()-(+v)*864e5).toISOString()}
+  return{from:from,to:to};
+}
+function loadJournal(){
+  var b=bounds(),q="?classe="+encodeURIComponent($("fCl").value)+(b.from?"&from="+encodeURIComponent(b.from):"")+(b.to?"&to="+encodeURIComponent(b.to):"");
+  return api("/api/prof/journal"+q).then(function(j){JOUR=j;renderJournal()});
+}
+$("fGo").onclick=function(){loadEtat().then(loadJournal)};
+var EV={activation:"Activation du compte",connexion:"Connexion",echec:"Échec de code",verrouille:"Compte verrouillé (5 erreurs)",deconnexion_forcee:"Déconnexion forcée (autre connexion)"};
+function filtered(){var c=$("fCl").value;return DATA.eleves.filter(function(e){return!c||e.classe===c})}
+function renderJournal(){
+  if(!JOUR)return;
+  var els=filtered(),ids={};
+  JOUR.connexions.forEach(function(x){if(x.type==="connexion"||x.type==="activation")ids[x.student_id]=1});
+  var vus=els.filter(function(e){return ids[e.id]}),jam=els.filter(function(e){return!ids[e.id]});
+  $("kpi").innerHTML="<span>"+vus.length+" connecté"+(vus.length>1?"s":"")+" sur "+els.length+"</span><span>"+jam.length+" jamais connecté"+(jam.length>1?"s":"")+"</span><span>"+JOUR.consultations.length+" page"+(JOUR.consultations.length>1?"s":"")+" ouverte"+(JOUR.consultations.length>1?"s":"")+"</span>";
+  $("never").innerHTML=jam.length?"<b>Jamais connectés :</b> "+jam.map(function(e){return esc(e.nom)}).join(", "):"";
+  var t={};JOUR.consultations.forEach(function(x){var k=x.titre||x.page;t[k]=t[k]||{n:0,s:0};t[k].n++;t[k].s+=x.duree||0});
+  var top=Object.keys(t).sort(function(a,b){return t[b].n-t[a].n}).slice(0,15);
+  $("top").innerHTML=top.length?"<table><tr><th>Rubrique</th><th>Ouvertures</th><th>Temps estimé</th></tr>"+top.map(function(k){return"<tr><td>"+esc(k)+"</td><td>"+t[k].n+"</td><td>"+Math.round(t[k].s/60)+" min</td></tr>"}).join("")+"</table>":'<p class="mu">Aucune consultation sur la période.</p>';
+  var l=JOUR.connexions.slice(0,40);
+  $("last").innerHTML=l.length?"<table><tr><th>Date</th><th>Élève</th><th>Événement</th></tr>"+l.map(function(x){return"<tr><td>"+fmt(x.ts)+"</td><td>"+esc(x.nom)+"</td><td>"+esc(EV[x.type]||x.type)+"</td></tr>"}).join("")+"</table>":'<p class="mu">Aucune connexion sur la période.</p>';
+}
+
+/* ---------- export Excel (.xlsx écrit à la main) ---------- */
+var XL=(function(){
+  var enc=function(s){return new TextEncoder().encode(s)};
+  var T=(function(){var t=new Uint32Array(256);for(var n=0;n<256;n++){var c=n;for(var k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
+  var crc32=function(b){var c=0xFFFFFFFF;for(var i=0;i<b.length;i++)c=T[(c^b[i])&255]^(c>>>8);return(c^0xFFFFFFFF)>>>0};
+  function zip(files){
+    var parts=[],cen=[],off=0;
+    files.forEach(function(f){
+      var name=enc(f.name),data=f.data,crc=crc32(data);
+      var lh=new DataView(new ArrayBuffer(30));
+      lh.setUint32(0,0x04034b50,true);lh.setUint16(4,20,true);lh.setUint16(6,0x0800,true);lh.setUint16(8,0,true);
+      lh.setUint16(10,0,true);lh.setUint16(12,(46<<9)|(11<<5)|2,true);lh.setUint32(14,crc,true);
+      lh.setUint32(18,data.length,true);lh.setUint32(22,data.length,true);lh.setUint16(26,name.length,true);lh.setUint16(28,0,true);
+      parts.push(new Uint8Array(lh.buffer),name,data);
+      var ch=new DataView(new ArrayBuffer(46));
+      ch.setUint32(0,0x02014b50,true);ch.setUint16(4,20,true);ch.setUint16(6,20,true);ch.setUint16(8,0x0800,true);ch.setUint16(10,0,true);
+      ch.setUint16(12,0,true);ch.setUint16(14,(46<<9)|(11<<5)|2,true);ch.setUint32(16,crc,true);
+      ch.setUint32(20,data.length,true);ch.setUint32(24,data.length,true);ch.setUint16(28,name.length,true);
+      ch.setUint32(42,off,true);
+      cen.push(new Uint8Array(ch.buffer),name);
+      off+=30+name.length+data.length;
+    });
+    var cl=cen.reduce(function(a,x){return a+x.length},0);
+    var e=new DataView(new ArrayBuffer(22));
+    e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,cl,true);e.setUint32(16,off,true);
+    var all=parts.concat(cen,[new Uint8Array(e.buffer)]);
+    var out=new Uint8Array(all.reduce(function(a,x){return a+x.length},0)),p=0;all.forEach(function(x){out.set(x,p);p+=x.length});
+    return out;
+  }
+  var colName=function(c){var s="";c++;while(c>0){var m=(c-1)%26;s=String.fromCharCode(65+m)+s;c=Math.floor((c-1)/26)}return s};
+  var x=function(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]}).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,"")};
+  function sheetXml(sh){
+    var rows=sh.rows.map(function(row,r){return'<row r="'+(r+1)+'">'+row.map(function(v,c){
+      var ref=colName(c)+(r+1),st=r===0?' s="1"':"";
+      if(v===""||v===null||v===undefined)return"";
+      if(typeof v==="number")return'<c r="'+ref+'"'+st+'><v>'+v+"</v></c>";
+      return'<c r="'+ref+'"'+st+' t="inlineStr"><is><t xml:space="preserve">'+x(v)+"</t></is></c>";
+    }).join("")+"</row>"}).join("");
+    var cols=sh.widths?"<cols>"+sh.widths.map(function(w,i){return'<col min="'+(i+1)+'" max="'+(i+1)+'" width="'+w+'" customWidth="1"/>'}).join("")+"</cols>":"";
+    return'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>'+cols+"<sheetData>"+rows+"</sheetData></worksheet>";
+  }
+  var STYLES='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><name val="Calibri"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFBE9C6"/><bgColor indexed="64"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="2"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
+  function build(sheets){
+    var hdr='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+    var files=[
+      {name:"[Content_Types].xml",data:enc(hdr+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>'+sheets.map(function(s,i){return'<Override PartName="/xl/worksheets/sheet'+(i+1)+'.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>'}).join("")+'<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>')},
+      {name:"_rels/.rels",data:enc(hdr+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>')},
+      {name:"xl/workbook.xml",data:enc(hdr+'<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>'+sheets.map(function(s,i){return'<sheet name="'+x(s.name)+'" sheetId="'+(i+1)+'" r:id="rId'+(i+1)+'"/>'}).join("")+"</sheets></workbook>")},
+      {name:"xl/_rels/workbook.xml.rels",data:enc(hdr+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+sheets.map(function(s,i){return'<Relationship Id="rId'+(i+1)+'" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet'+(i+1)+'.xml"/>'}).join("")+'<Relationship Id="rId'+(sheets.length+1)+'" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>')},
+      {name:"xl/styles.xml",data:enc(STYLES)}
+    ];
+    sheets.forEach(function(s,i){files.push({name:"xl/worksheets/sheet"+(i+1)+".xml",data:enc(sheetXml(s))})});
+    return zip(files);
+  }
+  return{build:build};
+})();
+function download(blob,name){var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},1500)}
+$("xl").onclick=function(){
+  loadEtat().then(loadJournal).then(function(){
+    var cl=$("fCl").value,els=filtered(),mm=function(s){return Math.round((s||0)/60)};
+    var conn=[["Date et heure","Élève","Classe","Événement"]].concat(JOUR.connexions.map(function(x){return[fmt(x.ts),x.nom,x.classe,EV[x.type]||x.type]}));
+    var cons=[["Date et heure","Élève","Classe","Rubrique","Page","Temps passé estimé (min)"]].concat(JOUR.consultations.map(function(x){return[fmt(x.ts),x.nom,x.classe,x.titre||"",x.page,mm(x.duree)]}));
+    var now=DATA.maintenant;
+    var comptes=[["Élève","Classe","État","Activé le","Dernière connexion","Verrouillé"]].concat(els.map(function(e){return[e.nom,e.classe,e.activated_at?"Activé":"Pas encore activé",fmt(e.activated_at),fmt(e.derniere),e.locked_until&&e.locked_until>now?"Oui":""]}));
+    var S={};
+    JOUR.connexions.forEach(function(x){var s=S[x.nom+"|"+x.classe]=S[x.nom+"|"+x.classe]||{nom:x.nom,classe:x.classe,n:0,last:"",pages:{},c:0,sec:0};if(x.type==="connexion"||x.type==="activation"){s.n++;if(x.ts>s.last)s.last=x.ts}});
+    JOUR.consultations.forEach(function(x){var s=S[x.nom+"|"+x.classe]=S[x.nom+"|"+x.classe]||{nom:x.nom,classe:x.classe,n:0,last:"",pages:{},c:0,sec:0};s.c++;s.sec+=x.duree||0;s.pages[x.titre||x.page]=1;if(x.ts>s.last)s.last=x.ts});
+    els.forEach(function(e){S[e.nom+"|"+e.classe]=S[e.nom+"|"+e.classe]||{nom:e.nom,classe:e.classe,n:0,last:"",pages:{},c:0,sec:0}});
+    var syn=[["Élève","Classe","Nombre de connexions","Dernière visite","Pages ouvertes","Rubriques vues","Temps passé estimé (min)"]].concat(Object.keys(S).map(function(k){return S[k]}).sort(function(a,b){return coll.compare(a.classe,b.classe)||coll.compare(a.nom,b.nom)}).map(function(s){return[s.nom,s.classe,s.n,fmt(s.last),s.c,Object.keys(s.pages).join(" ; "),mm(s.sec)]}));
+    var bytes=XL.build([
+      {name:"Connexions",rows:conn,widths:[18,28,10,40]},
+      {name:"Consultations",rows:cons,widths:[18,28,10,45,34,22]},
+      {name:"Comptes",rows:comptes,widths:[28,10,20,18,18,12]},
+      {name:"Synthèse",rows:syn,widths:[28,10,20,18,14,60,24]}
+    ]);
+    var d=new Date().toISOString().slice(0,10);
+    download(new Blob([bytes],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}),"dscg_acces_"+(cl||"toutes-classes")+"_"+d+".xlsx");
+  });
+};
+
+/* ---------- outils ---------- */
+$("bk").onclick=function(){
+  loadEtat().then(function(){
+    var rows=[["Élève","Classe","État","Activé le"]].concat(DATA.eleves.map(function(e){return[e.nom,e.classe,e.activated_at?"Activé":"Pas encore activé",fmt(e.activated_at)]}));
+    var csv="﻿"+rows.map(function(r){return r.map(function(c){return'"'+String(c).replace(/"/g,'""')+'"'}).join(";")}).join("\r\n");
+    download(new Blob([csv],{type:"text/csv;charset=utf-8"}),"dscg_comptes_"+new Date().toISOString().slice(0,10)+".csv");
+  });
+};
+$("pgGo").onclick=function(){
+  if($("pgTxt").value!=="PURGER"){$("msgP").textContent="Tapez PURGER pour confirmer.";return}
+  if(!confirm("Supprimer définitivement tous les comptes et tous les journaux ?"))return;
+  api("/api/prof/purge",{confirmation:"PURGER"}).then(function(){$("msgP").textContent="Purge effectuée.";$("pgTxt").value="";loadEtat()});
+};
+
+if(token)api("/api/prof/etat").then(function(j){if(j&&j.eleves){DATA=j;$("app").classList.remove("hide");renderEtat();fillClasses()}}).catch(function(){showLogin()});else showLogin();
+})();
+</script></body></html>
