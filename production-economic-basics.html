@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest?v=2"><meta name="theme-color" content="#0f1a33"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="LSA DSCG"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Production: the economic basics you need · LSA Toolbox DSCG</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/dscg-favicon-32.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --navy:#0f1a33; --navy2:#1c2c55; --steel:#e9eef3; --plate:#ffffff; --ink:#14213d; --mute:#55627a;
+  --gold:#f5b60f; --gold-d:#8a6400; --teal:#0b6e6e; --teal-soft:#dff1ef; --red:#cf3b28; --red-soft:#fbe3df; --line:#cdd7e2;
+  --display:"Quicksand",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --body:var(--display);
+  --voice:var(--display);
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--steel);color:var(--ink);font:17px/1.6 var(--body)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+
+/* ---------- hero ---------- */
+.hero{background:var(--navy);color:#fff;padding:calc(22px + env(safe-area-inset-top)) 0 34px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;opacity:.5;
+  background:repeating-linear-gradient(90deg,transparent 0 46px,rgba(255,255,255,.045) 46px 48px)}
+.hero .wrap{position:relative}
+.back{display:inline-flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font-size:15px;font-weight:600;min-height:44px;padding:0 16px 0 12px;border:1.5px solid rgba(255,255,255,.4);border-radius:999px;transition:background .2s,border-color .2s}
+.back:hover{background:rgba(255,255,255,.1);border-color:var(--gold)}
+.fab-back{position:fixed;left:14px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:30;display:grid;place-items:center;width:50px;height:50px;border-radius:50%;
+  background:var(--navy);color:var(--gold);border:2px solid var(--gold);box-shadow:0 8px 22px rgba(15,26,51,.3);
+  opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .3s,transform .3s var(--ease),visibility .3s}
+.scrolled .fab-back{opacity:1;visibility:visible;transform:none}
+.lsa-app .fab-back{display:none}
+h1{font-family:var(--display);font-weight:700;margin:26px 0 0;line-height:1;letter-spacing:-.01em}
+h1 .t1{display:block;color:var(--gold);font-size:clamp(40px,12.4vw,136px);text-transform:uppercase;letter-spacing:-.02em}
+h1 .t2{display:block;color:#fff;font-weight:500;font-size:clamp(24px,4.6vw,44px);line-height:1.05;margin-top:10px}
+.standfirst{max-width:36em;color:#c9d3ea;font-size:clamp(17px,2.1vw,20px);margin:22px 0 0}
+
+/* ---------- the chain (sticky progress + navigation) ---------- */
+.chain{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;border-top:1px solid rgba(255,255,255,.12);
+  padding:calc(10px + env(safe-area-inset-top)) 0 10px;box-shadow:0 6px 18px rgba(15,26,51,.18)}
+.chain .wrap{display:flex;align-items:center;gap:18px}
+.chain ol{list-style:none;margin:0;padding:0;display:flex;justify-content:space-between;align-items:center;position:relative;flex:1;min-width:0;--p:0%}
+.chain ol::before,.chain ol::after{content:"";position:absolute;left:15px;right:15px;top:50%;height:3px;margin-top:-1.5px;border-radius:2px}
+.chain ol::before{background:rgba(255,255,255,.2)}
+.chain ol::after{right:auto;width:calc((100% - 30px) * var(--p));background:var(--gold);transition:width .5s var(--ease)}
+.chain li{position:relative;z-index:1}
+.chain a{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--navy2);border:2px solid rgba(255,255,255,.35);
+  color:#fff;text-decoration:none;font:700 14px/1 var(--display);transition:background .3s,border-color .3s,color .3s,transform .3s var(--ease)}
+.chain a::after{content:"";position:absolute;inset:-7px}
+.chain li.done a{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.chain li.now a{background:#fff;border-color:var(--gold);color:var(--navy);transform:scale(1.22)}
+.chain-now{flex:none;width:12.5em;margin:0;font:600 15.5px/1.15 var(--display);letter-spacing:.01em;color:#fff}
+.practice{flex:none;display:inline-flex;align-items:center;gap:9px;background:none;border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:999px;
+  padding:0 14px 0 10px;min-height:40px;font-size:14.5px;font-weight:600}
+.practice i{width:30px;height:18px;border-radius:9px;background:rgba(255,255,255,.25);position:relative;transition:background .25s}
+.practice i::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .25s var(--ease)}
+.practice[aria-pressed="true"]{border-color:var(--gold)}
+.practice[aria-pressed="true"] i{background:var(--gold)}
+.practice[aria-pressed="true"] i::after{transform:translateX(12px);background:var(--navy)}
+@keyframes link{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:none}}
+.js .chain li{animation:link .45s var(--ease) both;animation-delay:calc(var(--i)*70ms + .35s)}
+
+/* ---------- ideas ---------- */
+.idea{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:26px 44px;align-items:start;padding:58px 0 50px;border-bottom:1px solid var(--line);scroll-margin-top:64px}
+.idea:last-of-type{border-bottom:0}
+.idea-head{display:flex;align-items:flex-start;gap:14px;margin:0 0 14px}
+.num{flex:none;display:grid;place-items:center;width:46px;height:46px;background:var(--navy);color:var(--gold);font:700 24px/1 var(--display);border-radius:6px}
+h2{font:700 clamp(25px,3.6vw,34px)/1.08 var(--display);margin:0;letter-spacing:-.01em;padding-top:5px}
+.idea-text p{margin:0;max-width:34em}
+.idea-text b{font-weight:700;box-shadow:inset 0 -.42em 0 rgba(245,182,15,.45)}
+
+/* figure plate */
+.fig{margin:0;background:var(--plate);border-radius:14px;padding:22px 22px 18px;border:1px solid var(--line)}
+.fig figcaption{font-size:14px;color:var(--mute);margin-top:14px;line-height:1.45}
+.fig .hint{font-size:14px;font-weight:600;color:var(--teal);margin:0 0 12px}
+.lab{font-size:13.5px;font-weight:600;color:var(--mute);margin:0 0 6px}
+
+/* you could say */
+.say{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 20px;align-items:center;background:var(--teal-soft);border-left:5px solid var(--teal);border-radius:0 14px 14px 0;padding:18px 20px}
+.say-label{font-weight:700;color:var(--teal);font-size:15px;white-space:nowrap}
+.say blockquote{margin:0;font:500 19px/1.5 var(--voice);color:#0c2f33}
+.say-try{display:none;margin:0;color:#35585a;font-size:15.5px}
+.say-btns{display:flex;gap:8px}
+.say button{display:inline-flex;align-items:center;gap:7px;min-height:42px;padding:0 14px;border-radius:999px;border:1.5px solid var(--teal);background:#fff;color:var(--teal);font-size:14.5px;font-weight:600;white-space:nowrap}
+.say button:hover{background:var(--teal);color:#fff}
+.say .show{display:none}
+.say .listen.on{background:var(--teal);color:#fff}
+.no-speech .listen{display:none}
+.practice-on .say:not(.open) blockquote{display:none}
+.practice-on .say:not(.open) .say-try{display:block}
+.practice-on .say:not(.open) .show{display:inline-flex}
+.practice-on .say:not(.open) .listen{display:none}
+@keyframes unveil{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.practice-on .say.open blockquote{animation:unveil .4s var(--ease)}
+
+/* ---------- figure parts ---------- */
+/* 1 steps */
+.steps{display:flex;align-items:stretch;gap:0}
+.steps button{flex:1;min-width:0;min-height:58px;padding:6px 4px;border:2px solid var(--navy);background:#fff;border-radius:8px;font-size:14px;font-weight:600;line-height:1.15;
+  transition:background .3s,border-color .3s,color .3s,opacity .3s}
+.steps .arrow{flex:none;width:18px;align-self:center;height:3px;background:var(--navy);transition:background .3s,opacity .3s}
+.steps button.blocked{background:var(--red);border-color:var(--red);color:#fff}
+.steps .off{border-style:dashed;border-color:#a9b4c4;color:#8a96a9;background:#f4f6f9}
+.steps .arrow.off{background:#c3ccd9;border:0}
+.js .steps>*{opacity:0;transform:translateX(-10px);transition:opacity .45s ease,transform .45s var(--ease),background .3s,border-color .3s,color .3s;transition-delay:calc(var(--i)*90ms)}
+.js .in .steps>*{opacity:1;transform:none}
+.js .in .steps.played>*{transition-delay:0s}
+
+/* 2 distance */
+.dist{display:grid;grid-template-columns:repeat(3,1fr);position:relative;padding-top:40px}
+.dist::before{content:"";position:absolute;left:16.66%;right:16.66%;top:11px;height:3px;background:var(--line)}
+.dist div{text-align:center;padding:0 6px;position:relative}
+.dist div::before{content:"";position:absolute;top:-38px;left:50%;width:21px;height:21px;margin-left:-10.5px;border-radius:50%;background:var(--navy);border:4px solid #fff;box-shadow:0 0 0 2px var(--navy)}
+.dist div:last-child::before{background:var(--gold)}
+.dist b{display:block;font:700 18.5px/1.1 var(--display);overflow-wrap:anywhere}
+.dist span{display:block;font-size:13.5px;color:var(--mute);line-height:1.35;margin-top:4px}
+.js .dist div{opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s var(--ease);transition-delay:calc(var(--i)*160ms + .1s)}
+.js .in .dist div{opacity:1;transform:none}
+
+/* segmented control */
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px}
+.seg button{min-height:42px;padding:0 13px;border-radius:8px;border:1.5px solid var(--line);background:#fff;font-size:14.5px;font-weight:600;color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* bars */
+.bar{display:flex;height:46px;border-radius:8px;overflow:hidden;background:#f1f4f8}
+.bar i{display:grid;place-items:center;font-style:normal;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;width:var(--w);transition:width .9s var(--ease)}
+.bar .c{background:var(--navy);color:#fff}
+.bar .m{background:var(--gold);color:var(--navy)}
+.bar .t{background:repeating-linear-gradient(135deg,var(--red) 0 8px,#e2604f 8px 16px);color:#fff}
+.bar .o{background:#b9c5d6;color:var(--navy)}
+.js .fig:not(.in) .bar .grow{width:0}
+.out{margin:12px 0 0;font-weight:600;min-height:3.1em}
+.out small{display:block;font-weight:400;color:var(--mute);font-size:14.5px}
+.brace{display:flex;justify-content:space-between;font-size:13.5px;color:var(--mute);margin-top:6px}
+
+/* 5 lines */
+.lines svg{display:block;width:100%;height:auto}
+.lines path{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.lines .calm{stroke:var(--teal)}
+.lines .wild{stroke:var(--red)}
+.lines text{font:600 12px var(--body);fill:var(--mute);text-anchor:middle}
+.js .lines path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.8s ease .2s}
+.js .lines.in path{stroke-dashoffset:0}
+.key{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;font-weight:600;margin-top:8px}
+.key span::before{content:"";display:inline-block;width:18px;height:4px;border-radius:2px;margin-right:7px;vertical-align:middle;background:var(--k)}
+
+/* 6 crates */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.two h3{font:700 19px/1.1 var(--display);margin:0 0 10px}
+.crates{display:grid;grid-template-columns:repeat(3,26px);gap:5px;height:57px;align-content:end}
+.crates i{width:26px;height:26px;border-radius:4px;background:var(--gold);border:2px solid var(--gold-d)}
+.js .crates i{opacity:0;transform:translateY(-14px);transition:opacity .35s ease,transform .45s cubic-bezier(.3,1.5,.5,1);transition-delay:calc(var(--i)*90ms + .2s)}
+.js .in .crates i{opacity:1;transform:none}
+.pair{list-style:none;margin:12px 0 0;padding:0;font-size:14.5px}
+.pair li{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-top:1px solid var(--line)}
+.pair b.lo{color:var(--teal)}.pair b.hi{color:var(--red)}
+
+/* 7 suppliers */
+.net{display:flex;align-items:center;gap:10px;min-height:112px}
+.net .sup{display:grid;gap:6px;flex:none}
+.net .sup i,.net .fac{font-style:normal;font-size:13px;font-weight:700;border-radius:6px;padding:5px 9px;text-align:center;transition:background .35s,color .35s,border-color .35s}
+.net .sup i{background:var(--navy);color:#fff;border:2px solid var(--navy)}
+.net .pipe{flex:1;height:3px;background:var(--navy);min-width:14px;transition:background .35s}
+.net .fac{flex:none;background:var(--gold);color:var(--navy);border:2px solid var(--gold-d);min-width:74px}
+.shock .sup i.hit{background:var(--red-soft);color:var(--red);border-color:var(--red);text-decoration:line-through}
+.shock .net.solo .pipe{background:#c3ccd9}
+.shock .net.solo .fac{background:#f4f6f9;color:#8a96a9;border:2px dashed #a9b4c4}
+.verdict{margin:8px 0 0;font-size:14.5px;font-weight:700;min-height:1.5em}
+.verdict.bad{color:var(--red)}.verdict.good{color:var(--teal)}
+.act{min-height:44px;padding:0 16px;border-radius:8px;border:0;background:var(--navy);color:#fff;font-size:15px;font-weight:600;margin-top:14px}
+.act[aria-pressed="true"]{background:var(--red)}
+
+/* 9 routes */
+.route{display:flex;align-items:center;gap:10px;margin:0 0 4px}
+.route .end{flex:none;font-size:13px;font-weight:700;background:var(--navy);color:#fff;border-radius:6px;padding:5px 9px}
+.route .end.cust{background:var(--gold);color:var(--navy)}
+.route .road{flex:0 0 var(--len);height:14px;border-radius:7px;background:repeating-linear-gradient(90deg,var(--c) 0 6px,transparent 6px 15px);transition:flex-basis 1.2s var(--ease) .2s}
+.js .fig:not(.in) .route .road{flex-basis:0}
+.route-note{font-size:14.5px;margin:0 0 18px}
+
+/* ---------- end ---------- */
+.end-nav{display:flex;flex-wrap:wrap;gap:10px;padding:34px 0 10px}
+.end-nav a,.end-nav button{display:inline-flex;align-items:center;min-height:46px;padding:0 18px;border-radius:10px;border:1.5px solid var(--navy);background:none;color:var(--navy);font-size:15.5px;font-weight:600;text-decoration:none}
+.end-nav .main{background:var(--navy);color:#fff}
+footer{margin-top:34px;background:var(--navy);color:#aeb9d6;padding:26px 0 calc(96px + env(safe-area-inset-bottom));font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:center}
+footer .brand{display:flex;align-items:center;gap:12px}
+footer img{width:42px;height:42px;object-fit:contain;border-radius:8px;background:#fff}
+footer strong{display:block;color:#fff}
+
+/* ---------- responsive ---------- */
+@media(max-width:860px){
+  .idea{grid-template-columns:1fr;gap:20px;padding:42px 0 38px}
+  .say{grid-template-columns:1fr;border-radius:0 12px 12px 0}
+  .chain-now{display:none}
+}
+@media(max-width:560px){
+  body{font-size:16.5px}
+  .wrap{padding:0 16px}
+  .chain .wrap{gap:12px}
+  .chain a{width:26px;height:26px;font-size:13.5px}
+  .chain ol::before,.chain ol::after{left:13px;right:13px}
+  .chain ol::after{right:auto;width:calc((100% - 26px) * var(--p))}
+  .practice{padding:0 10px 0 8px;font-size:13.5px}
+  .practice .pm{display:none}
+  .fig{padding:18px 16px 16px}
+  .steps{flex-direction:column}
+  .steps button{min-height:46px}
+  .steps .arrow{width:3px;height:14px}
+  .two{gap:14px}
+  .dist b{font-size:14.5px}
+  .dist span{font-size:12.5px}
+  .dist div{padding:0 3px}
+  .net{gap:6px}
+  .net .sup i,.net .fac{font-size:12px;padding:5px 6px}
+  .net .fac{min-width:0}
+  .say blockquote{font-size:17.5px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .steps>*,.js .dist div,.js .crates i{opacity:1!important;transform:none!important}
+  .js .lines path{stroke-dashoffset:0!important}
+  .js .fig:not(.in) .bar .grow{width:var(--w)!important}
+  .js .fig:not(.in) .route .road{flex-basis:var(--len)!important}
+}
+@media print{
+  body{background:#fff;font-size:11.5pt}
+  .chain,.back,.fab-back,.say-btns,.seg,.act,.hint,.end-nav,footer,.lsa-appnav,.lsa-update{display:none!important}
+  .hero{background:none;color:#000;padding:0 0 10px}.hero::before{display:none}
+  h1 .t1{color:#000;font-size:34pt}h1 .t2{color:#000;font-size:17pt}.standfirst{color:#333}
+  .idea{grid-template-columns:1fr 1fr;padding:16px 0;break-inside:avoid}
+  .say blockquote{display:block!important}.say-try{display:none!important}
+  .fig{border-color:#999}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js')</script>
+
+<header class="hero">
+  <div class="wrap">
+    <a class="back" href="production.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Retour à 6-Production</a>
+    <h1><span class="t1">Production</span><span class="t2">The economic basics you need</span></h1>
+    <p class="standfirst">Nine ideas to know before you read any text on production. Each one comes with a sentence you could say in the exam.</p>
+  </div>
+</header>
+
+<nav class="chain" aria-label="The nine ideas">
+  <div class="wrap">
+    <ol id="chain">
+      <li style="--i:0"><a href="#supply-chain" aria-label="1. Supply chain">1</a></li>
+      <li style="--i:1"><a href="#offshoring" aria-label="2. Globalisation and offshoring">2</a></li>
+      <li style="--i:2"><a href="#margin" aria-label="3. Costs, price and margin">3</a></li>
+      <li style="--i:3"><a href="#tariffs" aria-label="4. Tariffs and protectionism">4</a></li>
+      <li style="--i:4"><a href="#uncertainty" aria-label="5. Uncertainty and investment">5</a></li>
+      <li style="--i:5"><a href="#stock" aria-label="6. Just-in-time and stock">6</a></li>
+      <li style="--i:6"><a href="#resilience" aria-label="7. Dependence, diversification and resilience">7</a></li>
+      <li style="--i:7"><a href="#automation" aria-label="8. Productivity and automation">8</a></li>
+      <li style="--i:8"><a href="#sustainability" aria-label="9. Sustainability">9</a></li>
+    </ol>
+    <p class="chain-now" id="chainNow" aria-hidden="true">Tap a number to jump</p>
+    <button class="practice" id="practice" type="button" aria-pressed="false" title="Hide the sentences and try to say them first"><i aria-hidden="true"></i><span class="pl">Practice<span class="pm"> mode</span></span></button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- 1 -->
+<section class="idea" id="supply-chain" data-name="Supply chain">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">1</span><h2>Supply chain</h2></div>
+    <p>A <b>supply chain</b> is every step needed to make a product and deliver it: raw materials, parts, factories, transport, warehouses, shops. Today these steps are often in different countries, so a problem in one place can stop production in another.</p>
+  </div>
+  <figure class="fig" id="figSteps">
+    <p class="hint">Tap a step to block it.</p>
+    <div class="steps" role="group" aria-label="The steps of a supply chain">
+      <button type="button" style="--i:0">Raw materials</button><span class="arrow" style="--i:1"></span>
+      <button type="button" style="--i:2">Parts</button><span class="arrow" style="--i:3"></span>
+      <button type="button" style="--i:4">Factory</button><span class="arrow" style="--i:5"></span>
+      <button type="button" style="--i:6">Transport</button><span class="arrow" style="--i:7"></span>
+      <button type="button" style="--i:8">Shop</button>
+    </div>
+    <figcaption id="stepsOut" aria-live="polite">Everything works: the product reaches the shop.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“The text shows how fragile global supply chains are. A problem in one country can quickly affect factories all over the world.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="idea" id="offshoring" data-name="Globalisation and offshoring">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">2</span><h2>Globalisation and offshoring</h2></div>
+    <p>For about thirty years, companies moved production to countries where wages were lower. This is called <b>offshoring</b>. Bringing production back home is <b>reshoring</b>; moving it to a nearby country is <b>nearshoring</b>.</p>
+  </div>
+  <figure class="fig">
+    <p class="lab">Where is the factory?</p>
+    <div class="dist">
+      <div style="--i:0"><b>Reshoring</b><span>back in the home country</span></div>
+      <div style="--i:1"><b>Nearshoring</b><span>in a nearby country</span></div>
+      <div style="--i:2"><b>Offshoring</b><span>far away, where wages are lower</span></div>
+    </div>
+    <figcaption>The further away the factory is, the lower the wages, but the longer and more fragile the supply chain.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“For a long time, firms chose offshoring to reduce their labour costs. Today, some of them are thinking about reshoring or nearshoring.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="idea" id="margin" data-name="Costs, price and margin">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">3</span><h2>Costs, price and margin</h2></div>
+    <p>A company's <b>margin</b> is the difference between its selling price and its costs. When a cost goes up, the company has two choices: accept a smaller margin, or raise its price. The first reduces profit and investment; the second can reduce sales.</p>
+  </div>
+  <figure class="fig" id="figMargin">
+    <div class="seg" role="group" aria-label="What happens when costs rise">
+      <button type="button" aria-pressed="true" data-c="61" data-m="26" data-k="0">Today</button>
+      <button type="button" aria-pressed="false" data-c="74" data-m="13" data-k="1">Costs rise: absorb</button>
+      <button type="button" aria-pressed="false" data-c="74" data-m="26" data-k="2">Costs rise: pass on</button>
+    </div>
+    <p class="lab">Selling price</p>
+    <div class="bar"><i class="c grow" style="--w:61%">Costs</i><i class="m grow" style="--w:26%">Margin</i></div>
+    <p class="out" id="marginOut" aria-live="polite">The price covers the costs and leaves a margin.<small>This is the starting point.</small></p>
+    <figcaption>Illustration only: the sizes are not real figures.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“When costs rise, a firm can either absorb them, which reduces its margin, or pass them on to customers, which raises prices.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="idea" id="tariffs" data-name="Tariffs and protectionism">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">4</span><h2>Tariffs and protectionism</h2></div>
+    <p>A <b>tariff</b> is a tax on imported goods. Governments use tariffs to protect local producers from foreign competition: this policy is called <b>protectionism</b>. The tax is paid by the importer, and in the end often by the consumer, through higher prices. Other countries usually answer with their own tariffs.</p>
+  </div>
+  <figure class="fig">
+    <p class="lab">What the importer pays</p>
+    <div class="bar"><i class="c" style="--w:76%">Price of the imported good</i><i class="t grow" style="--w:24%">Tariff</i></div>
+    <div class="brace"><span>paid to the foreign producer</span><span>paid to the government</span></div>
+    <figcaption>The importer pays the tariff first. It then often raises its prices, so the consumer pays in the end. Illustration only.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“A tariff is a tax on imports. It is supposed to protect local producers, but in the end consumers often pay for it.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="idea" id="uncertainty" data-name="Uncertainty and investment">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">5</span><h2>Uncertainty and investment</h2></div>
+    <p>Companies invest when they can predict their future costs and sales. When rules change often, they wait, and investment falls. This is why <b>uncertainty</b> can do as much damage as the tariff itself.</p>
+  </div>
+  <figure class="fig lines">
+    <p class="lab">A tariff rate over time</p>
+    <svg viewBox="0 0 420 170" role="img" aria-label="Two lines: with stable rules the tariff rate stays flat; with changing rules it jumps up and down">
+      <line x1="10" y1="150" x2="410" y2="150" stroke="#cdd7e2" stroke-width="2"/>
+      <path class="calm" pathLength="1" d="M10 108 H410"/>
+      <path class="wild" pathLength="1" d="M10 108 H80 V52 H150 V22 H215 V84 H285 V40 H345 V136 H410"/>
+      <text x="115" y="44">announced</text><text x="182" y="14">raised</text><text x="250" y="76">suspended</text><text x="315" y="32">back</text><text x="378" y="128">blocked</text>
+    </svg>
+    <div class="key"><span style="--k:var(--teal)">Stable rules: firms can plan</span><span style="--k:var(--red)">Changing rules: firms wait</span></div>
+    <figcaption>Illustration only: this is not real data.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“The real problem is not only the tariff, but the uncertainty. If firms cannot predict their costs, they delay their investments.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="idea" id="stock" data-name="Just-in-time and stock">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">6</span><h2>Just-in-time and stock</h2></div>
+    <p>Stock costs money: storage, tied-up capital, products that become out of date. <b>Just-in-time</b> production keeps stock very low by receiving parts exactly when they are needed. It is cheap, but any delay can stop the factory. <b>Just-in-case</b> means keeping extra stock for safety.</p>
+  </div>
+  <figure class="fig">
+    <div class="two">
+      <div>
+        <h3>Just-in-time</h3>
+        <div class="crates" aria-label="One crate in stock"><i style="--i:0"></i></div>
+        <ul class="pair"><li>Cost of stock <b class="lo">low</b></li><li>Risk of stopping <b class="hi">high</b></li></ul>
+      </div>
+      <div>
+        <h3>Just-in-case</h3>
+        <div class="crates" aria-label="Six crates in stock"><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i></div>
+        <ul class="pair"><li>Cost of stock <b class="hi">higher</b></li><li>Risk of stopping <b class="lo">lower</b></li></ul>
+      </div>
+    </div>
+    <figcaption>More stock means more safety, but also more money that cannot be used elsewhere.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“Just-in-time production saves money, but it only works in a stable world. That is why many firms are moving to a just-in-case approach, with safety stocks.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="idea" id="resilience" data-name="Dependence and resilience">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">7</span><h2>Dependence, diversification and resilience</h2></div>
+    <p>Depending on one supplier or one country is risky. <b>Diversification</b> means using several suppliers in several regions. <b>Resilience</b> is the ability to keep working after a shock. It has a price: safety is never free, so firms must choose between lower costs and more security.</p>
+  </div>
+  <figure class="fig" id="figNet">
+    <div class="two">
+      <div>
+        <p class="lab">One supplier</p>
+        <div class="net solo"><div class="sup"><i class="hit">Supplier A</i></div><span class="pipe"></span><span class="fac">Factory</span></div>
+        <p class="verdict" data-ok="Cheaper to manage" data-ko="Production stops"></p>
+      </div>
+      <div>
+        <p class="lab">Three suppliers</p>
+        <div class="net"><div class="sup"><i class="hit">Supplier A</i><i>Supplier B</i><i>Supplier C</i></div><span class="pipe"></span><span class="fac">Factory</span></div>
+        <p class="verdict" data-ok="More expensive to manage" data-ko="Production continues"></p>
+      </div>
+    </div>
+    <button type="button" class="act" id="shockBtn" aria-pressed="false">Simulate a shock at supplier A</button>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“To become more resilient, firms diversify their suppliers. However, this safety has a cost, so they must find a balance between efficiency and resilience.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="idea" id="automation" data-name="Productivity and automation">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">8</span><h2>Productivity and automation</h2></div>
+    <p><b>Productivity</b> is how much a worker or a factory produces in a given time. Robots and artificial intelligence increase it. With <b>automation</b>, wages matter less in total costs, so producing in a high-wage country becomes possible again.</p>
+  </div>
+  <figure class="fig">
+    <p class="lab">Total costs, before automation</p>
+    <div class="bar"><i class="m grow" style="--w:52%">Wages</i><i class="o" style="--w:48%">Other costs</i></div>
+    <p class="lab" style="margin-top:16px">Total costs, with automation</p>
+    <div class="bar"><i class="m grow" style="--w:20%">Wages</i><i class="o" style="--w:80%">Other costs</i></div>
+    <figcaption>When wages are a small part of total costs, a low-wage country is less attractive. Illustration only.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“Thanks to automation, productivity increases and labour costs matter less. This makes it possible to produce again in high-wage countries.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="idea" id="sustainability" data-name="Sustainability">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">9</span><h2>Sustainability</h2></div>
+    <p>Producing and transporting goods creates pollution, especially over long distances. Customers and governments now expect companies to reduce their <b>emissions</b>. Producing closer to the customer can lower both emissions and risk.</p>
+  </div>
+  <figure class="fig">
+    <div class="route"><span class="end">Factory</span><span class="road" style="--len:58%;--c:var(--red)"></span><span class="end cust">Customer</span></div>
+    <p class="route-note">A long route: more transport emissions, more risk of delay.</p>
+    <div class="route"><span class="end">Factory</span><span class="road" style="--len:16%;--c:var(--teal)"></span><span class="end cust">Customer</span></div>
+    <p class="route-note" style="margin-bottom:0">A short route: fewer emissions, less risk.</p>
+    <figcaption>Here, resilience and sustainability point in the same direction.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“Producing closer to the customer has two advantages: it reduces transport emissions and it makes the supply chain safer.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<a class="fab-back" href="production.html" aria-label="Retour au chapitre 6-Production" title="Retour au chapitre"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></a>
+
+<div class="end-nav">
+  <a class="main" href="production-fil-rouge.html">Lire l'article fil rouge</a>
+  <a href="production.html">Revenir au chapitre</a>
+  <button type="button" onclick="window.print()">Imprimer cette fiche</button>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="brand">
+      <img src="assets/lsa-logo.png" alt="" onerror="this.remove()">
+      <div><strong>LSA Toolbox</strong>DSCG · 6-Production · M. Blanchet</div>
+    </div>
+    <div>Lycée Sidoine Apollinaire, Clermont-Ferrand</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var $=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  var IO='IntersectionObserver' in window;
+
+  /* figures build themselves when they come into view */
+  var figs=$('.fig');
+  if(IO){
+    var fo=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('in');fo.unobserve(e.target);}
+    })},{rootMargin:'0px 0px -18% 0px',threshold:.15});
+    figs.forEach(function(f){fo.observe(f)});
+  }else figs.forEach(function(f){f.classList.add('in')});
+
+  /* the chain follows the reader */
+  var ideas=$('.idea'),links=$('#chain li'),chain=document.getElementById('chain'),now=document.getElementById('chainNow');
+  function setNow(i){
+    links.forEach(function(l,k){l.classList.toggle('done',k<i);l.classList.toggle('now',k===i);
+      var a=l.firstElementChild;if(k===i)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});
+    chain.style.setProperty('--p',i<0?'0':String(i/(links.length-1)));
+    now.textContent=i<0?'Tap a number to jump':ideas[i].getAttribute('data-name');
+  }
+  if(IO){
+    var so=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting)setNow(ideas.indexOf(e.target));
+    })},{rootMargin:'-30% 0px -60% 0px',threshold:0});
+    ideas.forEach(function(s){so.observe(s)});
+    window.addEventListener('scroll',function(){if(window.scrollY<120)setNow(-1)},{passive:true});
+  }
+
+  /* floating back button: appears once the top link has scrolled away */
+  function fab(){document.body.classList.toggle('scrolled',window.scrollY>260)}
+  window.addEventListener('scroll',fab,{passive:true});fab();
+
+  /* practice mode: hide the sentences, try first, then check */
+  var pb=document.getElementById('practice');
+  pb.addEventListener('click',function(){
+    var on=pb.getAttribute('aria-pressed')!=='true';
+    pb.setAttribute('aria-pressed',on);
+    document.body.classList.toggle('practice-on',on);
+    $('.say').forEach(function(s){s.classList.remove('open')});
+    stop();
+  });
+  $('.say .show').forEach(function(b){b.addEventListener('click',function(){b.closest('.say').classList.add('open')})});
+
+  /* listen: the device reads the sentence aloud */
+  var synth=window.speechSynthesis,current=null;
+  function stop(){if(synth)synth.cancel();if(current){current.classList.remove('on');current.textContent='Listen';current=null;}}
+  if(!synth||!window.SpeechSynthesisUtterance){document.documentElement.classList.add('no-speech');}
+  else{
+    $('.say .listen').forEach(function(b){b.addEventListener('click',function(){
+      if(current===b){stop();return;}
+      stop();
+      var u=new SpeechSynthesisUtterance(b.closest('.say').querySelector('blockquote').textContent.replace(/[“”]/g,''));
+      var vs=synth.getVoices(),v=vs.filter(function(x){return /^en[-_]GB/i.test(x.lang)})[0]||vs.filter(function(x){return /^en/i.test(x.lang)})[0];
+      if(v)u.voice=v;u.lang=v?v.lang:'en-GB';u.rate=.9;
+      u.onend=u.onerror=function(){if(current===b){b.classList.remove('on');b.textContent='Listen';current=null;}};
+      current=b;b.classList.add('on');b.textContent='Stop';synth.speak(u);
+    })});
+    window.addEventListener('pagehide',stop);
+  }
+
+  /* 1: block a step of the chain */
+  var sf=document.getElementById('figSteps'),sw=sf.querySelector('.steps'),parts=$('.steps>*',sf),sbtn=$('.steps button',sf),sout=document.getElementById('stepsOut'),blocked=-1;
+  sbtn.forEach(function(b){b.addEventListener('click',function(){
+    sw.classList.add('played');
+    var i=parts.indexOf(b);blocked=(blocked===i)?-1:i;
+    parts.forEach(function(p,k){p.classList.toggle('blocked',k===blocked);p.classList.toggle('off',blocked>-1&&k>blocked);});
+    b.setAttribute('aria-pressed',blocked===i);
+    sbtn.forEach(function(o){if(o!==b)o.removeAttribute('aria-pressed')});
+    var name=b.textContent.trim(),last=i===parts.length-1;
+    sout.textContent=blocked<0?'Everything works: the product reaches the shop.':
+      (last?'The shop is closed: the product is ready, but nobody can buy it.':'“'+name+'” is blocked: every step after it has to wait, and the shop receives nothing.');
+  })});
+
+  /* 3: absorb or pass on */
+  var mf=document.getElementById('figMargin'),mb=$('.seg button',mf),bc=mf.querySelector('.bar .c'),bm=mf.querySelector('.bar .m'),mo=document.getElementById('marginOut');
+  var txt=[['The price covers the costs and leaves a margin.','This is the starting point.'],
+           ['Same price, smaller margin.','Less profit, so less money to invest.'],
+           ['Same margin, higher price.','Customers pay more, so sales can fall.']];
+  mb.forEach(function(b){b.addEventListener('click',function(){
+    mb.forEach(function(o){o.setAttribute('aria-pressed',o===b)});
+    bc.style.setProperty('--w',b.dataset.c+'%');bm.style.setProperty('--w',b.dataset.m+'%');
+    var t=txt[+b.dataset.k];mo.innerHTML=t[0]+'<small>'+t[1]+'</small>';
+  })});
+
+  /* 7: a shock at supplier A */
+  var nf=document.getElementById('figNet'),sb=document.getElementById('shockBtn'),vd=$('.verdict',nf);
+  function verdicts(on){vd.forEach(function(v,k){v.textContent=on?v.dataset.ko:v.dataset.ok;v.className='verdict'+(on?(k?' good':' bad'):'');})}
+  verdicts(false);
+  sb.addEventListener('click',function(){
+    var on=sb.getAttribute('aria-pressed')!=='true';
+    sb.setAttribute('aria-pressed',on);nf.classList.toggle('shock',on);
+    sb.textContent=on?'Reset':'Simulate a shock at supplier A';verdicts(on);
+  });
+})();
+</script>
+<script src="assets/auth-gate.js?v=1"></script><script src="assets/app-nav.js"></script>
+</body>
+</html>
