@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest?v=2"><meta name="theme-color" content="#0f1a33"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="LSA DSCG"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Marketing: the economic basics you need · LSA Toolbox DSCG</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/dscg-favicon-32.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --navy:#0f1a33; --navy2:#1c2c55; --steel:#e9eef3; --plate:#ffffff; --ink:#14213d; --mute:#55627a;
+  --gold:#f5b60f; --gold-d:#8a6400; --teal:#0b6e6e; --teal-soft:#dff1ef; --red:#cf3b28; --red-soft:#fbe3df; --line:#cdd7e2;
+  --display:"Quicksand",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --body:var(--display);
+  --voice:var(--display);
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--steel);color:var(--ink);font:17px/1.6 var(--body)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+
+/* ---------- hero ---------- */
+.hero{background:var(--navy);color:#fff;padding:calc(22px + env(safe-area-inset-top)) 0 34px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;opacity:.5;
+  background:repeating-linear-gradient(90deg,transparent 0 46px,rgba(255,255,255,.045) 46px 48px)}
+.hero .wrap{position:relative}
+.back{display:inline-flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font-size:15px;font-weight:600;min-height:44px;padding:0 16px 0 12px;border:1.5px solid rgba(255,255,255,.4);border-radius:999px;transition:background .2s,border-color .2s}
+.back:hover{background:rgba(255,255,255,.1);border-color:var(--gold)}
+.fab-back{position:fixed;right:14px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:30;display:grid;place-items:center;width:50px;height:50px;border-radius:50%;
+  background:var(--navy);color:var(--gold);border:2px solid var(--gold);box-shadow:0 8px 22px rgba(15,26,51,.3);
+  opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .3s,transform .3s var(--ease),visibility .3s}
+.scrolled .fab-back{opacity:1;visibility:visible;transform:none}
+.lsa-app .fab-back{display:none}
+h1{font-family:var(--display);font-weight:700;margin:26px 0 0;line-height:1;letter-spacing:-.01em}
+h1 .t1{display:block;color:var(--gold);font-size:clamp(40px,12.4vw,136px);text-transform:uppercase;letter-spacing:-.02em}
+h1 .t2{display:block;color:#fff;font-weight:500;font-size:clamp(24px,4.6vw,44px);line-height:1.05;margin-top:10px}
+.standfirst{max-width:36em;color:#c9d3ea;font-size:clamp(17px,2.1vw,20px);margin:22px 0 0}
+
+/* ---------- the chain (sticky progress + navigation) ---------- */
+.chain{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;border-top:1px solid rgba(255,255,255,.12);
+  padding:calc(10px + env(safe-area-inset-top)) 0 10px;box-shadow:0 6px 18px rgba(15,26,51,.18)}
+.chain .wrap{display:flex;align-items:center;gap:18px}
+.chain ol{list-style:none;margin:0;padding:0;display:flex;justify-content:space-between;align-items:center;position:relative;flex:1;min-width:0;--p:0%}
+.chain ol::before,.chain ol::after{content:"";position:absolute;left:15px;right:15px;top:50%;height:3px;margin-top:-1.5px;border-radius:2px}
+.chain ol::before{background:rgba(255,255,255,.2)}
+.chain ol::after{right:auto;width:calc((100% - 30px) * var(--p));background:var(--gold);transition:width .5s var(--ease)}
+.chain li{position:relative;z-index:1}
+.chain a{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--navy2);border:2px solid rgba(255,255,255,.35);
+  color:#fff;text-decoration:none;font:700 14px/1 var(--display);transition:background .3s,border-color .3s,color .3s,transform .3s var(--ease)}
+.chain a::after{content:"";position:absolute;inset:-7px}
+.chain li.done a{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.chain li.now a{background:#fff;border-color:var(--gold);color:var(--navy);transform:scale(1.22)}
+.chain-now{flex:none;width:12.5em;margin:0;font:600 15.5px/1.15 var(--display);letter-spacing:.01em;color:#fff}
+.practice{flex:none;display:inline-flex;align-items:center;gap:9px;background:none;border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:999px;
+  padding:0 14px 0 10px;min-height:40px;font-size:14.5px;font-weight:600}
+.practice i{width:30px;height:18px;border-radius:9px;background:rgba(255,255,255,.25);position:relative;transition:background .25s}
+.practice i::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .25s var(--ease)}
+.practice[aria-pressed="true"]{border-color:var(--gold)}
+.practice[aria-pressed="true"] i{background:var(--gold)}
+.practice[aria-pressed="true"] i::after{transform:translateX(12px);background:var(--navy)}
+@keyframes link{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:none}}
+.js .chain li{animation:link .45s var(--ease) both;animation-delay:calc(var(--i)*70ms + .35s)}
+
+/* ---------- ideas ---------- */
+.idea{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:26px 44px;align-items:start;padding:58px 0 50px;border-bottom:1px solid var(--line);scroll-margin-top:64px}
+.idea:last-of-type{border-bottom:0}
+.idea-head{display:flex;align-items:flex-start;gap:14px;margin:0 0 14px}
+.num{flex:none;display:grid;place-items:center;width:46px;height:46px;background:var(--navy);color:var(--gold);font:700 24px/1 var(--display);border-radius:6px}
+h2{font:700 clamp(25px,3.6vw,34px)/1.08 var(--display);margin:0;letter-spacing:-.01em;padding-top:5px}
+.idea-text p{margin:0;max-width:34em}
+.idea-text b{font-weight:700;box-shadow:inset 0 -.42em 0 rgba(245,182,15,.45)}
+
+/* figure plate */
+.fig{margin:0;background:var(--plate);border-radius:14px;padding:22px 22px 18px;border:1px solid var(--line)}
+.fig figcaption{font-size:14px;color:var(--mute);margin-top:14px;line-height:1.45}
+.fig .hint{font-size:14px;font-weight:600;color:var(--teal);margin:0 0 12px}
+.lab{font-size:13.5px;font-weight:600;color:var(--mute);margin:0 0 6px}
+
+/* you could say */
+.say{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 20px;align-items:center;background:var(--teal-soft);border-left:5px solid var(--teal);border-radius:0 14px 14px 0;padding:18px 20px}
+.say-label{font-weight:700;color:var(--teal);font-size:15px;white-space:nowrap}
+.say blockquote{margin:0;font:500 19px/1.5 var(--voice);color:#0c2f33}
+.say-try{display:none;margin:0;color:#35585a;font-size:15.5px}
+.say-btns{display:flex;gap:8px}
+.say button{display:inline-flex;align-items:center;gap:7px;min-height:42px;padding:0 14px;border-radius:999px;border:1.5px solid var(--teal);background:#fff;color:var(--teal);font-size:14.5px;font-weight:600;white-space:nowrap}
+.say button:hover{background:var(--teal);color:#fff}
+.say .show{display:none}
+.say .listen.on{background:var(--teal);color:#fff}
+.no-speech .listen{display:none}
+.practice-on .say:not(.open) blockquote{display:none}
+.practice-on .say:not(.open) .say-try{display:block}
+.practice-on .say:not(.open) .show{display:inline-flex}
+.practice-on .say:not(.open) .listen{display:none}
+@keyframes unveil{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.practice-on .say.open blockquote{animation:unveil .4s var(--ease)}
+
+/* ---------- figure parts ---------- */
+/* 1 steps */
+.steps{display:flex;align-items:stretch;gap:0}
+.steps button{flex:1;min-width:0;min-height:58px;padding:6px 4px;border:2px solid var(--navy);background:#fff;border-radius:8px;font-size:14px;font-weight:600;line-height:1.15;
+  transition:background .3s,border-color .3s,color .3s,opacity .3s}
+.steps .arrow{flex:none;width:18px;align-self:center;height:3px;background:var(--navy);transition:background .3s,opacity .3s}
+.steps button.blocked{background:var(--red);border-color:var(--red);color:#fff}
+.steps .off{border-style:dashed;border-color:#a9b4c4;color:#8a96a9;background:#f4f6f9}
+.steps .arrow.off{background:#c3ccd9;border:0}
+.js .steps>*{opacity:0;transform:translateX(-10px);transition:opacity .45s ease,transform .45s var(--ease),background .3s,border-color .3s,color .3s;transition-delay:calc(var(--i)*90ms)}
+.js .in .steps>*{opacity:1;transform:none}
+.js .in .steps.played>*{transition-delay:0s}
+
+/* 2 distance */
+.dist{display:grid;grid-template-columns:repeat(3,1fr);position:relative;padding-top:40px}
+.dist::before{content:"";position:absolute;left:16.66%;right:16.66%;top:11px;height:3px;background:var(--line)}
+.dist div{text-align:center;padding:0 6px;position:relative}
+.dist div::before{content:"";position:absolute;top:-38px;left:50%;width:21px;height:21px;margin-left:-10.5px;border-radius:50%;background:var(--navy);border:4px solid #fff;box-shadow:0 0 0 2px var(--navy)}
+.dist div:last-child::before{background:var(--gold)}
+.dist b{display:block;font:700 18.5px/1.1 var(--display);overflow-wrap:anywhere}
+.dist span{display:block;font-size:13.5px;color:var(--mute);line-height:1.35;margin-top:4px}
+.js .dist div{opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s var(--ease);transition-delay:calc(var(--i)*160ms + .1s)}
+.js .in .dist div{opacity:1;transform:none}
+
+/* segmented control */
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px}
+.seg button{min-height:42px;padding:0 13px;border-radius:8px;border:1.5px solid var(--line);background:#fff;font-size:14.5px;font-weight:600;color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* bars */
+.bar{display:flex;height:46px;border-radius:8px;overflow:hidden;background:#f1f4f8}
+.bar i{display:grid;place-items:center;font-style:normal;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;width:var(--w);transition:width .9s var(--ease)}
+.bar .c{background:var(--navy);color:#fff}
+.bar .m{background:var(--gold);color:var(--navy)}
+.bar .t{background:repeating-linear-gradient(135deg,var(--red) 0 8px,#e2604f 8px 16px);color:#fff}
+.bar .o{background:#b9c5d6;color:var(--navy)}
+.js .fig:not(.in) .bar .grow{width:0}
+.out{margin:12px 0 0;font-weight:600;min-height:3.1em}
+.out small{display:block;font-weight:400;color:var(--mute);font-size:14.5px}
+.brace{display:flex;justify-content:space-between;font-size:13.5px;color:var(--mute);margin-top:6px}
+
+/* 5 lines */
+.lines svg{display:block;width:100%;height:auto}
+.lines path{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.lines .calm{stroke:var(--teal)}
+.lines .wild{stroke:var(--red)}
+.lines text{font:600 12px var(--body);fill:var(--mute);text-anchor:middle}
+.js .lines path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.8s ease .2s}
+.js .lines.in path{stroke-dashoffset:0}
+.key{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;font-weight:600;margin-top:8px}
+.key span::before{content:"";display:inline-block;width:18px;height:4px;border-radius:2px;margin-right:7px;vertical-align:middle;background:var(--k)}
+
+/* 6 crates */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.two h3{font:700 19px/1.1 var(--display);margin:0 0 10px}
+.crates{display:grid;grid-template-columns:repeat(3,26px);gap:5px;height:57px;align-content:end}
+.crates i{width:26px;height:26px;border-radius:4px;background:var(--gold);border:2px solid var(--gold-d)}
+.js .crates i{opacity:0;transform:translateY(-14px);transition:opacity .35s ease,transform .45s cubic-bezier(.3,1.5,.5,1);transition-delay:calc(var(--i)*90ms + .2s)}
+.js .in .crates i{opacity:1;transform:none}
+.pair{list-style:none;margin:12px 0 0;padding:0;font-size:14.5px}
+.pair li{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-top:1px solid var(--line)}
+.pair b.lo{color:var(--teal)}.pair b.hi{color:var(--red)}
+
+/* 7 suppliers */
+.net{display:flex;align-items:center;gap:10px;min-height:112px}
+.net .sup{display:grid;gap:6px;flex:none}
+.net .sup i,.net .fac{font-style:normal;font-size:13px;font-weight:700;border-radius:6px;padding:5px 9px;text-align:center;transition:background .35s,color .35s,border-color .35s}
+.net .sup i{background:var(--navy);color:#fff;border:2px solid var(--navy)}
+.net .pipe{flex:1;height:3px;background:var(--navy);min-width:14px;transition:background .35s}
+.net .fac{flex:none;background:var(--gold);color:var(--navy);border:2px solid var(--gold-d);min-width:74px}
+.shock .sup i.hit{background:var(--red-soft);color:var(--red);border-color:var(--red);text-decoration:line-through}
+.shock .net.solo .pipe{background:#c3ccd9}
+.shock .net.solo .fac{background:#f4f6f9;color:#8a96a9;border:2px dashed #a9b4c4}
+.verdict{margin:8px 0 0;font-size:14.5px;font-weight:700;min-height:1.5em}
+.verdict.bad{color:var(--red)}.verdict.good{color:var(--teal)}
+.act{min-height:44px;padding:0 16px;border-radius:8px;border:0;background:var(--navy);color:#fff;font-size:15px;font-weight:600;margin-top:14px}
+.act[aria-pressed="true"]{background:var(--red)}
+
+/* 9 routes */
+.route{display:flex;align-items:center;gap:10px;margin:0 0 4px}
+.route .end{flex:none;font-size:13px;font-weight:700;background:var(--navy);color:#fff;border-radius:6px;padding:5px 9px}
+.route .end.cust{background:var(--gold);color:var(--navy)}
+.route .road{flex:0 0 var(--len);height:14px;border-radius:7px;background:repeating-linear-gradient(90deg,var(--c) 0 6px,transparent 6px 15px);transition:flex-basis 1.2s var(--ease) .2s}
+.js .fig:not(.in) .route .road{flex-basis:0}
+.route-note{font-size:14.5px;margin:0 0 18px}
+
+/* meters */
+.meter{display:grid;grid-template-columns:10.5em 1fr;gap:12px;align-items:center;font-size:14.5px;font-weight:600;line-height:1.25;margin:0 0 10px}
+.meter .track{height:16px;border-radius:8px;background:#eef2f6;overflow:hidden}
+.meter .track i{display:block;height:100%;width:var(--w);border-radius:8px;background:var(--c,var(--navy));transition:width .9s var(--ease)}
+.js .fig:not(.in) .meter .track i{width:0}
+/* ticks */
+.ticks{list-style:none;margin:0;padding:0;font-size:14.5px;line-height:1.35}
+.ticks li{position:relative;padding:8px 0 8px 20px;border-top:1px solid var(--line)}
+.ticks li::before{content:"";position:absolute;left:0;top:13px;width:10px;height:10px;border-radius:3px;background:var(--navy)}
+.ticks.green li::before{background:var(--teal)}
+.js .ticks li{opacity:0;transform:translateX(-8px);transition:opacity .4s ease,transform .4s var(--ease);transition-delay:calc(var(--i)*130ms + .15s)}
+.js .in .ticks li{opacity:1;transform:none}
+/* static steps */
+.steps .st{flex:1;min-width:0;min-height:74px;display:grid;align-content:center;gap:3px;text-align:center;padding:9px 6px;border:2px solid var(--navy);background:#fff;border-radius:8px;line-height:1.2;transition:background .4s,border-color .4s}
+.steps .st b{font-size:15px}
+.steps .st span{font-size:12.5px;color:var(--mute)}
+.steps .st.gold{background:var(--gold);border-color:var(--gold-d)}
+.steps .st.gold span{color:var(--navy)}
+.steps .st.bad{background:var(--red-soft);border-color:var(--red)}
+.steps .st.bad b{color:var(--red)}
+.steps .st.good{background:var(--teal-soft);border-color:var(--teal)}
+.steps .st.good b{color:var(--teal)}
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{min-height:44px;padding:8px 14px;border-radius:8px;border:2px solid var(--navy);background:#fff;font-size:14.5px;font-weight:600;line-height:1.3;text-align:left;transition:background .3s,color .3s,border-color .3s}
+.chips button small{display:inline-block;font-weight:700;font-size:12.5px;margin-left:8px;padding:1px 8px;border-radius:999px;background:#fff}
+.chips button.vague{background:var(--red-soft);border-color:var(--red);color:#8f2417}
+.chips button.vague small{color:var(--red)}
+.chips button.proof{background:var(--teal-soft);border-color:var(--teal);color:#084f4f}
+.chips button.proof small{color:var(--teal)}
+/* flow */
+.flow{display:grid;grid-template-columns:1fr 64px 1fr;gap:10px;align-items:center;margin:0 0 6px}
+.flow .box{text-align:center;font-weight:700;font-size:15px;line-height:1.2;border-radius:8px;padding:11px 8px}
+.flow .co{background:var(--navy);color:#fff;border:2px solid var(--navy)}
+.flow .env{background:var(--teal-soft);color:var(--teal);border:2px solid var(--teal)}
+.flow .ar{color:var(--gold-d);display:flex;flex-direction:column;gap:4px}
+.flow .ar svg{display:block;width:100%}
+.flow .ar.two svg:last-child{transform:scaleX(-1);color:var(--teal)}
+.js .flow .ar{clip-path:inset(0 100% 0 0);transition:clip-path .8s var(--ease) .3s}
+.js .in .flow .ar{clip-path:inset(0)}
+/* 4 Ps */
+.mix{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.mix button{aspect-ratio:1;max-height:110px;border-radius:12px;border:2px solid var(--navy);background:#fff;display:grid;place-items:center;padding:4px;transition:background .3s,color .3s,transform .3s var(--ease)}
+.mix b{font-size:15.5px;line-height:1.1}
+.mix b::first-letter{font-size:1.9em;color:var(--gold-d)}
+.mix button[aria-pressed="true"]{background:var(--navy);color:#fff;transform:translateY(-3px)}
+.mix button[aria-pressed="true"] b::first-letter{color:var(--gold)}
+/* customer cards */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.card{border-radius:10px;padding:11px 10px;background:#f3f6f9;border:2px solid transparent;transition:background .4s,border-color .4s;transition-delay:calc(var(--i)*90ms)}
+.card b{display:block;font-size:15px}
+.card span{display:block;font-size:13.5px;line-height:1.35;margin-top:4px}
+.cards.pers .card{background:var(--teal-soft);border-color:var(--teal)}
+@keyframes swap{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.cards.swap .card span{animation:swap .4s var(--ease) both;animation-delay:calc(var(--i)*90ms)}
+
+/* ---------- end ---------- */
+.end-nav{display:flex;flex-wrap:wrap;gap:10px;padding:34px 0 10px}
+.end-nav a,.end-nav button{display:inline-flex;align-items:center;min-height:46px;padding:0 18px;border-radius:10px;border:1.5px solid var(--navy);background:none;color:var(--navy);font-size:15.5px;font-weight:600;text-decoration:none}
+.end-nav .main{background:var(--navy);color:#fff}
+footer{margin-top:34px;background:var(--navy);color:#aeb9d6;padding:26px 0 calc(96px + env(safe-area-inset-bottom));font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:center}
+footer .brand{display:flex;align-items:center;gap:12px}
+footer img{width:42px;height:42px;object-fit:contain;border-radius:8px;background:#fff}
+footer strong{display:block;color:#fff}
+
+/* ---------- responsive ---------- */
+@media(max-width:860px){
+  .idea{grid-template-columns:1fr;gap:20px;padding:42px 0 38px}
+  .say{grid-template-columns:1fr;border-radius:0 12px 12px 0}
+  .chain-now{display:none}
+}
+@media(max-width:560px){
+  body{font-size:16.5px}
+  .wrap{padding:0 16px}
+  .chain .wrap{gap:12px}
+  .chain a{width:26px;height:26px;font-size:13.5px}
+  .chain ol::before,.chain ol::after{left:13px;right:13px}
+  .chain ol::after{right:auto;width:calc((100% - 26px) * var(--p))}
+  .practice{padding:0 10px 0 8px;font-size:13.5px}
+  .practice .pm{display:none}
+  .fig{padding:18px 16px 16px}
+  .steps{flex-direction:column}
+  .steps button{min-height:46px}
+  .steps .arrow{width:3px;height:14px}
+  .two{gap:14px}
+  .meter{grid-template-columns:8.6em 1fr;font-size:13.5px}
+  .steps .st{min-height:56px}
+  .flow{grid-template-columns:1fr 46px 1fr;gap:7px}.flow .box{font-size:14px;padding:10px 5px}
+  .mix{gap:6px}.mix b{font-size:11.5px}
+  .cards{grid-template-columns:1fr;gap:6px}.card{display:flex;gap:10px;align-items:baseline;padding:9px 12px}.card b{flex:none;width:5.2em}.card span{margin:0}
+  .dist b{font-size:14.5px}
+  .dist span{font-size:12.5px}
+  .dist div{padding:0 3px}
+  .net{gap:6px}
+  .net .sup i,.net .fac{font-size:12px;padding:5px 6px}
+  .net .fac{min-width:0}
+  .say blockquote{font-size:17.5px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .steps>*,.js .ticks li{opacity:1!important;transform:none!important}
+  .js .flow .ar{clip-path:none!important}
+  .js .fig:not(.in) .meter .track i{width:var(--w)!important}
+  .js .lines path{stroke-dashoffset:0!important}
+  .js .fig:not(.in) .bar .grow{width:var(--w)!important}
+  .js .fig:not(.in) .route .road{flex-basis:var(--len)!important}
+}
+@media print{
+  body{background:#fff;font-size:11.5pt}
+  .chain,.back,.fab-back,.say-btns,.seg,.act,.hint,.end-nav,footer,.lsa-appnav,.lsa-update{display:none!important}
+  .hero{background:none;color:#000;padding:0 0 10px}.hero::before{display:none}
+  h1 .t1{color:#000;font-size:34pt}h1 .t2{color:#000;font-size:17pt}.standfirst{color:#333}
+  .idea{grid-template-columns:1fr 1fr;padding:16px 0;break-inside:avoid}
+  .say blockquote{display:block!important}.say-try{display:none!important}
+  .fig{border-color:#999}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js')</script>
+
+<header class="hero">
+  <div class="wrap">
+    <a class="back" href="marketing.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Retour à 7-Marketing</a>
+    <h1><span class="t1">Marketing</span><span class="t2">The economic basics you need</span></h1>
+    <p class="standfirst">Nine ideas to know before you read any text on marketing. Each one comes with a sentence you could say in the exam.</p>
+  </div>
+</header>
+
+<nav class="chain" aria-label="The nine ideas">
+  <div class="wrap">
+    <ol id="chain">
+      <li style="--i:0"><a href="#marketing-mix" aria-label="1. The marketing mix: the 4 Ps">1</a></li>
+      <li style="--i:1"><a href="#segmentation" aria-label="2. Segmentation, targeting and positioning">2</a></li>
+      <li style="--i:2"><a href="#price-value" aria-label="3. Price and perceived value">3</a></li>
+      <li style="--i:3"><a href="#loyalty" aria-label="4. Winning and keeping customers">4</a></li>
+      <li style="--i:4"><a href="#brand" aria-label="5. Brand identity and rebranding">5</a></li>
+      <li style="--i:5"><a href="#social-media" aria-label="6. Social media and influencers">6</a></li>
+      <li style="--i:6"><a href="#e-reputation" aria-label="7. E-reputation and crisis communication">7</a></li>
+      <li style="--i:7"><a href="#personalisation" aria-label="8. Personalisation, data and AI">8</a></li>
+      <li style="--i:8"><a href="#trust" aria-label="9. Consent, ethics and trust">9</a></li>
+    </ol>
+    <p class="chain-now" id="chainNow" aria-hidden="true">Tap a number to jump</p>
+    <button class="practice" id="practice" type="button" aria-pressed="false" title="Hide the sentences and try to say them first"><i aria-hidden="true"></i><span class="pl">Practice<span class="pm"> mode</span></span></button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- 1 -->
+<section class="idea" id="marketing-mix" data-name="The marketing mix">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">1</span><h2>The marketing mix: the 4 Ps</h2></div>
+    <p><b>Marketing</b> is everything a company does to understand its customers and sell to them. The <b>marketing mix</b> sums it up in four decisions, the 4 Ps: <b>product</b>, <b>price</b>, <b>place</b> (where and how it is sold) and <b>promotion</b> (how it is communicated). The four must be consistent.</p>
+  </div>
+  <figure class="fig" id="figMix">
+    <p class="hint">Tap a P to see the question it answers.</p>
+    <div class="mix" role="group" aria-label="The 4 Ps">
+      <button type="button" aria-pressed="true" data-k="0"><b>Product</b></button>
+      <button type="button" aria-pressed="false" data-k="1"><b>Price</b></button>
+      <button type="button" aria-pressed="false" data-k="2"><b>Place</b></button>
+      <button type="button" aria-pressed="false" data-k="3"><b>Promotion</b></button>
+    </div>
+    <p class="out" id="mixOut" aria-live="polite">What exactly do we sell?<small>Quality, design, brand, services around the product.</small></p>
+    <figcaption>A luxury product sold at a low price in a discount shop would send confused signals.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“The four elements of the marketing mix must be consistent: product, price, place and promotion must all send the same message.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="idea" id="segmentation" data-name="Segmentation and positioning">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">2</span><h2>Segmentation, targeting and positioning</h2></div>
+    <p>Customers do not all want the same thing. <b>Segmentation</b> divides the market into groups with similar needs, for example by age or by lifestyle. <b>Targeting</b> means choosing which groups to serve. <b>Positioning</b> is the image the brand wants to have in the mind of these customers, compared with its competitors.</p>
+  </div>
+  <figure class="fig">
+    <div class="steps">
+      <div class="st" style="--i:0"><b>Segmentation</b><span>divide the market into groups</span></div><span class="arrow" style="--i:1"></span>
+      <div class="st" style="--i:2"><b>Targeting</b><span>choose the groups to serve</span></div><span class="arrow" style="--i:3"></span>
+      <div class="st gold" style="--i:4"><b>Positioning</b><span>decide how the brand is seen</span></div>
+    </div>
+    <figcaption>Different segments expect different things: a message for students will not work for retired people.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“A brand cannot please everybody. It must choose its target segments and position itself clearly against its competitors.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="idea" id="price-value" data-name="Price and perceived value">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">3</span><h2>Price and perceived value</h2></div>
+    <p>Customers do not only compare prices; they compare what they pay with what they get. This is <b>perceived value</b>: quality, image, service, emotion. With digital tools, some companies use <b>dynamic pricing</b>: the price changes with demand, as for plane tickets. It can increase revenue, but customers may find it unfair.</p>
+  </div>
+  <figure class="fig" id="figPrice">
+    <div class="seg" role="group" aria-label="Level of demand">
+      <button type="button" aria-pressed="true" data-v="40" data-k="0">Quiet Tuesday</button>
+      <button type="button" aria-pressed="false" data-v="88" data-k="1">Holiday weekend</button>
+    </div>
+    <div class="meter"><span>Demand</span><div class="track"><i style="--w:30%;--c:var(--teal)"></i></div></div>
+    <div class="meter"><span>Price of the same ticket</span><div class="track"><i style="--w:40%;--c:var(--gold)"></i></div></div>
+    <p class="out" id="priceOut" aria-live="polite">Low demand: the price goes down.<small>The company fills seats that would stay empty.</small></p>
+    <figcaption>Dynamic pricing. Illustration only: the sizes are not real figures.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“Customers buy value, not just a price. Dynamic pricing can increase revenue, but it can also look unfair and damage trust.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="idea" id="loyalty" data-name="Winning and keeping customers">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">4</span><h2>Winning and keeping customers</h2></div>
+    <p>Winning a new customer usually costs more than keeping an existing one: advertising, promotions, discounts. A loyal customer buys again and again, and often recommends the brand. <b>Customer loyalty</b> is therefore a source of stable revenue. But a brand also needs new customers, for example younger ones, to survive.</p>
+  </div>
+  <figure class="fig">
+    <div class="two">
+      <div>
+        <h3>Win new customers</h3>
+        <ul class="ticks"><li style="--i:0">advertising and promotions</li><li style="--i:1">necessary to grow</li><li style="--i:2">often expensive</li></ul>
+      </div>
+      <div>
+        <h3>Keep existing customers</h3>
+        <ul class="ticks green"><li style="--i:3">regular, stable revenue</li><li style="--i:4">free recommendations</li><li style="--i:5">based on trust and habit</li></ul>
+      </div>
+    </div>
+    <figcaption>A good strategy does both: it attracts new customers without losing the loyal ones.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“Building loyalty is a long-term investment: keeping a customer usually costs less than winning a new one.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="idea" id="brand" data-name="Brand identity and rebranding">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">5</span><h2>Brand identity and rebranding</h2></div>
+    <p>A <b>brand</b> is more than a name: it is a logo, a style, values and emotions. Loyal customers often feel that the brand belongs to them. This is why <b>rebranding</b>, changing the image of a brand, is risky. A sudden change can look like a betrayal; a gradual change, tested and explained, is safer.</p>
+  </div>
+  <figure class="fig" id="figBrand">
+    <div class="seg" role="group" aria-label="How the brand changes">
+      <button type="button" aria-pressed="true" data-v="34,62,82" data-k="0">Sudden rebranding</button>
+      <button type="button" aria-pressed="false" data-v="84,54,30" data-k="1">Step-by-step change</button>
+    </div>
+    <div class="meter"><span>Loyal customers kept</span><div class="track"><i style="--w:34%;--c:var(--teal)"></i></div></div>
+    <div class="meter"><span>New customers attracted</span><div class="track"><i style="--w:62%;--c:var(--gold)"></i></div></div>
+    <div class="meter"><span>Risk of a backlash</span><div class="track"><i style="--w:82%;--c:var(--red)"></i></div></div>
+    <p class="out" id="brandOut" aria-live="polite">Loyal customers feel betrayed.<small>The company may have to go back, after spending a lot of money.</small></p>
+    <figcaption>Illustration only: the sizes are not real figures.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“A brand must change with its customers, not against them. A sudden rebranding can destroy years of loyalty.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="idea" id="social-media" data-name="Social media and influencers">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">6</span><h2>Social media and influencers</h2></div>
+    <p>Traditional advertising is a one-way message. <b>Social media</b> create a two-way conversation: the brand speaks, and customers answer, share and comment, in public. Even small companies can reach a large audience at low cost. <b>Influencers</b> are popular content creators paid by brands; they often seem more authentic than an advert.</p>
+  </div>
+  <figure class="fig">
+    <p class="lab">Traditional advertising</p>
+    <div class="flow"><span class="box co">Brand</span><span class="ar"><svg viewBox="0 0 46 20" aria-hidden="true"><path d="M2 10h38M32 3l9 7-9 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="box env">Customers</span></div>
+    <p class="lab" style="margin-top:16px">Social media</p>
+    <div class="flow"><span class="box co">Brand</span><span class="ar two"><svg viewBox="0 0 46 20" aria-hidden="true"><path d="M2 10h38M32 3l9 7-9 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 46 20" aria-hidden="true"><path d="M2 10h38M32 3l9 7-9 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="box env">Customers</span></div>
+    <figcaption>On social media, customers answer back, in front of everybody. This is an opportunity and a risk.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“Social media are double-edged: they help brands to reach customers cheaply, but customers can also use them to criticise the brand in public.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="idea" id="e-reputation" data-name="E-reputation and crisis communication">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">7</span><h2>E-reputation and crisis communication</h2></div>
+    <p><b>E-reputation</b> is the image of a brand on the internet: reviews, comments, posts. A <b>backlash</b>, a wave of public anger, can spread in a few hours. <b>Crisis communication</b> is the way a company answers: listen, answer quickly, explain its choices and, when needed, apologise.</p>
+  </div>
+  <figure class="fig" id="figCrisis">
+    <div class="seg" role="group" aria-label="How the brand reacts">
+      <button type="button" aria-pressed="true" data-v="86" data-k="0">The brand stays silent</button>
+      <button type="button" aria-pressed="false" data-v="30" data-k="1">The brand answers quickly</button>
+    </div>
+    <div class="steps">
+      <div class="st" style="--i:0"><b>A complaint</b><span>one post, one angry customer</span></div><span class="arrow" style="--i:1"></span>
+      <div class="st" style="--i:2"><b>It spreads</b><span>shares and comments</span></div><span class="arrow" style="--i:3"></span>
+      <div class="st bad" style="--i:4" id="crisisEnd"><b>Bad buzz</b><span>the story is everywhere</span></div>
+    </div>
+    <div class="meter" style="margin-top:16px"><span>Damage to reputation</span><div class="track"><i style="--w:86%;--c:var(--red)"></i></div></div>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“On social media, a crisis can spread in hours. The brand must listen, answer quickly and explain its choices.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="idea" id="personalisation" data-name="Personalisation, data and AI">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">8</span><h2>Personalisation, data and AI</h2></div>
+    <p>Instead of sending the same message to everybody, brands now use customer <b>data</b> to <b>personalise</b> their offers, recommendations and sometimes prices. <b>Generative AI</b> can create advertisements and campaigns in minutes. Well used, personalisation helps customers; badly used, it feels intrusive.</p>
+  </div>
+  <figure class="fig" id="figPers">
+    <div class="seg" role="group" aria-label="Type of message">
+      <button type="button" aria-pressed="true" data-k="0">Mass marketing</button>
+      <button type="button" aria-pressed="false" data-k="1">Personalised marketing</button>
+    </div>
+    <div class="cards" aria-live="polite">
+      <div class="card" style="--i:0"><b>Léa, 22</b><span>“20% off everything this week”</span></div>
+      <div class="card" style="--i:1"><b>Tom, 45</b><span>“20% off everything this week”</span></div>
+      <div class="card" style="--i:2"><b>Anne, 68</b><span>“20% off everything this week”</span></div>
+    </div>
+    <figcaption>These customers are invented examples.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“Data and AI allow brands to personalise their offers. This can help customers, but only if they trust the way their data is used.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="idea" id="trust" data-name="Consent, ethics and trust">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">9</span><h2>Consent, ethics and trust</h2></div>
+    <p>Personalisation depends on <b>personal data</b>, so customers must give their <b>consent</b>, as the European GDPR requires. Trust also depends on <b>authenticity</b>: fake reviews, hidden advertising or invented influencers mislead people. A brand that deceives may gain sales today, but it loses trust, and trust is slow to rebuild.</p>
+  </div>
+  <figure class="fig" id="figFair">
+    <p class="hint">Fair or misleading? Tap a practice to check.</p>
+    <div class="chips wide">
+      <button type="button" data-t="proof">Asking for consent before sending offers</button>
+      <button type="button" data-t="vague">Publishing fake five-star reviews</button>
+      <button type="button" data-t="proof">Saying clearly that a post is an advert</button>
+      <button type="button" data-t="vague">Selling customer data without telling them</button>
+      <button type="button" data-t="vague">Presenting an AI-generated influencer as a real person</button>
+    </div>
+    <figcaption>Trust takes years to build and can be lost in a few days.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“A brand that misuses data or misleads its customers may win in the short term, but it loses their trust in the long term.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<a class="fab-back" href="marketing.html" aria-label="Retour au chapitre 7-Marketing" title="Retour au chapitre"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></a>
+
+<div class="end-nav">
+  <a class="main" href="marketing-fil-rouge.html">Lire l'article fil rouge</a>
+  <a href="marketing.html">Revenir au chapitre</a>
+  <button type="button" onclick="window.print()">Imprimer cette fiche</button>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="brand">
+      <img src="assets/lsa-logo.png" alt="" onerror="this.remove()">
+      <div><strong>LSA Toolbox</strong>DSCG · 7-Marketing · M. Blanchet</div>
+    </div>
+    <div>Lycée Sidoine Apollinaire, Clermont-Ferrand</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var $=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  var IO='IntersectionObserver' in window;
+
+  /* figures build themselves when they come into view */
+  var figs=$('.fig');
+  if(IO){
+    var fo=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('in');fo.unobserve(e.target);}
+    })},{rootMargin:'0px 0px -18% 0px',threshold:.15});
+    figs.forEach(function(f){fo.observe(f)});
+  }else figs.forEach(function(f){f.classList.add('in')});
+
+  /* the chain follows the reader */
+  var ideas=$('.idea'),links=$('#chain li'),chain=document.getElementById('chain'),now=document.getElementById('chainNow');
+  function setNow(i){
+    links.forEach(function(l,k){l.classList.toggle('done',k<i);l.classList.toggle('now',k===i);
+      var a=l.firstElementChild;if(k===i)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});
+    chain.style.setProperty('--p',i<0?'0':String(i/(links.length-1)));
+    now.textContent=i<0?'Tap a number to jump':ideas[i].getAttribute('data-name');
+  }
+  if(IO){
+    var so=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting)setNow(ideas.indexOf(e.target));
+    })},{rootMargin:'-30% 0px -60% 0px',threshold:0});
+    ideas.forEach(function(s){so.observe(s)});
+    window.addEventListener('scroll',function(){if(window.scrollY<120)setNow(-1)},{passive:true});
+  }
+
+  /* floating back button: appears once the top link has scrolled away */
+  function fab(){document.body.classList.toggle('scrolled',window.scrollY>260)}
+  window.addEventListener('scroll',fab,{passive:true});fab();
+
+  /* practice mode: hide the sentences, try first, then check */
+  var pb=document.getElementById('practice');
+  pb.addEventListener('click',function(){
+    var on=pb.getAttribute('aria-pressed')!=='true';
+    pb.setAttribute('aria-pressed',on);
+    document.body.classList.toggle('practice-on',on);
+    $('.say').forEach(function(s){s.classList.remove('open')});
+    stop();
+  });
+  $('.say .show').forEach(function(b){b.addEventListener('click',function(){b.closest('.say').classList.add('open')})});
+
+  /* listen: the device reads the sentence aloud */
+  var synth=window.speechSynthesis,current=null;
+  function stop(){if(synth)synth.cancel();if(current){current.classList.remove('on');current.textContent='Listen';current=null;}}
+  if(!synth||!window.SpeechSynthesisUtterance){document.documentElement.classList.add('no-speech');}
+  else{
+    $('.say .listen').forEach(function(b){b.addEventListener('click',function(){
+      if(current===b){stop();return;}
+      stop();
+      var u=new SpeechSynthesisUtterance(b.closest('.say').querySelector('blockquote').textContent.replace(/[“”]/g,''));
+      var vs=synth.getVoices(),v=vs.filter(function(x){return /^en[-_]GB/i.test(x.lang)})[0]||vs.filter(function(x){return /^en/i.test(x.lang)})[0];
+      if(v)u.voice=v;u.lang=v?v.lang:'en-GB';u.rate=.9;
+      u.onend=u.onerror=function(){if(current===b){b.classList.remove('on');b.textContent='Listen';current=null;}};
+      current=b;b.classList.add('on');b.textContent='Stop';synth.speak(u);
+    })});
+    window.addEventListener('pagehide',stop);
+  }
+
+  /* 1: the 4 Ps */
+  var xf=document.getElementById('figMix'),xb=$('.mix button',xf),xo=document.getElementById('mixOut');
+  var xt=[['What exactly do we sell?','Quality, design, brand, services around the product.'],
+          ['How much does the customer pay?','The price must match the image and the value of the product.'],
+          ['Where and how is it sold?','Shops, website, app, distributors.'],
+          ['How do we talk about it?','Advertising, social media, influencers, promotions.']];
+  xb.forEach(function(b){b.addEventListener('click',function(){
+    xb.forEach(function(o){o.setAttribute('aria-pressed',o===b)});
+    var t=xt[+b.dataset.k];xo.innerHTML=t[0]+'<small>'+t[1]+'</small>';
+  })});
+
+  /* 3: dynamic pricing */
+  var pf=document.getElementById('figPrice'),pb=$('.seg button',pf),pm=$('.track i',pf),po=document.getElementById('priceOut');
+  pb.forEach(function(b){b.addEventListener('click',function(){
+    pb.forEach(function(o){o.setAttribute('aria-pressed',o===b)});
+    var hi=b.dataset.k==='1';
+    pm[0].style.setProperty('--w',hi?'92%':'30%');pm[1].style.setProperty('--w',b.dataset.v+'%');
+    po.innerHTML=hi?'High demand: the price goes up.<small>More revenue, but some customers feel cheated.</small>':'Low demand: the price goes down.<small>The company fills seats that would stay empty.</small>';
+  })});
+
+  /* 5: rebranding */
+  var bf=document.getElementById('figBrand'),bb=$('.seg button',bf),bm=$('.track i',bf),bo=document.getElementById('brandOut');
+  var bt=[['Loyal customers feel betrayed.','The company may have to go back, after spending a lot of money.'],
+          ['The change is tested, explained and introduced slowly.','Fewer new customers at first, but loyal ones stay.']];
+  bb.forEach(function(b){b.addEventListener('click',function(){
+    bb.forEach(function(o){o.setAttribute('aria-pressed',o===b)});
+    b.dataset.v.split(',').forEach(function(v,k){bm[k].style.setProperty('--w',v+'%')});
+    var t=bt[+b.dataset.k];bo.innerHTML=t[0]+'<small>'+t[1]+'</small>';
+  })});
+
+  /* 7: crisis */
+  var cf=document.getElementById('figCrisis'),cb=$('.seg button',cf),cm=cf.querySelector('.track i'),ce=document.getElementById('crisisEnd');
+  cb.forEach(function(b){b.addEventListener('click',function(){
+    cb.forEach(function(o){o.setAttribute('aria-pressed',o===b)});
+    var ok=b.dataset.k==='1';cf.querySelector('.steps').classList.add('played');
+    cm.style.setProperty('--w',b.dataset.v+'%');
+    ce.className='st '+(ok?'good':'bad');
+    ce.innerHTML=ok?'<b>Crisis contained</b><span>the brand explains and apologises</span>':'<b>Bad buzz</b><span>the story is everywhere</span>';
+  })});
+
+  /* 8: mass or personalised */
+  var mf=document.getElementById('figPers'),mb=$('.seg button',mf),mc=mf.querySelector('.cards'),ms=$('.card span',mf);
+  var mt=[['“20% off everything this week”','“20% off everything this week”','“20% off everything this week”'],
+          ['“New trainers in your size are back in stock”','“The garden tools you looked at are on offer”','“A free delivery for your next order”']];
+  mb.forEach(function(b){b.addEventListener('click',function(){
+    mb.forEach(function(o){o.setAttribute('aria-pressed',o===b)});
+    var k=+b.dataset.k;mc.classList.toggle('pers',k===1);
+    ms.forEach(function(x,i){x.textContent=mt[k][i]});
+    mc.classList.remove('swap');void mc.offsetWidth;mc.classList.add('swap');
+  })});
+
+  /* 9: fair or misleading */
+  $('#figFair .chips button').forEach(function(b){b.addEventListener('click',function(){
+    if(b.classList.contains('vague')||b.classList.contains('proof'))return;
+    b.classList.add(b.dataset.t);
+    var t=document.createElement('small');t.textContent=b.dataset.t==='vague'?'misleading':'fair';b.appendChild(t);
+  })});
+})();
+</script>
+<script src="assets/auth-gate.js?v=1"></script><script src="assets/app-nav.js"></script>
+</body>
+</html>
