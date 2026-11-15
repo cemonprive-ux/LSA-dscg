@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest?v=2"><meta name="theme-color" content="#0f1a33"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="LSA DSCG"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Management: the economic basics you need · LSA Toolbox DSCG</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/dscg-favicon-32.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --navy:#0f1a33; --navy2:#1c2c55; --steel:#e9eef3; --plate:#ffffff; --ink:#14213d; --mute:#55627a;
+  --gold:#f5b60f; --gold-d:#8a6400; --teal:#0b6e6e; --teal-soft:#dff1ef; --red:#cf3b28; --red-soft:#fbe3df; --line:#cdd7e2;
+  --display:"Quicksand",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --body:var(--display);
+  --voice:var(--display);
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--steel);color:var(--ink);font:17px/1.6 var(--body)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+
+/* ---------- hero ---------- */
+.hero{background:var(--navy);color:#fff;padding:calc(22px + env(safe-area-inset-top)) 0 34px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;opacity:.5;
+  background:repeating-linear-gradient(90deg,transparent 0 46px,rgba(255,255,255,.045) 46px 48px)}
+.hero .wrap{position:relative}
+.back{display:inline-flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font-size:15px;font-weight:600;min-height:44px;padding:0 16px 0 12px;border:1.5px solid rgba(255,255,255,.4);border-radius:999px;transition:background .2s,border-color .2s}
+.back:hover{background:rgba(255,255,255,.1);border-color:var(--gold)}
+.fab-back{position:fixed;right:14px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:30;display:grid;place-items:center;width:50px;height:50px;border-radius:50%;
+  background:var(--navy);color:var(--gold);border:2px solid var(--gold);box-shadow:0 8px 22px rgba(15,26,51,.3);
+  opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .3s,transform .3s var(--ease),visibility .3s}
+.scrolled .fab-back{opacity:1;visibility:visible;transform:none}
+.lsa-app .fab-back{display:none}
+h1{font-family:var(--display);font-weight:700;margin:26px 0 0;line-height:1;letter-spacing:-.01em}
+h1 .t1{display:block;color:var(--gold);font-size:clamp(40px,12.4vw,136px);text-transform:uppercase;letter-spacing:-.02em}
+h1 .t2{display:block;color:#fff;font-weight:500;font-size:clamp(24px,4.6vw,44px);line-height:1.05;margin-top:10px}
+.standfirst{max-width:36em;color:#c9d3ea;font-size:clamp(17px,2.1vw,20px);margin:22px 0 0}
+
+/* ---------- the chain (sticky progress + navigation) ---------- */
+.chain{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;border-top:1px solid rgba(255,255,255,.12);
+  padding:calc(10px + env(safe-area-inset-top)) 0 10px;box-shadow:0 6px 18px rgba(15,26,51,.18)}
+.chain .wrap{display:flex;align-items:center;gap:18px}
+.chain ol{list-style:none;margin:0;padding:0;display:flex;justify-content:space-between;align-items:center;position:relative;flex:1;min-width:0;--p:0%}
+.chain ol::before,.chain ol::after{content:"";position:absolute;left:15px;right:15px;top:50%;height:3px;margin-top:-1.5px;border-radius:2px}
+.chain ol::before{background:rgba(255,255,255,.2)}
+.chain ol::after{right:auto;width:calc((100% - 30px) * var(--p));background:var(--gold);transition:width .5s var(--ease)}
+.chain li{position:relative;z-index:1}
+.chain a{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--navy2);border:2px solid rgba(255,255,255,.35);
+  color:#fff;text-decoration:none;font:700 14px/1 var(--display);transition:background .3s,border-color .3s,color .3s,transform .3s var(--ease)}
+.chain a::after{content:"";position:absolute;inset:-7px}
+.chain li.done a{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.chain li.now a{background:#fff;border-color:var(--gold);color:var(--navy);transform:scale(1.22)}
+.chain-now{flex:none;width:12.5em;margin:0;font:600 15.5px/1.15 var(--display);letter-spacing:.01em;color:#fff}
+.practice{flex:none;display:inline-flex;align-items:center;gap:9px;background:none;border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:999px;
+  padding:0 14px 0 10px;min-height:40px;font-size:14.5px;font-weight:600}
+.practice i{width:30px;height:18px;border-radius:9px;background:rgba(255,255,255,.25);position:relative;transition:background .25s}
+.practice i::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .25s var(--ease)}
+.practice[aria-pressed="true"]{border-color:var(--gold)}
+.practice[aria-pressed="true"] i{background:var(--gold)}
+.practice[aria-pressed="true"] i::after{transform:translateX(12px);background:var(--navy)}
+@keyframes link{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:none}}
+.js .chain li{animation:link .45s var(--ease) both;animation-delay:calc(var(--i)*70ms + .35s)}
+
+/* ---------- ideas ---------- */
+.idea{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:26px 44px;align-items:start;padding:58px 0 50px;border-bottom:1px solid var(--line);scroll-margin-top:64px}
+.idea:last-of-type{border-bottom:0}
+.idea-head{display:flex;align-items:flex-start;gap:14px;margin:0 0 14px}
+.num{flex:none;display:grid;place-items:center;width:46px;height:46px;background:var(--navy);color:var(--gold);font:700 24px/1 var(--display);border-radius:6px}
+h2{font:700 clamp(25px,3.6vw,34px)/1.08 var(--display);margin:0;letter-spacing:-.01em;padding-top:5px}
+.idea-text p{margin:0;max-width:34em}
+.idea-text b{font-weight:700;box-shadow:inset 0 -.42em 0 rgba(245,182,15,.45)}
+
+/* figure plate */
+.fig{margin:0;background:var(--plate);border-radius:14px;padding:22px 22px 18px;border:1px solid var(--line)}
+.fig figcaption{font-size:14px;color:var(--mute);margin-top:14px;line-height:1.45}
+.fig .hint{font-size:14px;font-weight:600;color:var(--teal);margin:0 0 12px}
+.lab{font-size:13.5px;font-weight:600;color:var(--mute);margin:0 0 6px}
+
+/* you could say */
+.say{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 20px;align-items:center;background:var(--teal-soft);border-left:5px solid var(--teal);border-radius:0 14px 14px 0;padding:18px 20px}
+.say-label{font-weight:700;color:var(--teal);font-size:15px;white-space:nowrap}
+.say blockquote{margin:0;font:500 19px/1.5 var(--voice);color:#0c2f33}
+.say-try{display:none;margin:0;color:#35585a;font-size:15.5px}
+.say-btns{display:flex;gap:8px}
+.say button{display:inline-flex;align-items:center;gap:7px;min-height:42px;padding:0 14px;border-radius:999px;border:1.5px solid var(--teal);background:#fff;color:var(--teal);font-size:14.5px;font-weight:600;white-space:nowrap}
+.say button:hover{background:var(--teal);color:#fff}
+.say .show{display:none}
+.say .listen.on{background:var(--teal);color:#fff}
+.no-speech .listen{display:none}
+.practice-on .say:not(.open) blockquote{display:none}
+.practice-on .say:not(.open) .say-try{display:block}
+.practice-on .say:not(.open) .show{display:inline-flex}
+.practice-on .say:not(.open) .listen{display:none}
+@keyframes unveil{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.practice-on .say.open blockquote{animation:unveil .4s var(--ease)}
+
+/* ---------- figure parts ---------- */
+/* 1 steps */
+.steps{display:flex;align-items:stretch;gap:0}
+.steps button{flex:1;min-width:0;min-height:58px;padding:6px 4px;border:2px solid var(--navy);background:#fff;border-radius:8px;font-size:14px;font-weight:600;line-height:1.15;
+  transition:background .3s,border-color .3s,color .3s,opacity .3s}
+.steps .arrow{flex:none;width:18px;align-self:center;height:3px;background:var(--navy);transition:background .3s,opacity .3s}
+.steps button.blocked{background:var(--red);border-color:var(--red);color:#fff}
+.steps .off{border-style:dashed;border-color:#a9b4c4;color:#8a96a9;background:#f4f6f9}
+.steps .arrow.off{background:#c3ccd9;border:0}
+.js .steps>*{opacity:0;transform:translateX(-10px);transition:opacity .45s ease,transform .45s var(--ease),background .3s,border-color .3s,color .3s;transition-delay:calc(var(--i)*90ms)}
+.js .in .steps>*{opacity:1;transform:none}
+.js .in .steps.played>*{transition-delay:0s}
+
+/* 2 distance */
+.dist{display:grid;grid-template-columns:repeat(3,1fr);position:relative;padding-top:40px}
+.dist::before{content:"";position:absolute;left:16.66%;right:16.66%;top:11px;height:3px;background:var(--line)}
+.dist div{text-align:center;padding:0 6px;position:relative}
+.dist div::before{content:"";position:absolute;top:-38px;left:50%;width:21px;height:21px;margin-left:-10.5px;border-radius:50%;background:var(--navy);border:4px solid #fff;box-shadow:0 0 0 2px var(--navy)}
+.dist div:last-child::before{background:var(--gold)}
+.dist b{display:block;font:700 18.5px/1.1 var(--display);overflow-wrap:anywhere}
+.dist span{display:block;font-size:13.5px;color:var(--mute);line-height:1.35;margin-top:4px}
+.js .dist div{opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s var(--ease);transition-delay:calc(var(--i)*160ms + .1s)}
+.js .in .dist div{opacity:1;transform:none}
+
+/* segmented control */
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px}
+.seg button{min-height:42px;padding:0 13px;border-radius:8px;border:1.5px solid var(--line);background:#fff;font-size:14.5px;font-weight:600;color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* bars */
+.bar{display:flex;height:46px;border-radius:8px;overflow:hidden;background:#f1f4f8}
+.bar i{display:grid;place-items:center;font-style:normal;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;width:var(--w);transition:width .9s var(--ease)}
+.bar .c{background:var(--navy);color:#fff}
+.bar .m{background:var(--gold);color:var(--navy)}
+.bar .t{background:repeating-linear-gradient(135deg,var(--red) 0 8px,#e2604f 8px 16px);color:#fff}
+.bar .o{background:#b9c5d6;color:var(--navy)}
+.js .fig:not(.in) .bar .grow{width:0}
+.out{margin:12px 0 0;font-weight:600;min-height:3.1em}
+.out small{display:block;font-weight:400;color:var(--mute);font-size:14.5px}
+.brace{display:flex;justify-content:space-between;font-size:13.5px;color:var(--mute);margin-top:6px}
+
+/* 5 lines */
+.lines svg{display:block;width:100%;height:auto}
+.lines path{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.lines .calm{stroke:var(--teal)}
+.lines .wild{stroke:var(--red)}
+.lines text{font:600 12px var(--body);fill:var(--mute);text-anchor:middle}
+.js .lines path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.8s ease .2s}
+.js .lines.in path{stroke-dashoffset:0}
+.key{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;font-weight:600;margin-top:8px}
+.key span::before{content:"";display:inline-block;width:18px;height:4px;border-radius:2px;margin-right:7px;vertical-align:middle;background:var(--k)}
+
+/* 6 crates */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.two h3{font:700 19px/1.1 var(--display);margin:0 0 10px}
+.crates{display:grid;grid-template-columns:repeat(3,26px);gap:5px;height:57px;align-content:end}
+.crates i{width:26px;height:26px;border-radius:4px;background:var(--gold);border:2px solid var(--gold-d)}
+.js .crates i{opacity:0;transform:translateY(-14px);transition:opacity .35s ease,transform .45s cubic-bezier(.3,1.5,.5,1);transition-delay:calc(var(--i)*90ms + .2s)}
+.js .in .crates i{opacity:1;transform:none}
+.pair{list-style:none;margin:12px 0 0;padding:0;font-size:14.5px}
+.pair li{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-top:1px solid var(--line)}
+.pair b.lo{color:var(--teal)}.pair b.hi{color:var(--red)}
+
+/* 7 suppliers */
+.net{display:flex;align-items:center;gap:10px;min-height:112px}
+.net .sup{display:grid;gap:6px;flex:none}
+.net .sup i,.net .fac{font-style:normal;font-size:13px;font-weight:700;border-radius:6px;padding:5px 9px;text-align:center;transition:background .35s,color .35s,border-color .35s}
+.net .sup i{background:var(--navy);color:#fff;border:2px solid var(--navy)}
+.net .pipe{flex:1;height:3px;background:var(--navy);min-width:14px;transition:background .35s}
+.net .fac{flex:none;background:var(--gold);color:var(--navy);border:2px solid var(--gold-d);min-width:74px}
+.shock .sup i.hit{background:var(--red-soft);color:var(--red);border-color:var(--red);text-decoration:line-through}
+.shock .net.solo .pipe{background:#c3ccd9}
+.shock .net.solo .fac{background:#f4f6f9;color:#8a96a9;border:2px dashed #a9b4c4}
+.verdict{margin:8px 0 0;font-size:14.5px;font-weight:700;min-height:1.5em}
+.verdict.bad{color:var(--red)}.verdict.good{color:var(--teal)}
+.act{min-height:44px;padding:0 16px;border-radius:8px;border:0;background:var(--navy);color:#fff;font-size:15px;font-weight:600;margin-top:14px}
+.act[aria-pressed="true"]{background:var(--red)}
+
+/* 9 routes */
+.route{display:flex;align-items:center;gap:10px;margin:0 0 4px}
+.route .end{flex:none;font-size:13px;font-weight:700;background:var(--navy);color:#fff;border-radius:6px;padding:5px 9px}
+.route .end.cust{background:var(--gold);color:var(--navy)}
+.route .road{flex:0 0 var(--len);height:14px;border-radius:7px;background:repeating-linear-gradient(90deg,var(--c) 0 6px,transparent 6px 15px);transition:flex-basis 1.2s var(--ease) .2s}
+.js .fig:not(.in) .route .road{flex-basis:0}
+.route-note{font-size:14.5px;margin:0 0 18px}
+
+/* meters */
+.meter{display:grid;grid-template-columns:10.5em 1fr;gap:12px;align-items:center;font-size:14.5px;font-weight:600;line-height:1.25;margin:0 0 10px}
+.meter .track{height:16px;border-radius:8px;background:#eef2f6;overflow:hidden}
+.meter .track i{display:block;height:100%;width:var(--w);border-radius:8px;background:var(--c,var(--navy));transition:width .9s var(--ease)}
+.js .fig:not(.in) .meter .track i{width:0}
+/* ticks */
+.ticks{list-style:none;margin:0;padding:0;font-size:14.5px;line-height:1.35}
+.ticks li{position:relative;padding:8px 0 8px 20px;border-top:1px solid var(--line)}
+.ticks li::before{content:"";position:absolute;left:0;top:13px;width:10px;height:10px;border-radius:3px;background:var(--navy)}
+.ticks.green li::before{background:var(--teal)}
+.js .ticks li{opacity:0;transform:translateX(-8px);transition:opacity .4s ease,transform .4s var(--ease);transition-delay:calc(var(--i)*130ms + .15s)}
+.js .in .ticks li{opacity:1;transform:none}
+/* static steps */
+.steps .st{flex:1;min-width:0;min-height:74px;display:grid;align-content:center;gap:3px;text-align:center;padding:9px 6px;border:2px solid var(--navy);background:#fff;border-radius:8px;line-height:1.2}
+.steps .st b{font-size:15px}
+.steps .st span{font-size:12.5px;color:var(--mute)}
+.steps .st.gold{background:var(--gold);border-color:var(--gold-d)}
+.steps .st.gold span{color:var(--navy)}
+.steps .st.bad{background:var(--red-soft);border-color:var(--red)}
+.steps .st.bad b{color:var(--red)}
+/* three tiles */
+.tri{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tri div{background:#f3f6f9;border-radius:10px;padding:12px 10px;text-align:center}
+.tri b{display:block;font-size:17px;line-height:1.15;margin-bottom:5px}
+.tri b.g{color:var(--gold-d)}.tri b.t{color:var(--teal)}
+.tri span{display:block;font-size:13.5px;line-height:1.35;color:var(--ink)}
+.js .tri div{opacity:0;transform:translateY(12px);transition:opacity .5s ease,transform .5s var(--ease);transition-delay:calc(var(--i)*160ms + .1s)}
+.js .in .tri div{opacity:1;transform:none}
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{min-height:44px;padding:8px 14px;border-radius:8px;border:2px solid var(--navy);background:#fff;font-size:14.5px;font-weight:600;line-height:1.3;text-align:left;transition:background .3s,color .3s,border-color .3s}
+.chips button small{display:inline-block;font-weight:700;font-size:12.5px;margin-left:8px;padding:1px 8px;border-radius:999px;background:#fff}
+.chips button.vague{background:var(--red-soft);border-color:var(--red);color:#8f2417}
+.chips button.vague small{color:var(--red)}
+.chips button.proof{background:var(--teal-soft);border-color:var(--teal);color:#084f4f}
+.chips button.proof small{color:var(--teal)}
+/* week */
+.week{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.day{border-radius:10px;padding:10px 4px 9px;text-align:center;background:var(--navy);color:#fff;transition:background .4s,color .4s;transition-delay:calc(var(--i)*70ms)}
+.day b{display:block;font-size:15px}
+.day span{display:block;font-size:12.5px;font-weight:600;margin-top:3px;opacity:.9}
+.day.home{background:var(--teal-soft);color:var(--teal);box-shadow:inset 0 0 0 2px var(--teal)}
+/* org */
+.org{display:grid;gap:12px;justify-items:center;min-height:150px;align-content:center}
+.org .row{display:flex;gap:10px;justify-content:center;position:relative}
+.org .row+.row::before{content:"";position:absolute;left:50%;top:-12px;width:2px;height:12px;background:var(--navy);transition:opacity .3s}
+.org i{font-style:normal;font-size:13.5px;font-weight:700;border-radius:8px;padding:8px 12px;border:2px solid var(--navy);background:#fff;transition:all .5s var(--ease)}
+.org i.top{background:var(--navy);color:#fff}
+.org i.mid{background:#e9eef3}
+.org.flat{grid-template-columns:1fr}
+.org.flat .row{display:contents}
+.org.flat{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.org.flat .row+.row::before{opacity:0}
+.org.flat i{background:var(--teal-soft);border-color:var(--teal);color:var(--teal)}
+.org.flat i.top,.org.flat i.mid{background:var(--gold);border-color:var(--gold-d);color:var(--navy)}
+
+/* ---------- end ---------- */
+.end-nav{display:flex;flex-wrap:wrap;gap:10px;padding:34px 0 10px}
+.end-nav a,.end-nav button{display:inline-flex;align-items:center;min-height:46px;padding:0 18px;border-radius:10px;border:1.5px solid var(--navy);background:none;color:var(--navy);font-size:15.5px;font-weight:600;text-decoration:none}
+.end-nav .main{background:var(--navy);color:#fff}
+footer{margin-top:34px;background:var(--navy);color:#aeb9d6;padding:26px 0 calc(96px + env(safe-area-inset-bottom));font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:center}
+footer .brand{display:flex;align-items:center;gap:12px}
+footer img{width:42px;height:42px;object-fit:contain;border-radius:8px;background:#fff}
+footer strong{display:block;color:#fff}
+
+/* ---------- responsive ---------- */
+@media(max-width:860px){
+  .idea{grid-template-columns:1fr;gap:20px;padding:42px 0 38px}
+  .say{grid-template-columns:1fr;border-radius:0 12px 12px 0}
+  .chain-now{display:none}
+}
+@media(max-width:560px){
+  body{font-size:16.5px}
+  .wrap{padding:0 16px}
+  .chain .wrap{gap:12px}
+  .chain a{width:26px;height:26px;font-size:13.5px}
+  .chain ol::before,.chain ol::after{left:13px;right:13px}
+  .chain ol::after{right:auto;width:calc((100% - 26px) * var(--p))}
+  .practice{padding:0 10px 0 8px;font-size:13.5px}
+  .practice .pm{display:none}
+  .fig{padding:18px 16px 16px}
+  .steps{flex-direction:column}
+  .steps button{min-height:46px}
+  .steps .arrow{width:3px;height:14px}
+  .two{gap:14px}
+  .meter{grid-template-columns:8.6em 1fr;font-size:13.5px}
+  .steps .st{min-height:56px}
+  .tri{grid-template-columns:1fr;gap:7px}.tri div{text-align:left;padding:10px 12px}
+  .week{gap:5px}.day b{font-size:13.5px}.day span{font-size:11px}
+  .org i{font-size:12.5px;padding:7px 9px}.org .row{gap:6px}
+  .dist b{font-size:14.5px}
+  .dist span{font-size:12.5px}
+  .dist div{padding:0 3px}
+  .net{gap:6px}
+  .net .sup i,.net .fac{font-size:12px;padding:5px 6px}
+  .net .fac{min-width:0}
+  .say blockquote{font-size:17.5px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .steps>*,.js .ticks li,.js .tri div{opacity:1!important;transform:none!important}
+  .js .fig:not(.in) .meter .track i{width:var(--w)!important}
+  .js .lines path{stroke-dashoffset:0!important}
+  .js .fig:not(.in) .bar .grow{width:var(--w)!important}
+  .js .fig:not(.in) .route .road{flex-basis:var(--len)!important}
+}
+@media print{
+  body{background:#fff;font-size:11.5pt}
+  .chain,.back,.fab-back,.say-btns,.seg,.act,.hint,.end-nav,footer,.lsa-appnav,.lsa-update{display:none!important}
+  .hero{background:none;color:#000;padding:0 0 10px}.hero::before{display:none}
+  h1 .t1{color:#000;font-size:34pt}h1 .t2{color:#000;font-size:17pt}.standfirst{color:#333}
+  .idea{grid-template-columns:1fr 1fr;padding:16px 0;break-inside:avoid}
+  .say blockquote{display:block!important}.say-try{display:none!important}
+  .fig{border-color:#999}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js')</script>
+
+<header class="hero">
+  <div class="wrap">
+    <a class="back" href="management-hr.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Retour à 5-Management</a>
+    <h1><span class="t1">Management</span><span class="t2">The economic basics you need</span></h1>
+    <p class="standfirst">Nine ideas to know before you read any text on management, human resources and strategy. Each one comes with a sentence you could say in the exam.</p>
+  </div>
+</header>
+
+<nav class="chain" aria-label="The nine ideas">
+  <div class="wrap">
+    <ol id="chain">
+      <li style="--i:0"><a href="#talent" aria-label="1. Attracting and keeping talent">1</a></li>
+      <li style="--i:1"><a href="#hybrid" aria-label="2. Office, remote and hybrid work">2</a></li>
+      <li style="--i:2"><a href="#performance" aria-label="3. Productivity and performance">3</a></li>
+      <li style="--i:3"><a href="#wellbeing" aria-label="4. Wellbeing and burnout">4</a></li>
+      <li style="--i:4"><a href="#monitoring" aria-label="5. Trust and control: employee monitoring">5</a></li>
+      <li style="--i:5"><a href="#management-models" aria-label="6. From hierarchy to agility">6</a></li>
+      <li style="--i:6"><a href="#ai-hr" aria-label="7. AI in human resources">7</a></li>
+      <li style="--i:7"><a href="#human-capital" aria-label="8. Human capital and training">8</a></li>
+      <li style="--i:8"><a href="#culture" aria-label="9. Corporate and national cultures">9</a></li>
+    </ol>
+    <p class="chain-now" id="chainNow" aria-hidden="true">Tap a number to jump</p>
+    <button class="practice" id="practice" type="button" aria-pressed="false" title="Hide the sentences and try to say them first"><i aria-hidden="true"></i><span class="pl">Practice<span class="pm"> mode</span></span></button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- 1 -->
+<section class="idea" id="talent" data-name="Attracting and keeping talent">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">1</span><h2>Attracting and keeping talent</h2></div>
+    <p>Companies compete to hire skilled people: this is the <b>war for talent</b>. When an employee leaves, the company loses money and time, because it must recruit and train someone new. <b>Staff turnover</b> is the share of employees who leave each year. Keeping good employees, or <b>retention</b>, is therefore a key goal.</p>
+  </div>
+  <figure class="fig">
+    <p class="lab">What happens when an employee leaves</p>
+    <div class="steps">
+      <div class="st bad" style="--i:0"><b>Departure</b><span>skills and knowledge leave</span></div><span class="arrow" style="--i:1"></span>
+      <div class="st" style="--i:2"><b>Recruitment</b><span>adverts, interviews</span></div><span class="arrow" style="--i:3"></span>
+      <div class="st" style="--i:4"><b>Training</b><span>the newcomer learns the job</span></div><span class="arrow" style="--i:5"></span>
+      <div class="st gold" style="--i:6"><b>Full speed</b><span>often months later</span></div>
+    </div>
+    <figcaption>Each step costs money and time. This is why retention matters.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“In the war for talent, keeping good employees is essential. Every departure costs the company money and time.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="idea" id="hybrid" data-name="Office, remote and hybrid work">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">2</span><h2>Office, remote and hybrid work</h2></div>
+    <p>Since the pandemic, <b>remote work</b> has become normal. In <b>hybrid work</b>, employees share their week between the office and home. Flexibility helps to attract talent, but some large firms are now asking staff to come back to the office more often, because they see real benefits in working face to face.</p>
+  </div>
+  <figure class="fig" id="figWeek">
+    <div class="seg" role="group" aria-label="Work model">
+      <button type="button" aria-pressed="true" data-k="0">Office</button>
+      <button type="button" aria-pressed="false" data-k="1">Hybrid</button>
+      <button type="button" aria-pressed="false" data-k="2">Remote</button>
+    </div>
+    <div class="week" aria-hidden="true"><div class="day" style="--i:0"><b>Mon</b><span>Office</span></div><div class="day" style="--i:1"><b>Tue</b><span>Office</span></div><div class="day" style="--i:2"><b>Wed</b><span>Office</span></div><div class="day" style="--i:3"><b>Thu</b><span>Office</span></div><div class="day" style="--i:4"><b>Fri</b><span>Office</span></div></div>
+    <p class="out" id="weekOut" aria-live="polite">Everyone works on site, every day.<small>Strong team spirit, but little flexibility.</small></p>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“Hybrid work gives employees flexibility, but managers must set clear rules to keep the team together.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="idea" id="performance" data-name="Productivity and performance">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">3</span><h2>Productivity and performance</h2></div>
+    <p><b>Productivity</b> compares what a person produces with the time spent. Being present is not the same as being productive. Modern management judges <b>performance</b> mainly on <b>results</b>, not on hours at the desk. This needs clear objectives, known by everybody.</p>
+  </div>
+  <figure class="fig">
+    <p class="lab">Employee A</p>
+    <div class="meter"><span>Hours at the desk</span><div class="track"><i style="--w:92%"></i></div></div>
+    <div class="meter"><span>Results</span><div class="track"><i style="--w:42%;--c:var(--teal)"></i></div></div>
+    <p class="lab" style="margin-top:16px">Employee B</p>
+    <div class="meter"><span>Hours at the desk</span><div class="track"><i style="--w:56%"></i></div></div>
+    <div class="meter"><span>Results</span><div class="track"><i style="--w:86%;--c:var(--teal)"></i></div></div>
+    <figcaption>If performance is judged on presence, A looks better. If it is judged on results, B does. Illustration only.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“Performance should be judged on results, not on hours of presence. This requires clear objectives.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="idea" id="wellbeing" data-name="Wellbeing and burnout">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">4</span><h2>Wellbeing and burnout</h2></div>
+    <p><b>Wellbeing</b> at work is now a management issue. Too much work for too long can lead to <b>burnout</b>: deep physical and mental exhaustion. Digital tools also blur the line between work and private life, which makes <b>work-life balance</b> harder. Tired employees are less productive and more likely to leave.</p>
+  </div>
+  <figure class="fig" id="figLoad">
+    <div class="seg" role="group" aria-label="Workload">
+      <button type="button" aria-pressed="true" data-v="80,18,20" data-k="0">Reasonable workload</button>
+      <button type="button" aria-pressed="false" data-v="46,82,76" data-k="1">Constant overload</button>
+    </div>
+    <div class="meter"><span>Productivity</span><div class="track"><i style="--w:80%;--c:var(--teal)"></i></div></div>
+    <div class="meter"><span>Risk of burnout</span><div class="track"><i style="--w:18%;--c:var(--red)"></i></div></div>
+    <div class="meter"><span>Risk of leaving</span><div class="track"><i style="--w:20%;--c:var(--red)"></i></div></div>
+    <p class="out" id="loadOut" aria-live="polite">Employees work well and stay.<small>Wellbeing supports performance.</small></p>
+    <figcaption>Illustration only: the sizes are not real figures.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“Wellbeing is not a luxury. Exhausted employees are less productive and more likely to leave.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="idea" id="monitoring" data-name="Trust and control">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">5</span><h2>Trust and control: employee monitoring</h2></div>
+    <p>Digital tools allow <b>employee monitoring</b>: badge swipes, connections, dashboards. Managers say these tools help to organise teams and to treat everyone the same way. Employees often feel watched: <b>trust</b> falls and motivation suffers. Monitoring is more acceptable when it is <b>transparent</b>, <b>proportionate</b> and explained.</p>
+  </div>
+  <figure class="fig" id="figMon">
+    <p class="hint">Acceptable or excessive? Tap a practice to check.</p>
+    <div class="chips wide">
+      <button type="button" data-t="proof">Using badge data to plan office space</button>
+      <button type="button" data-t="vague">Recording every mouse click</button>
+      <button type="button" data-t="proof">A dashboard that employees can see too</button>
+      <button type="button" data-t="vague">Reading emails in secret</button>
+      <button type="button" data-t="vague">Rating staff only on hours of presence</button>
+    </div>
+    <figcaption>The same tool can be acceptable or not: it depends on the purpose, on transparency and on proportion.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“Monitoring is not wrong in itself, but it must be transparent and proportionate. Otherwise, it destroys trust.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="idea" id="management-models" data-name="Hierarchy and agility">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">6</span><h2>From hierarchy to agility</h2></div>
+    <p>In a traditional <b>hierarchy</b>, decisions go down from the top, level by level. In an <b>agile organisation</b>, small teams decide quickly and work directly with the data. The manager becomes less a controller and more a <b>facilitator</b>: someone who explains, supports and removes obstacles.</p>
+  </div>
+  <figure class="fig" id="figOrg">
+    <div class="seg" role="group" aria-label="Type of organisation">
+      <button type="button" aria-pressed="true" data-k="0">Traditional hierarchy</button>
+      <button type="button" aria-pressed="false" data-k="1">Agile organisation</button>
+    </div>
+    <div class="org" aria-hidden="true">
+      <div class="row"><i class="top">Director</i></div>
+      <div class="row"><i class="mid">Manager</i><i class="mid">Manager</i></div>
+      <div class="row"><i>Team</i><i>Team</i><i>Team</i><i>Team</i></div>
+    </div>
+    <p class="out" id="orgOut" aria-live="polite">Orders go down, reports go up.<small>Clear, but slow when the world changes fast.</small></p>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“Management models are becoming more agile. The manager is less a controller and more a facilitator of change.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="idea" id="ai-hr" data-name="AI in human resources">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">7</span><h2>AI in human resources</h2></div>
+    <p><b>Human resources</b> (HR) manage the people of a company: recruitment, pay, training, careers. AI can now sort job applications, find skills gaps and predict who might leave. It saves time, but it can be biased, because it learns from past decisions. Clear rules and a human decision remain necessary.</p>
+  </div>
+  <figure class="fig">
+    <div class="steps">
+      <div class="st" style="--i:0"><b>Past decisions</b><span>who was hired before</span></div><span class="arrow" style="--i:1"></span>
+      <div class="st" style="--i:2"><b>AI sorts the applications</b><span>fast, for thousands of CVs</span></div><span class="arrow" style="--i:3"></span>
+      <div class="st gold" style="--i:4"><b>A human decides</b><span>and checks for bias</span></div>
+    </div>
+    <figcaption>If past decisions were unfair, the AI will repeat them. This is why the last word must stay human.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“AI can help HR departments to save time, but it can reproduce past bias. The final decision must stay human.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="idea" id="human-capital" data-name="Human capital and training">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">8</span><h2>Human capital and training</h2></div>
+    <p><b>Human capital</b> is the knowledge and skills of the employees. Like machines, it is a resource that companies must invest in. With AI, skills become out of date quickly, so a workforce that is not trained is a business risk. Training must be short, continuous and open to all. It also reduces the fear of change.</p>
+  </div>
+  <figure class="fig">
+    <p class="lab">What effective training looks like today</p>
+    <div class="tri">
+      <div style="--i:0"><b class="t">Short</b><span>modules of a few hours, not programmes of several months</span></div>
+      <div style="--i:1"><b class="g">Continuous</b><span>all through the career, as the tools change</span></div>
+      <div style="--i:2"><b class="t">Open to all</b><span>every department and every level, with ethics and AI basics</span></div>
+    </div>
+    <figcaption>Training is an investment in human capital, not just a cost.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“Training is an investment in human capital. In a fast-changing world, a company that does not train its staff takes a real risk.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="idea" id="culture" data-name="Corporate and national cultures">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">9</span><h2>Corporate and national cultures</h2></div>
+    <p><b>Corporate culture</b> is the set of values and habits shared inside a company: “the way we do things here”. Teams are also more and more international, so managers work with people from different <b>national cultures</b>, who may communicate differently and see authority differently. <b>Cultural awareness</b> prevents misunderstandings.</p>
+  </div>
+  <figure class="fig">
+    <div class="two">
+      <div>
+        <h3>Corporate culture</h3>
+        <ul class="ticks"><li style="--i:0">shared values</li><li style="--i:1">common habits and rules</li><li style="--i:2">a sense of belonging</li></ul>
+      </div>
+      <div>
+        <h3>National cultures</h3>
+        <ul class="ticks green"><li style="--i:3">ways of communicating</li><li style="--i:4">view of authority</li><li style="--i:5">relation to time and deadlines</li></ul>
+      </div>
+    </div>
+    <figcaption>A good manager knows both, and adapts without judging.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“In international teams, cultural awareness is a key skill: it prevents misunderstandings and builds trust.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<a class="fab-back" href="management-hr.html" aria-label="Retour au chapitre 5-Management, Human Resources and Strategy" title="Retour au chapitre"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></a>
+
+<div class="end-nav">
+  <a class="main" href="management-hr-fil-rouge.html">Lire l'article fil rouge</a>
+  <a href="management-hr.html">Revenir au chapitre</a>
+  <button type="button" onclick="window.print()">Imprimer cette fiche</button>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="brand">
+      <img src="assets/lsa-logo.png" alt="" onerror="this.remove()">
+      <div><strong>LSA Toolbox</strong>DSCG · 5-Management, Human Resources and Strategy · M. Blanchet</div>
+    </div>
+    <div>Lycée Sidoine Apollinaire, Clermont-Ferrand</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var $=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  var IO='IntersectionObserver' in window;
+
+  /* figures build themselves when they come into view */
+  var figs=$('.fig');
+  if(IO){
+    var fo=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('in');fo.unobserve(e.target);}
+    })},{rootMargin:'0px 0px -18% 0px',threshold:.15});
+    figs.forEach(function(f){fo.observe(f)});
+  }else figs.forEach(function(f){f.classList.add('in')});
+
+  /* the chain follows the reader */
+  var ideas=$('.idea'),links=$('#chain li'),chain=document.getElementById('chain'),now=document.getElementById('chainNow');
+  function setNow(i){
+    links.forEach(function(l,k){l.classList.toggle('done',k<i);l.classList.toggle('now',k===i);
+      var a=l.firstElementChild;if(k===i)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});
+    chain.style.setProperty('--p',i<0?'0':String(i/(links.length-1)));
+    now.textContent=i<0?'Tap a number to jump':ideas[i].getAttribute('data-name');
+  }
+  if(IO){
+    var so=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting)setNow(ideas.indexOf(e.target));
+    })},{rootMargin:'-30% 0px -60% 0px',threshold:0});
+    ideas.forEach(function(s){so.observe(s)});
+    window.addEventListener('scroll',function(){if(window.scrollY<120)setNow(-1)},{passive:true});
+  }
+
+  /* floating back button: appears once the top link has scrolled away */
+  function fab(){document.body.classList.toggle('scrolled',window.scrollY>260)}
+  window.addEventListener('scroll',fab,{passive:true});fab();
+
+  /* practice mode: hide the sentences, try first, then check */
+  var pb=document.getElementById('practice');
+  pb.addEventListener('click',function(){
+    var on=pb.getAttribute('aria-pressed')!=='true';
+    pb.setAttribute('aria-pressed',on);
+    document.body.classList.toggle('practice-on',on);
+    $('.say').forEach(function(s){s.classList.remove('open')});
+    stop();
+  });
+  $('.say .show').forEach(function(b){b.addEventListener('click',function(){b.closest('.say').classList.add('open')})});
+
+  /* listen: the device reads the sentence aloud */
+  var synth=window.speechSynthesis,current=null;
+  function stop(){if(synth)synth.cancel();if(current){current.classList.remove('on');current.textContent='Listen';current=null;}}
+  if(!synth||!window.SpeechSynthesisUtterance){document.documentElement.classList.add('no-speech');}
+  else{
+    $('.say .listen').forEach(function(b){b.addEventListener('click',function(){
+      if(current===b){stop();return;}
+      stop();
+      var u=new SpeechSynthesisUtterance(b.closest('.say').querySelector('blockquote').textContent.replace(/[“”]/g,''));
+      var vs=synth.getVoices(),v=vs.filter(function(x){return /^en[-_]GB/i.test(x.lang)})[0]||vs.filter(function(x){return /^en/i.test(x.lang)})[0];
+      if(v)u.voice=v;u.lang=v?v.lang:'en-GB';u.rate=.9;
+      u.onend=u.onerror=function(){if(current===b){b.classList.remove('on');b.textContent='Listen';current=null;}};
+      current=b;b.classList.add('on');b.textContent='Stop';synth.speak(u);
+    })});
+    window.addEventListener('pagehide',stop);
+  }
+
+  /* 2: office, hybrid or remote week */
+  var kf=document.getElementById('figWeek'),kb=$('.seg button',kf),kd=$('.day',kf),ko=document.getElementById('weekOut');
+  var home=[[],[0,4],[0,1,2,3,4]];
+  var kt=[['Everyone works on site, every day.','Strong team spirit, but little flexibility.'],
+          ['Three days in the office, two days at home.','Flexibility and team spirit, if the rules are clear.'],
+          ['Everyone works from home.','Maximum flexibility, but a weaker sense of belonging.']];
+  kb.forEach(function(b){b.addEventListener('click',function(){
+    kb.forEach(function(o){o.setAttribute('aria-pressed',o===b)});
+    var h=home[+b.dataset.k];
+    kd.forEach(function(d,i){var on=h.indexOf(i)>-1;d.classList.toggle('home',on);d.querySelector('span').textContent=on?'Home':'Office'});
+    var t=kt[+b.dataset.k];ko.innerHTML=t[0]+'<small>'+t[1]+'</small>';
+  })});
+
+  /* 4: workload */
+  var lf=document.getElementById('figLoad'),lb=$('.seg button',lf),lm=$('.track i',lf),lo=document.getElementById('loadOut');
+  var lt=[['Employees work well and stay.','Wellbeing supports performance.'],
+          ['Employees are exhausted.','Productivity falls, and many think about leaving.']];
+  lb.forEach(function(b){b.addEventListener('click',function(){
+    lb.forEach(function(o){o.setAttribute('aria-pressed',o===b)});
+    b.dataset.v.split(',').forEach(function(v,k){lm[k].style.setProperty('--w',v+'%')});
+    var t=lt[+b.dataset.k];lo.innerHTML=t[0]+'<small>'+t[1]+'</small>';
+  })});
+
+  /* 5: acceptable or excessive monitoring */
+  $('#figMon .chips button').forEach(function(b){b.addEventListener('click',function(){
+    if(b.classList.contains('vague')||b.classList.contains('proof'))return;
+    b.classList.add(b.dataset.t);
+    var t=document.createElement('small');t.textContent=b.dataset.t==='vague'?'excessive':'acceptable';b.appendChild(t);
+  })});
+
+  /* 6: hierarchy or agile */
+  var of=document.getElementById('figOrg'),ob=$('.seg button',of),oo=of.querySelector('.org'),ou=document.getElementById('orgOut'),oi=$('.org i',of);
+  ob.forEach(function(b){b.addEventListener('click',function(){
+    ob.forEach(function(o){o.setAttribute('aria-pressed',o===b)});
+    var flat=b.dataset.k==='1';oo.classList.toggle('flat',flat);
+    oi.forEach(function(x){if(x.classList.contains('top'))x.textContent=flat?'Facilitator':'Director';else if(x.classList.contains('mid'))x.textContent=flat?'Coach':'Manager';});
+    ou.innerHTML=flat?'Small teams decide quickly.<small>Managers support them instead of giving orders.</small>':'Orders go down, reports go up.<small>Clear, but slow when the world changes fast.</small>';
+  })});
+})();
+</script>
+<script src="assets/auth-gate.js?v=1"></script><script src="assets/app-nav.js"></script>
+</body>
+</html>

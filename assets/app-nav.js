@@ -13,7 +13,7 @@ var P={
 "governance-csr-fil-rouge.html":"governance-csr.html","governance-csr-economic-basics.html":"governance-csr.html","green-revolution.html":"governance-csr.html",
 "Green-revolution-summary-trainer.html":"green-revolution.html","Green-revolution-essay-trainer.html":"green-revolution.html",
 "information-systems-fil-rouge.html":"information-systems.html","information-systems-economic-basics.html":"information-systems.html","Information-systems-summary-trainer.html":"information-systems.html","Information-systems-essay-trainer.html":"information-systems.html",
-"management-hr-fil-rouge.html":"management-hr.html","Management-hr-summary-trainer.html":"management-hr.html","Management-hr-essay-trainer.html":"management-hr.html",
+"management-hr-fil-rouge.html":"management-hr.html","management-hr-economic-basics.html":"management-hr.html","Management-hr-summary-trainer.html":"management-hr.html","Management-hr-essay-trainer.html":"management-hr.html",
 "production-fil-rouge.html":"production.html","production-economic-basics.html":"production.html","Production-summary-trainer.html":"production.html","Production-essay-trainer.html":"production.html",
 "marketing-fil-rouge.html":"marketing.html","Marketing-summary-trainer.html":"marketing.html","Marketing-essay-trainer.html":"marketing.html",
 "brexit.html":"general-knowledge.html","midterms-2026.html":"general-knowledge.html","financial-crises.html":"general-knowledge.html",
