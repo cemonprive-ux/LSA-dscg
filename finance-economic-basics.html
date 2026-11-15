@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest?v=2"><meta name="theme-color" content="#0f1a33"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="LSA DSCG"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Finance: the economic basics you need · LSA Toolbox DSCG</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/dscg-favicon-32.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --navy:#0f1a33; --navy2:#1c2c55; --steel:#e9eef3; --plate:#ffffff; --ink:#14213d; --mute:#55627a;
+  --gold:#f5b60f; --gold-d:#8a6400; --teal:#0b6e6e; --teal-soft:#dff1ef; --red:#cf3b28; --red-soft:#fbe3df; --line:#cdd7e2;
+  --display:"Quicksand",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --body:var(--display);
+  --voice:var(--display);
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--steel);color:var(--ink);font:17px/1.6 var(--body)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+
+/* ---------- hero ---------- */
+.hero{background:var(--navy);color:#fff;padding:calc(22px + env(safe-area-inset-top)) 0 34px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;opacity:.5;
+  background:repeating-linear-gradient(90deg,transparent 0 46px,rgba(255,255,255,.045) 46px 48px)}
+.hero .wrap{position:relative}
+.back{display:inline-flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font-size:15px;font-weight:600;min-height:44px;padding:0 16px 0 12px;border:1.5px solid rgba(255,255,255,.4);border-radius:999px;transition:background .2s,border-color .2s}
+.back:hover{background:rgba(255,255,255,.1);border-color:var(--gold)}
+.fab-back{position:fixed;right:14px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:30;display:grid;place-items:center;width:50px;height:50px;border-radius:50%;
+  background:var(--navy);color:var(--gold);border:2px solid var(--gold);box-shadow:0 8px 22px rgba(15,26,51,.3);
+  opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .3s,transform .3s var(--ease),visibility .3s}
+.scrolled .fab-back{opacity:1;visibility:visible;transform:none}
+.lsa-app .fab-back{display:none}
+h1{font-family:var(--display);font-weight:700;margin:26px 0 0;line-height:1;letter-spacing:-.01em}
+h1 .t1{display:block;color:var(--gold);font-size:clamp(40px,12.4vw,136px);text-transform:uppercase;letter-spacing:-.02em}
+h1 .t2{display:block;color:#fff;font-weight:500;font-size:clamp(24px,4.6vw,44px);line-height:1.05;margin-top:10px}
+.standfirst{max-width:36em;color:#c9d3ea;font-size:clamp(17px,2.1vw,20px);margin:22px 0 0}
+
+/* ---------- the chain (sticky progress + navigation) ---------- */
+.chain{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;border-top:1px solid rgba(255,255,255,.12);
+  padding:calc(10px + env(safe-area-inset-top)) 0 10px;box-shadow:0 6px 18px rgba(15,26,51,.18)}
+.chain .wrap{display:flex;align-items:center;gap:18px}
+.chain ol{list-style:none;margin:0;padding:0;display:flex;justify-content:space-between;align-items:center;position:relative;flex:1;min-width:0;--p:0%}
+.chain ol::before,.chain ol::after{content:"";position:absolute;left:15px;right:15px;top:50%;height:3px;margin-top:-1.5px;border-radius:2px}
+.chain ol::before{background:rgba(255,255,255,.2)}
+.chain ol::after{right:auto;width:calc((100% - 30px) * var(--p));background:var(--gold);transition:width .5s var(--ease)}
+.chain li{position:relative;z-index:1}
+.chain a{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--navy2);border:2px solid rgba(255,255,255,.35);
+  color:#fff;text-decoration:none;font:700 14px/1 var(--display);transition:background .3s,border-color .3s,color .3s,transform .3s var(--ease)}
+.chain a::after{content:"";position:absolute;inset:-7px}
+.chain li.done a{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.chain li.now a{background:#fff;border-color:var(--gold);color:var(--navy);transform:scale(1.22)}
+.chain-now{flex:none;width:12.5em;margin:0;font:600 15.5px/1.15 var(--display);letter-spacing:.01em;color:#fff}
+.practice{flex:none;display:inline-flex;align-items:center;gap:9px;background:none;border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:999px;
+  padding:0 14px 0 10px;min-height:40px;font-size:14.5px;font-weight:600}
+.practice i{width:30px;height:18px;border-radius:9px;background:rgba(255,255,255,.25);position:relative;transition:background .25s}
+.practice i::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .25s var(--ease)}
+.practice[aria-pressed="true"]{border-color:var(--gold)}
+.practice[aria-pressed="true"] i{background:var(--gold)}
+.practice[aria-pressed="true"] i::after{transform:translateX(12px);background:var(--navy)}
+@keyframes link{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:none}}
+.js .chain li{animation:link .45s var(--ease) both;animation-delay:calc(var(--i)*70ms + .35s)}
+
+/* ---------- ideas ---------- */
+.idea{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:26px 44px;align-items:start;padding:58px 0 50px;border-bottom:1px solid var(--line);scroll-margin-top:64px}
+.idea:last-of-type{border-bottom:0}
+.idea-head{display:flex;align-items:flex-start;gap:14px;margin:0 0 14px}
+.num{flex:none;display:grid;place-items:center;width:46px;height:46px;background:var(--navy);color:var(--gold);font:700 24px/1 var(--display);border-radius:6px}
+h2{font:700 clamp(25px,3.6vw,34px)/1.08 var(--display);margin:0;letter-spacing:-.01em;padding-top:5px}
+.idea-text p{margin:0;max-width:34em}
+.idea-text b{font-weight:700;box-shadow:inset 0 -.42em 0 rgba(245,182,15,.45)}
+
+/* figure plate */
+.fig{margin:0;background:var(--plate);border-radius:14px;padding:22px 22px 18px;border:1px solid var(--line)}
+.fig figcaption{font-size:14px;color:var(--mute);margin-top:14px;line-height:1.45}
+.fig .hint{font-size:14px;font-weight:600;color:var(--teal);margin:0 0 12px}
+.lab{font-size:13.5px;font-weight:600;color:var(--mute);margin:0 0 6px}
+
+/* you could say */
+.say{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 20px;align-items:center;background:var(--teal-soft);border-left:5px solid var(--teal);border-radius:0 14px 14px 0;padding:18px 20px}
+.say-label{font-weight:700;color:var(--teal);font-size:15px;white-space:nowrap}
+.say blockquote{margin:0;font:500 19px/1.5 var(--voice);color:#0c2f33}
+.say-try{display:none;margin:0;color:#35585a;font-size:15.5px}
+.say-btns{display:flex;gap:8px}
+.say button{display:inline-flex;align-items:center;gap:7px;min-height:42px;padding:0 14px;border-radius:999px;border:1.5px solid var(--teal);background:#fff;color:var(--teal);font-size:14.5px;font-weight:600;white-space:nowrap}
+.say button:hover{background:var(--teal);color:#fff}
+.say .show{display:none}
+.say .listen.on{background:var(--teal);color:#fff}
+.no-speech .listen{display:none}
+.practice-on .say:not(.open) blockquote{display:none}
+.practice-on .say:not(.open) .say-try{display:block}
+.practice-on .say:not(.open) .show{display:inline-flex}
+.practice-on .say:not(.open) .listen{display:none}
+@keyframes unveil{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.practice-on .say.open blockquote{animation:unveil .4s var(--ease)}
+
+/* ---------- figure parts ---------- */
+/* 1 steps */
+.steps{display:flex;align-items:stretch;gap:0}
+.steps button{flex:1;min-width:0;min-height:58px;padding:6px 4px;border:2px solid var(--navy);background:#fff;border-radius:8px;font-size:14px;font-weight:600;line-height:1.15;
+  transition:background .3s,border-color .3s,color .3s,opacity .3s}
+.steps .arrow{flex:none;width:18px;align-self:center;height:3px;background:var(--navy);transition:background .3s,opacity .3s}
+.steps button.blocked{background:var(--red);border-color:var(--red);color:#fff}
+.steps .off{border-style:dashed;border-color:#a9b4c4;color:#8a96a9;background:#f4f6f9}
+.steps .arrow.off{background:#c3ccd9;border:0}
+.js .steps>*{opacity:0;transform:translateX(-10px);transition:opacity .45s ease,transform .45s var(--ease),background .3s,border-color .3s,color .3s;transition-delay:calc(var(--i)*90ms)}
+.js .in .steps>*{opacity:1;transform:none}
+.js .in .steps.played>*{transition-delay:0s}
+
+/* 2 distance */
+.dist{display:grid;grid-template-columns:repeat(3,1fr);position:relative;padding-top:40px}
+.dist::before{content:"";position:absolute;left:16.66%;right:16.66%;top:11px;height:3px;background:var(--line)}
+.dist div{text-align:center;padding:0 6px;position:relative}
+.dist div::before{content:"";position:absolute;top:-38px;left:50%;width:21px;height:21px;margin-left:-10.5px;border-radius:50%;background:var(--navy);border:4px solid #fff;box-shadow:0 0 0 2px var(--navy)}
+.dist div:last-child::before{background:var(--gold)}
+.dist b{display:block;font:700 18.5px/1.1 var(--display);overflow-wrap:anywhere}
+.dist span{display:block;font-size:13.5px;color:var(--mute);line-height:1.35;margin-top:4px}
+.js .dist div{opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s var(--ease);transition-delay:calc(var(--i)*160ms + .1s)}
+.js .in .dist div{opacity:1;transform:none}
+
+/* segmented control */
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px}
+.seg button{min-height:42px;padding:0 13px;border-radius:8px;border:1.5px solid var(--line);background:#fff;font-size:14.5px;font-weight:600;color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* bars */
+.bar{display:flex;height:46px;border-radius:8px;overflow:hidden;background:#f1f4f8}
+.bar i{display:grid;place-items:center;font-style:normal;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;width:var(--w);transition:width .9s var(--ease)}
+.bar .c{background:var(--navy);color:#fff}
+.bar .m{background:var(--gold);color:var(--navy)}
+.bar .t{background:repeating-linear-gradient(135deg,var(--red) 0 8px,#e2604f 8px 16px);color:#fff}
+.bar .o{background:#b9c5d6;color:var(--navy)}
+.js .fig:not(.in) .bar .grow{width:0}
+.out{margin:12px 0 0;font-weight:600;min-height:3.1em}
+.out small{display:block;font-weight:400;color:var(--mute);font-size:14.5px}
+.brace{display:flex;justify-content:space-between;font-size:13.5px;color:var(--mute);margin-top:6px}
+
+/* 5 lines */
+.lines svg{display:block;width:100%;height:auto}
+.lines path{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.lines .calm{stroke:var(--teal)}
+.lines .wild{stroke:var(--red)}
+.lines text{font:600 12px var(--body);fill:var(--mute);text-anchor:middle}
+.js .lines path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.8s ease .2s}
+.js .lines.in path{stroke-dashoffset:0}
+.key{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;font-weight:600;margin-top:8px}
+.key span::before{content:"";display:inline-block;width:18px;height:4px;border-radius:2px;margin-right:7px;vertical-align:middle;background:var(--k)}
+
+/* 6 crates */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.two h3{font:700 19px/1.1 var(--display);margin:0 0 10px}
+.crates{display:grid;grid-template-columns:repeat(3,26px);gap:5px;height:57px;align-content:end}
+.crates i{width:26px;height:26px;border-radius:4px;background:var(--gold);border:2px solid var(--gold-d)}
+.js .crates i{opacity:0;transform:translateY(-14px);transition:opacity .35s ease,transform .45s cubic-bezier(.3,1.5,.5,1);transition-delay:calc(var(--i)*90ms + .2s)}
+.js .in .crates i{opacity:1;transform:none}
+.pair{list-style:none;margin:12px 0 0;padding:0;font-size:14.5px}
+.pair li{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-top:1px solid var(--line)}
+.pair b.lo{color:var(--teal)}.pair b.hi{color:var(--red)}
+
+/* 7 suppliers */
+.net{display:flex;align-items:center;gap:10px;min-height:112px}
+.net .sup{display:grid;gap:6px;flex:none}
+.net .sup i,.net .fac{font-style:normal;font-size:13px;font-weight:700;border-radius:6px;padding:5px 9px;text-align:center;transition:background .35s,color .35s,border-color .35s}
+.net .sup i{background:var(--navy);color:#fff;border:2px solid var(--navy)}
+.net .pipe{flex:1;height:3px;background:var(--navy);min-width:14px;transition:background .35s}
+.net .fac{flex:none;background:var(--gold);color:var(--navy);border:2px solid var(--gold-d);min-width:74px}
+.shock .sup i.hit{background:var(--red-soft);color:var(--red);border-color:var(--red);text-decoration:line-through}
+.shock .net.solo .pipe{background:#c3ccd9}
+.shock .net.solo .fac{background:#f4f6f9;color:#8a96a9;border:2px dashed #a9b4c4}
+.verdict{margin:8px 0 0;font-size:14.5px;font-weight:700;min-height:1.5em}
+.verdict.bad{color:var(--red)}.verdict.good{color:var(--teal)}
+.act{min-height:44px;padding:0 16px;border-radius:8px;border:0;background:var(--navy);color:#fff;font-size:15px;font-weight:600;margin-top:14px}
+.act[aria-pressed="true"]{background:var(--red)}
+
+/* 9 routes */
+.route{display:flex;align-items:center;gap:10px;margin:0 0 4px}
+.route .end{flex:none;font-size:13px;font-weight:700;background:var(--navy);color:#fff;border-radius:6px;padding:5px 9px}
+.route .end.cust{background:var(--gold);color:var(--navy)}
+.route .road{flex:0 0 var(--len);height:14px;border-radius:7px;background:repeating-linear-gradient(90deg,var(--c) 0 6px,transparent 6px 15px);transition:flex-basis 1.2s var(--ease) .2s}
+.js .fig:not(.in) .route .road{flex-basis:0}
+.route-note{font-size:14.5px;margin:0 0 18px}
+
+/* meters */
+.meter{display:grid;grid-template-columns:10.5em 1fr;gap:12px;align-items:center;font-size:14.5px;font-weight:600;margin:0 0 10px}
+.meter .track{height:16px;border-radius:8px;background:#eef2f6;overflow:hidden}
+.meter .track i{display:block;height:100%;width:var(--w);border-radius:8px;background:var(--c,var(--navy));transition:width .9s var(--ease)}
+.js .fig:not(.in) .meter .track i{width:0}
+/* dominoes */
+.dom{display:flex;gap:10px;align-items:flex-end;height:104px;padding-left:4px}
+.dom i{flex:1;min-width:0;height:84px;display:grid;place-items:center;text-align:center;font-style:normal;font-size:13px;font-weight:700;line-height:1.15;padding:0 3px;
+  background:var(--navy);color:#fff;border-radius:6px;transform-origin:100% 100%;transition:transform .5s cubic-bezier(.5,0,.8,.4),background .3s;transition-delay:calc(var(--i)*230ms)}
+.dom i.eco{flex:1.5;background:var(--gold);color:var(--navy)}
+.fallen .dom i{transform:rotate(9deg);background:var(--red);color:#fff}
+/* ticks */
+.ticks{list-style:none;margin:0;padding:0;font-size:14.5px;line-height:1.35}
+.ticks li{position:relative;padding:8px 0 8px 20px;border-top:1px solid var(--line)}
+.ticks li::before{content:"";position:absolute;left:0;top:13px;width:10px;height:10px;border-radius:3px;background:var(--teal)}
+.js .ticks li{opacity:0;transform:translateX(-8px);transition:opacity .4s ease,transform .4s var(--ease);transition-delay:calc(var(--i)*130ms + .15s)}
+.js .in .ticks li{opacity:1;transform:none}
+/* facts */
+.facts{margin-top:0}
+.facts li{align-items:baseline}
+.facts li:first-child{border-top:0}
+.facts b{text-align:right;color:var(--navy)}
+@keyframes swap{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.facts.swap b{animation:swap .35s var(--ease)}
+/* effects */
+.eff{border-radius:10px;padding:14px 14px 12px;border:2px solid;transition:background .35s,border-color .35s}
+.eff h3{margin:0 0 4px}
+.eff p{margin:0;font-weight:700;font-size:16.5px;line-height:1.25}
+.eff small{display:block;margin-top:6px;font-size:13.5px;line-height:1.35;color:var(--ink)}
+.eff.good{background:var(--teal-soft);border-color:var(--teal)}.eff.good p{color:var(--teal)}
+.eff.bad{background:var(--red-soft);border-color:var(--red)}.eff.bad p{color:var(--red)}
+/* payment routes */
+.route.via .end{text-align:center;line-height:1.2}
+.route.via .mid{flex:1;min-width:0;border:2px solid;padding:8px 9px}
+.route.via .mid.far{background:var(--red-soft);color:var(--red);border-color:var(--red)}
+.route.via .mid.near{background:var(--teal-soft);color:var(--teal);border-color:var(--teal)}
+/* esg */
+.esg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.esg div{background:#f3f6f9;border-radius:10px;padding:12px 10px 12px;text-align:center}
+.esg b{display:block;font-size:44px;line-height:1;font-weight:700;color:var(--teal)}
+.esg strong{display:block;font-size:14.5px;margin-top:6px}
+.esg span{display:block;font-size:13px;color:var(--mute);line-height:1.35;margin-top:3px}
+.js .esg div{opacity:0;transform:translateY(12px);transition:opacity .5s ease,transform .5s var(--ease);transition-delay:calc(var(--i)*160ms + .1s)}
+.js .in .esg div{opacity:1;transform:none}
+
+/* ---------- end ---------- */
+.end-nav{display:flex;flex-wrap:wrap;gap:10px;padding:34px 0 10px}
+.end-nav a,.end-nav button{display:inline-flex;align-items:center;min-height:46px;padding:0 18px;border-radius:10px;border:1.5px solid var(--navy);background:none;color:var(--navy);font-size:15.5px;font-weight:600;text-decoration:none}
+.end-nav .main{background:var(--navy);color:#fff}
+footer{margin-top:34px;background:var(--navy);color:#aeb9d6;padding:26px 0 calc(96px + env(safe-area-inset-bottom));font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:center}
+footer .brand{display:flex;align-items:center;gap:12px}
+footer img{width:42px;height:42px;object-fit:contain;border-radius:8px;background:#fff}
+footer strong{display:block;color:#fff}
+
+/* ---------- responsive ---------- */
+@media(max-width:860px){
+  .idea{grid-template-columns:1fr;gap:20px;padding:42px 0 38px}
+  .say{grid-template-columns:1fr;border-radius:0 12px 12px 0}
+  .chain-now{display:none}
+}
+@media(max-width:560px){
+  body{font-size:16.5px}
+  .wrap{padding:0 16px}
+  .chain .wrap{gap:12px}
+  .chain a{width:26px;height:26px;font-size:13.5px}
+  .chain ol::before,.chain ol::after{left:13px;right:13px}
+  .chain ol::after{right:auto;width:calc((100% - 26px) * var(--p))}
+  .practice{padding:0 10px 0 8px;font-size:13.5px}
+  .practice .pm{display:none}
+  .fig{padding:18px 16px 16px}
+  .steps{flex-direction:column}
+  .steps button{min-height:46px}
+  .steps .arrow{width:3px;height:14px}
+  .two{gap:14px}
+  .meter{grid-template-columns:8.2em 1fr;font-size:13.5px}
+  .dom{gap:6px}.dom i{font-size:11.5px}
+  .esg{gap:6px}.esg div{padding:10px 5px}.esg b{font-size:36px}.esg strong{font-size:12.5px}.esg span{font-size:12px}
+  .eff{padding:11px 10px}.eff p{font-size:15px}
+  .dist b{font-size:14.5px}
+  .dist span{font-size:12.5px}
+  .dist div{padding:0 3px}
+  .net{gap:6px}
+  .net .sup i,.net .fac{font-size:12px;padding:5px 6px}
+  .net .fac{min-width:0}
+  .say blockquote{font-size:17.5px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .ticks li,.js .esg div{opacity:1!important;transform:none!important}
+  .js .fig:not(.in) .meter .track i{width:var(--w)!important}
+  .js .lines path{stroke-dashoffset:0!important}
+  .js .fig:not(.in) .bar .grow{width:var(--w)!important}
+  .js .fig:not(.in) .route .road{flex-basis:var(--len)!important}
+}
+@media print{
+  body{background:#fff;font-size:11.5pt}
+  .chain,.back,.fab-back,.say-btns,.seg,.act,.hint,.end-nav,footer,.lsa-appnav,.lsa-update{display:none!important}
+  .hero{background:none;color:#000;padding:0 0 10px}.hero::before{display:none}
+  h1 .t1{color:#000;font-size:34pt}h1 .t2{color:#000;font-size:17pt}.standfirst{color:#333}
+  .idea{grid-template-columns:1fr 1fr;padding:16px 0;break-inside:avoid}
+  .say blockquote{display:block!important}.say-try{display:none!important}
+  .fig{border-color:#999}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js')</script>
+
+<header class="hero">
+  <div class="wrap">
+    <a class="back" href="digital-currency.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Retour à 1-Finance</a>
+    <h1><span class="t1">Finance</span><span class="t2">The economic basics you need</span></h1>
+    <p class="standfirst">Nine ideas to know before you read any text on finance. Each one comes with a sentence you could say in the exam.</p>
+  </div>
+</header>
+
+<nav class="chain" aria-label="The nine ideas">
+  <div class="wrap">
+    <ol id="chain">
+      <li style="--i:0"><a href="#credit" aria-label="1. Credit and interest rates">1</a></li>
+      <li style="--i:1"><a href="#bubbles" aria-label="2. Bubbles and crises">2</a></li>
+      <li style="--i:2"><a href="#systemic-risk" aria-label="3. Systemic risk">3</a></li>
+      <li style="--i:3"><a href="#central-banks" aria-label="4. Central banks and regulators">4</a></li>
+      <li style="--i:4"><a href="#risk-return" aria-label="5. Risk, return and investor protection">5</a></li>
+      <li style="--i:5"><a href="#money" aria-label="6. Four kinds of money">6</a></li>
+      <li style="--i:6"><a href="#currency" aria-label="7. Strong or weak currency">7</a></li>
+      <li style="--i:7"><a href="#power" aria-label="8. Money as power">8</a></li>
+      <li style="--i:8"><a href="#sustainable-finance" aria-label="9. Sustainable finance">9</a></li>
+    </ol>
+    <p class="chain-now" id="chainNow" aria-hidden="true">Tap a number to jump</p>
+    <button class="practice" id="practice" type="button" aria-pressed="false" title="Hide the sentences and try to say them first"><i aria-hidden="true"></i><span class="pl">Practice<span class="pm"> mode</span></span></button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- 1 -->
+<section class="idea" id="credit" data-name="Credit and interest rates">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">1</span><h2>Credit and interest rates</h2></div>
+    <p>Banks lend money to households and companies. The borrower pays back the loan plus <b>interest</b>: the interest rate is the price of money. When rates are low, credit is cheap, people borrow more and the economy speeds up. When rates are high, the opposite happens.</p>
+  </div>
+  <figure class="fig" id="figRates">
+    <div class="seg" role="group" aria-label="Level of interest rates">
+      <button type="button" aria-pressed="true" data-v="86,80,74" data-k="0">Low interest rates</button>
+      <button type="button" aria-pressed="false" data-v="30,36,24" data-k="1">High interest rates</button>
+    </div>
+    <div class="meter"><span>Borrowing</span><div class="track"><i style="--w:86%"></i></div></div>
+    <div class="meter"><span>Spending and investment</span><div class="track"><i style="--w:80%"></i></div></div>
+    <div class="meter"><span>Risk of too much debt</span><div class="track"><i style="--w:74%;--c:var(--red)"></i></div></div>
+    <p class="out" id="ratesOut" aria-live="polite">Credit is cheap: the economy speeds up.<small>But households and firms can take on too much debt.</small></p>
+    <figcaption>Illustration only: the sizes are not real figures.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“When interest rates are low, credit is cheap, so households and firms borrow more. This supports growth, but it can also encourage too much debt.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="idea" id="bubbles" data-name="Bubbles and crises">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">2</span><h2>Bubbles and crises</h2></div>
+    <p>A <b>bubble</b> appears when the price of an asset, such as houses or shares, rises far above its real value, because everybody expects it to rise again. One day confidence disappears, prices collapse and borrowers cannot repay. The subprime crisis of 2008 followed this cycle: cheap credit, too much risk, then collapse.</p>
+  </div>
+  <figure class="fig lines">
+    <p class="lab">The price of an asset over time</p>
+    <svg viewBox="0 0 420 170" role="img" aria-label="The market price rises far above the real value, then collapses">
+      <line x1="10" y1="156" x2="410" y2="156" stroke="#cdd7e2" stroke-width="2"/>
+      <path class="calm" pathLength="1" d="M10 138 L410 116"/>
+      <path class="wild" pathLength="1" d="M10 138 C100 134 165 120 210 74 S258 14 270 20 L302 140 H410"/>
+      <text x="96" y="118">cheap credit</text><text x="186" y="52">too much risk</text><text x="350" y="92">collapse</text>
+    </svg>
+    <div class="key"><span style="--k:var(--red)">Market price</span><span style="--k:var(--teal)">Real value</span></div>
+    <figcaption>Illustration only: this is not real data.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“This is a typical bubble: prices rose because people expected them to keep rising. When confidence disappeared, the market collapsed.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="idea" id="systemic-risk" data-name="Systemic risk">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">3</span><h2>Systemic risk</h2></div>
+    <p>Banks lend to each other, so they are linked like dominoes. <b>Systemic risk</b> is the danger that the failure of one bank brings down the others, and then the whole economy. A <b>bank run</b> happens when many savers withdraw their money at the same time because they are afraid.</p>
+  </div>
+  <figure class="fig" id="figDom">
+    <div class="dom" aria-hidden="true">
+      <i style="--i:0">Bank A</i><i style="--i:1">Bank B</i><i style="--i:2">Bank C</i><i style="--i:3">Bank D</i><i class="eco" style="--i:4">The economy</i>
+    </div>
+    <p class="verdict" id="domOut" aria-live="polite">Every bank is standing.</p>
+    <button type="button" class="act" id="domBtn" aria-pressed="false">Make bank A fail</button>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“The danger is systemic risk: if one big bank fails, it can bring down the whole financial system, like dominoes.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="idea" id="central-banks" data-name="Central banks and regulators">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">4</span><h2>Central banks and regulators</h2></div>
+    <p>A <b>central bank</b>, such as the European Central Bank or the Federal Reserve in the United States, manages the currency: it sets the main interest rate to keep prices stable, and it helps banks in a crisis. <b>Regulators</b>, also called financial watchdogs, write the rules for banks and markets and check that they are respected.</p>
+  </div>
+  <figure class="fig">
+    <div class="two">
+      <div>
+        <h3>Central bank</h3>
+        <ul class="ticks"><li style="--i:0">sets the main interest rate</li><li style="--i:1">keeps prices stable</li><li style="--i:2">helps banks in a crisis</li></ul>
+      </div>
+      <div>
+        <h3>Regulator</h3>
+        <ul class="ticks"><li style="--i:3">writes the rules</li><li style="--i:4">checks banks and markets</li><li style="--i:5">punishes fraud</li></ul>
+      </div>
+    </div>
+    <figcaption>Both are public authorities. Their common goal is a stable financial system.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“Central banks and regulators act as referees. Their role is to keep prices stable and to prevent a new crisis.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="idea" id="risk-return" data-name="Risk, return and protection">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">5</span><h2>Risk, return and investor protection</h2></div>
+    <p>On the stock market, investors buy <b>shares</b>: small parts of a company. The basic rule is that a higher possible <b>return</b> always means a higher <b>risk</b> of losing money. Small investors do not always understand this, so the law obliges sellers to inform them clearly.</p>
+  </div>
+  <figure class="fig">
+    <p class="lab">Risk and possible return</p>
+    <div class="meter"><span>Savings account</span><div class="track"><i style="--w:14%;--c:var(--teal)"></i></div></div>
+    <div class="meter"><span>Bonds</span><div class="track"><i style="--w:36%;--c:#3f8f8a"></i></div></div>
+    <div class="meter"><span>Shares</span><div class="track"><i style="--w:66%;--c:var(--gold)"></i></div></div>
+    <div class="meter"><span>Cryptocurrencies</span><div class="track"><i style="--w:96%;--c:var(--red)"></i></div></div>
+    <figcaption>A bond is a loan to a state or a company. No product offers a high return without risk. Illustration only.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“A high return always comes with a high risk. That is why small investors need clear information and some protection.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="idea" id="money" data-name="Four kinds of money">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">6</span><h2>Four kinds of money</h2></div>
+    <p>Not all money is the same. <b>Cash</b> is public money, issued by the central bank. <b>Bank deposits</b> are private money, created by commercial banks when they lend. <b>Cryptocurrencies</b> such as bitcoin are issued by no public authority, and their value changes very fast. A <b>central bank digital currency</b> (CBDC), such as the digital euro project, would be public money in electronic form.</p>
+  </div>
+  <figure class="fig" id="figMoney">
+    <p class="hint">Tap a kind of money.</p>
+    <div class="seg" role="group" aria-label="Kinds of money">
+      <button type="button" aria-pressed="true" data-k="0">Cash</button>
+      <button type="button" aria-pressed="false" data-k="1">Bank deposit</button>
+      <button type="button" aria-pressed="false" data-k="2">Cryptocurrency</button>
+      <button type="button" aria-pressed="false" data-k="3">CBDC</button>
+    </div>
+    <ul class="pair facts" aria-live="polite">
+      <li>Issued by <b id="mBy">the central bank</b></li>
+      <li>Public or private <b id="mPub">public</b></li>
+      <li>Form <b id="mForm">notes and coins</b></li>
+      <li>Value <b id="mVal">stable and guaranteed</b></li>
+    </ul>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“We should not confuse cryptocurrencies with a central bank digital currency. The first are private and volatile; the second would be public money, guaranteed like a banknote.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="idea" id="currency" data-name="Strong or weak currency">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">7</span><h2>Strong or weak currency</h2></div>
+    <p>The <b>exchange rate</b> is the price of one currency in another. With a <b>strong currency</b>, imports are cheaper, which helps consumers and importers, but exports become more expensive for foreign buyers. A <b>weak currency</b> has the opposite effect: it helps exporters but makes imports more expensive.</p>
+  </div>
+  <figure class="fig" id="figFx">
+    <div class="seg" role="group" aria-label="Strength of the currency">
+      <button type="button" aria-pressed="true" data-k="0">Strong currency</button>
+      <button type="button" aria-pressed="false" data-k="1">Weak currency</button>
+    </div>
+    <div class="two">
+      <div class="eff good" id="fxImp"><h3>Imports</h3><p>cheaper</p><small>Good for consumers and importers</small></div>
+      <div class="eff bad" id="fxExp"><h3>Exports</h3><p>more expensive abroad</p><small>Harder for exporters</small></div>
+    </div>
+    <figcaption>There is no perfect level: every exchange rate creates winners and losers.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“A strong currency is good news for importers and consumers, but bad news for exporters. A weak currency has the opposite effect.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="idea" id="power" data-name="Money as power">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">8</span><h2>Money as power</h2></div>
+    <p>Money is also a political tool. <b>Monetary sovereignty</b> means that a country or a region controls its own currency and its own payment systems. Today, Europeans depend a lot on a few American card networks; a public European system is presented as a way to reduce this dependence.</p>
+  </div>
+  <figure class="fig">
+    <p class="lab">A card payment in Europe today</p>
+    <div class="route via"><span class="end">Customer</span><span class="road" style="--len:9%;--c:var(--red)"></span><span class="end mid far">American card network</span><span class="road" style="--len:9%;--c:var(--red)"></span><span class="end cust">Shop</span></div>
+    <p class="lab" style="margin-top:18px">With a public European system</p>
+    <div class="route via"><span class="end">Customer</span><span class="road" style="--len:9%;--c:var(--teal)"></span><span class="end mid near">European public system</span><span class="road" style="--len:9%;--c:var(--teal)"></span><span class="end cust">Shop</span></div>
+    <figcaption>Who controls the middle step controls the payment. This is why money is a question of power.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“Money is not only an economic tool; it is also a question of power. A public digital currency could reduce Europe's dependence on foreign payment networks.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="idea" id="sustainable-finance" data-name="Sustainable finance">
+  <div class="idea-text">
+    <div class="idea-head"><span class="num">9</span><h2>Sustainable finance</h2></div>
+    <p>Investors now judge companies on <b>ESG</b> criteria (environmental, social and governance), not only on profit. A <b>green bond</b> is a loan from investors that must finance an environmental project. In this way, money moves towards more responsible companies.</p>
+  </div>
+  <figure class="fig">
+    <div class="esg">
+      <div style="--i:0"><b>E</b><strong>Environmental</strong><span>emissions, energy, waste</span></div>
+      <div style="--i:1"><b>S</b><strong>Social</strong><span>working conditions, equality</span></div>
+      <div style="--i:2"><b>G</b><strong>Governance</strong><span>transparency, honest management</span></div>
+    </div>
+    <figcaption>A company with good ESG results can find money more easily and more cheaply.</figcaption>
+  </figure>
+  <div class="say">
+    <span class="say-label">You could say:</span>
+    <blockquote>“With sustainable finance, investors look at ESG criteria as well as profit. Finance becomes a tool for the ecological transition.”</blockquote>
+    <p class="say-try">Say it in your own words first, then check.</p>
+    <div class="say-btns"><button type="button" class="show">Show the sentence</button><button type="button" class="listen">Listen</button></div>
+  </div>
+</section>
+
+<a class="fab-back" href="digital-currency.html" aria-label="Retour au chapitre 1-Finance" title="Retour au chapitre"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></a>
+
+<div class="end-nav">
+  <a class="main" href="finance-fil-rouge.html">Lire l'article fil rouge</a>
+  <a href="digital-currency.html">Revenir au chapitre</a>
+  <button type="button" onclick="window.print()">Imprimer cette fiche</button>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="brand">
+      <img src="assets/lsa-logo.png" alt="" onerror="this.remove()">
+      <div><strong>LSA Toolbox</strong>DSCG · 1-Finance · M. Blanchet</div>
+    </div>
+    <div>Lycée Sidoine Apollinaire, Clermont-Ferrand</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var $=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  var IO='IntersectionObserver' in window;
+
+  /* figures build themselves when they come into view */
+  var figs=$('.fig');
+  if(IO){
+    var fo=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('in');fo.unobserve(e.target);}
+    })},{rootMargin:'0px 0px -18% 0px',threshold:.15});
+    figs.forEach(function(f){fo.observe(f)});
+  }else figs.forEach(function(f){f.classList.add('in')});
+
+  /* the chain follows the reader */
+  var ideas=$('.idea'),links=$('#chain li'),chain=document.getElementById('chain'),now=document.getElementById('chainNow');
+  function setNow(i){
+    links.forEach(function(l,k){l.classList.toggle('done',k<i);l.classList.toggle('now',k===i);
+      var a=l.firstElementChild;if(k===i)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});
+    chain.style.setProperty('--p',i<0?'0':String(i/(links.length-1)));
+    now.textContent=i<0?'Tap a number to jump':ideas[i].getAttribute('data-name');
+  }
+  if(IO){
+    var so=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting)setNow(ideas.indexOf(e.target));
+    })},{rootMargin:'-30% 0px -60% 0px',threshold:0});
+    ideas.forEach(function(s){so.observe(s)});
+    window.addEventListener('scroll',function(){if(window.scrollY<120)setNow(-1)},{passive:true});
+  }
+
+  /* floating back button: appears once the top link has scrolled away */
+  function fab(){document.body.classList.toggle('scrolled',window.scrollY>260)}
+  window.addEventListener('scroll',fab,{passive:true});fab();
+
+  /* practice mode: hide the sentences, try first, then check */
+  var pb=document.getElementById('practice');
+  pb.addEventListener('click',function(){
+    var on=pb.getAttribute('aria-pressed')!=='true';
+    pb.setAttribute('aria-pressed',on);
+    document.body.classList.toggle('practice-on',on);
+    $('.say').forEach(function(s){s.classList.remove('open')});
+    stop();
+  });
+  $('.say .show').forEach(function(b){b.addEventListener('click',function(){b.closest('.say').classList.add('open')})});
+
+  /* listen: the device reads the sentence aloud */
+  var synth=window.speechSynthesis,current=null;
+  function stop(){if(synth)synth.cancel();if(current){current.classList.remove('on');current.textContent='Listen';current=null;}}
+  if(!synth||!window.SpeechSynthesisUtterance){document.documentElement.classList.add('no-speech');}
+  else{
+    $('.say .listen').forEach(function(b){b.addEventListener('click',function(){
+      if(current===b){stop();return;}
+      stop();
+      var u=new SpeechSynthesisUtterance(b.closest('.say').querySelector('blockquote').textContent.replace(/[“”]/g,''));
+      var vs=synth.getVoices(),v=vs.filter(function(x){return /^en[-_]GB/i.test(x.lang)})[0]||vs.filter(function(x){return /^en/i.test(x.lang)})[0];
+      if(v)u.voice=v;u.lang=v?v.lang:'en-GB';u.rate=.9;
+      u.onend=u.onerror=function(){if(current===b){b.classList.remove('on');b.textContent='Listen';current=null;}};
+      current=b;b.classList.add('on');b.textContent='Stop';synth.speak(u);
+    })});
+    window.addEventListener('pagehide',stop);
+  }
+
+  /* 1: low or high interest rates */
+  var rf=document.getElementById('figRates'),rb=$('.seg button',rf),rm=$('.track i',rf),ro=document.getElementById('ratesOut');
+  var rt=[['Credit is cheap: the economy speeds up.','But households and firms can take on too much debt.'],
+          ['Credit is expensive: the economy slows down.','Prices rise more slowly, and debt is less attractive.']];
+  rb.forEach(function(b){b.addEventListener('click',function(){
+    rb.forEach(function(o){o.setAttribute('aria-pressed',o===b)});
+    b.dataset.v.split(',').forEach(function(v,k){rm[k].style.setProperty('--w',v+'%')});
+    var t=rt[+b.dataset.k];ro.innerHTML=t[0]+'<small>'+t[1]+'</small>';
+  })});
+
+  /* 3: one bank fails */
+  var df=document.getElementById('figDom'),db=document.getElementById('domBtn'),dout=document.getElementById('domOut'),dt;
+  db.addEventListener('click',function(){
+    var on=db.getAttribute('aria-pressed')!=='true';
+    db.setAttribute('aria-pressed',on);df.classList.toggle('fallen',on);clearTimeout(dt);
+    db.textContent=on?'Reset':'Make bank A fail';
+    dout.className='verdict';dout.textContent=on?'Bank A fails…':'Every bank is standing.';
+    if(on)dt=setTimeout(function(){dout.className='verdict bad';dout.textContent='The other banks fall, and the whole economy is hit.'},1300);
+  });
+
+  /* 6: four kinds of money */
+  var yf=document.getElementById('figMoney'),yb=$('.seg button',yf),yl=yf.querySelector('.facts');
+  var yd=[['the central bank','public','notes and coins','stable and guaranteed'],
+          ['commercial banks','private','numbers in a bank account','stable, protected up to a limit'],
+          ['no public authority','private','digital only','very unstable'],
+          ['the central bank','public','digital only','stable and guaranteed']];
+  yb.forEach(function(b){b.addEventListener('click',function(){
+    yb.forEach(function(o){o.setAttribute('aria-pressed',o===b)});
+    var d=yd[+b.dataset.k];['mBy','mPub','mForm','mVal'].forEach(function(id,k){document.getElementById(id).textContent=d[k]});
+    yl.classList.remove('swap');void yl.offsetWidth;yl.classList.add('swap');
+  })});
+
+  /* 7: strong or weak currency */
+  var xf=document.getElementById('figFx'),xb=$('.seg button',xf),xi=document.getElementById('fxImp'),xe=document.getElementById('fxExp');
+  var xd=[[['good','cheaper','Good for consumers and importers'],['bad','more expensive abroad','Harder for exporters']],
+          [['bad','more expensive','Prices rise for consumers'],['good','cheaper abroad','Easier for exporters']]];
+  function fx(el,d){el.className='eff '+d[0];el.querySelector('p').textContent=d[1];el.querySelector('small').textContent=d[2];}
+  xb.forEach(function(b){b.addEventListener('click',function(){
+    xb.forEach(function(o){o.setAttribute('aria-pressed',o===b)});
+    var d=xd[+b.dataset.k];fx(xi,d[0]);fx(xe,d[1]);
+  })});
+})();
+</script>
+<script src="assets/auth-gate.js?v=1"></script><script src="assets/app-nav.js"></script>
+</body>
+</html>
