@@ -10,7 +10,7 @@ var H={"digital-currency.html":"1-Finance","accounting-auditing.html":"2-Account
 var P={
 "finance-fil-rouge.html":"digital-currency.html","finance-economic-basics.html":"digital-currency.html","cryptocurrencies.html":"digital-currency.html","Digital-currency-summary-trainer.html":"digital-currency.html","Digital-currency-essay-trainer.html":"digital-currency.html",
 "accounting-auditing-fil-rouge.html":"accounting-auditing.html","accounting-auditing-economic-basics.html":"accounting-auditing.html","Accounting-auditing-summary-trainer.html":"accounting-auditing.html","Accounting-auditing-essay-trainer.html":"accounting-auditing.html",
-"governance-csr-fil-rouge.html":"governance-csr.html","green-revolution.html":"governance-csr.html",
+"governance-csr-fil-rouge.html":"governance-csr.html","governance-csr-economic-basics.html":"governance-csr.html","green-revolution.html":"governance-csr.html",
 "Green-revolution-summary-trainer.html":"green-revolution.html","Green-revolution-essay-trainer.html":"green-revolution.html",
 "information-systems-fil-rouge.html":"information-systems.html","Information-systems-summary-trainer.html":"information-systems.html","Information-systems-essay-trainer.html":"information-systems.html",
 "management-hr-fil-rouge.html":"management-hr.html","Management-hr-summary-trainer.html":"management-hr.html","Management-hr-essay-trainer.html":"management-hr.html",
